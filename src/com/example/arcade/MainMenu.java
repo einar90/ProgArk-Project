@@ -8,11 +8,10 @@ import sheep.game.State;
 import sheep.gui.TextButton;
 
 /**
- * Created with IntelliJ IDEA.
+ * Created by:
  * User: Einar
  * Date: 11.03.13
  * Time: 12:03
- * To change this template use File | Settings | File Templates.
  */
 public class MainMenu extends State {
 

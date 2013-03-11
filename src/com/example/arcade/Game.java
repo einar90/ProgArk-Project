@@ -4,11 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 /**
- * Created with IntelliJ IDEA.
+ * Created by:
  * User: Einar
  * Date: 11.03.13
  * Time: 12:02
- * To change this template use File | Settings | File Templates.
  */
 public class Game extends sheep.game.Game {
     /**
