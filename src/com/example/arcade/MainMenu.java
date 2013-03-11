@@ -81,6 +81,10 @@ public class MainMenu extends State implements WidgetListener {
     public boolean onTouchDown(MotionEvent event) {
         if (gamesButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Games button tapped.");
+        } else if (highscoresButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            Log.d("Tapped", "Highscore button tapped.");
+        } else if (settingsButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            Log.d("Tapped", "Settings button tapped.");
         }
         return true;
     }
