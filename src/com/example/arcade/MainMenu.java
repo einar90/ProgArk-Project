@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
 import sheep.game.State;
 import sheep.gui.TextButton;
 import sheep.gui.Widget;
@@ -73,5 +75,13 @@ public class MainMenu extends State implements WidgetListener {
         Widget dummy = action.getSource();
 
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean onTouchDown(MotionEvent event) {
+        if (gamesButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            Log.d("Tapped", "Games button tapped.");
+        }
+        return true;
     }
 }
