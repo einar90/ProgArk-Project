@@ -27,21 +27,25 @@ public class MainMenu extends State {
     public MainMenu(Resources resouces) {
         DisplayMetrics displayMetrics = resouces.getDisplayMetrics();
         Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
-        gamesButton = new TextButton(displaySize.x / 2, displaySize.y / 5, "Games");
-        highscoresButton = new TextButton(displaySize.x / 2, setRelativeMenuPosition(1, gamesButton, displaySize), "Highscores");
-        settingsButton = new TextButton(displaySize.x / 2, setRelativeMenuPosition(2, gamesButton, displaySize), "Settings");
+        gamesButton = new TextButton(setRelativeMenuWidthPosition(displaySize), displaySize.y / 5, "Games");
+        highscoresButton = new TextButton(setRelativeMenuWidthPosition(displaySize), setRelativeMenuHeightPosition(1, gamesButton, displaySize), "Highscores");
+        settingsButton = new TextButton(setRelativeMenuWidthPosition(displaySize), setRelativeMenuHeightPosition(2, gamesButton, displaySize), "Settings");
 
     }
 
-    public static int setRelativeMenuPosition(int posistion, TextButton relativeTo, Point displaySize) {
+    private static int setRelativeMenuHeightPosition(int posistion, TextButton relativeTo, Point displaySize) {
         float[] boxPoints = relativeTo.getBoundingBox().getPoints();
         float yPos = boxPoints[3] - boxPoints[1];
-        yPos = 2 * yPos * posistion;
+        yPos = 3 * yPos * posistion;
         yPos += displaySize.y / 5;
 
         return (int) yPos;
 
 
+    }
+
+    private static int setRelativeMenuWidthPosition(Point displaySize) {
+        return displaySize.x / 5;
     }
 
     @Override
