@@ -11,7 +11,7 @@ import sheep.math.Vector2;
  * Time: 14:01
  * To change this template use File | Settings | File Templates.
  */
-public class Projectile extends Sprite {
+public abstract class Projectile extends Sprite {
 
     private Vector2 velocityVector;
     private int position;

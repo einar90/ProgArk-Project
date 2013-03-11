@@ -22,7 +22,11 @@ public class Tank extends Sprite {
     Projectile projectilePicked;
     private Dictionary projectileAmmo;
 
-    public Tank() {
+    public Tank(Vector2 position) {
+        this.position = position;
+        this.hp = 100;
+        this.power = 0;
+        this.barrelAngle = 0;
 
     }
 
