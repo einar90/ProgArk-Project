@@ -22,6 +22,7 @@ public class UserInterface extends State implements MiniGame {
 
     public void draw(Canvas canvas) {
 
+
     }
 
     public void update(float dt) {
