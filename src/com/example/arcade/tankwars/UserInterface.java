@@ -1,8 +1,10 @@
 package com.example.arcade.tankwars;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
+import sheep.collision.Polygon;
 import sheep.game.State;
 
 /**
@@ -14,14 +16,17 @@ import sheep.game.State;
  */
 public class UserInterface extends State implements MiniGame {
 
+    Point canvasSize = null;
+    Polygon map;
 
     public UserInterface() {
+
 
     }
 
 
     public void draw(Canvas canvas) {
-
+        canvasSize = new Point(canvas.getWidth(), canvas.getHeight());
     }
 
     public void update(float dt) {
