@@ -2,6 +2,9 @@ package com.example.arcade.tankwars;
 
 import android.graphics.Canvas;
 import sheep.game.Sprite;
+import sheep.math.Vector2;
+
+import java.util.Dictionary;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +14,13 @@ import sheep.game.Sprite;
  * To change this template use File | Settings | File Templates.
  */
 public class Tank extends Sprite {
+
+    private int barrelAngle;
+    private int power;
+    private int hp;
+    private Vector2 position;
+    Projectile projectilePicked;
+    private Dictionary projectileAmmo;
 
     public Tank() {
 
