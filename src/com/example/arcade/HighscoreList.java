@@ -1,6 +1,6 @@
 package com.example.arcade;
 
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 /**
  * Created by:
@@ -10,18 +10,50 @@ import java.util.TreeMap;
  */
 public abstract class HighscoreList {
 
-    private TreeMap<String, Integer> highscoreList = new TreeMap<String, Integer>();
+    private class Score {
 
-    public void addScore(String player, int score) {
-        highscoreList.put(player, score);
+        private String name;
+        private int score;
+
+        public Score(String name, int score) {
+            this.name = name;
+            this.score = score;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getScore() {
+            return score;
+        }
     }
 
-    public String getTopTen() {
-        int highest = 0;
-        for (int i = 0; i < highscoreList.size() - 1; i++) {
+    private ArrayList<Score> highscoreList = new ArrayList<Score>();
 
+    public void addScore(String name, int score) {
+        Score newScore = new Score(name, score);
+
+        for (int i = 0; i < highscoreList.size(); i++) {
+            if (newScore.getScore() > highscoreList.get(i).getScore()) {
+                highscoreList.add(i, newScore);
+            }
         }
-        return "LOLLLLL";
+
+        if (highscoreList.size() > 10) {
+            highscoreList.remove(10);
+        }
+
+    }
+
+
+    public String getTopTen() {
+        String topTenString = "";
+
+        for (int i = 0; i < highscoreList.size(); i++) {
+            topTenString += (i + 1) + "\t" + highscoreList.get(i).getName() + "\t" + highscoreList.get(i).getScore() + "\n";
+        }
+        return topTenString;
     }
 
 }
