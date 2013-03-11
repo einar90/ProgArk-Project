@@ -5,6 +5,8 @@ import sheep.game.Sprite;
 import sheep.math.Vector2;
 
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,19 +17,31 @@ import java.util.Dictionary;
  */
 public class Tank extends Sprite {
 
+
     private int barrelAngle;
     private int power;
     private int hp;
     private Vector2 position;
     Projectile projectilePicked;
-    private Dictionary projectileAmmo;
+    private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
 
     public Tank(Vector2 position) {
         this.position = position;
         this.hp = 100;
         this.power = 0;
         this.barrelAngle = 0;
+        this.projectileAmmo = setStartingAmmo(15, 1, 3);
 
+    }
+
+    private static Dictionary setStartingAmmo(final int tankshells, final int nukes, final int thermites) {
+        Map<String, Integer> map = new HashMap<String, Integer>() {{
+            put("Bullet", 999);
+            put("TankShell", tankshells);
+            put("Nukes", nukes);
+            put("ThermiteShells", thermites);
+        }};
+        return (Dictionary) map;
     }
 
     public void draw(Canvas canvas) {

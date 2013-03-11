@@ -2,6 +2,7 @@ package com.example.arcade.tankwars;
 
 import android.graphics.Canvas;
 import sheep.game.Sprite;
+import sheep.graphics.Image;
 import sheep.math.Vector2;
 
 /**
@@ -12,15 +13,17 @@ import sheep.math.Vector2;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class Projectile extends Sprite {
+    Image spriteImage;
 
     private Vector2 velocityVector;
-    private int position;
-
+    private Vector2 position;
+    private Projectile projectileType;  //Kan kanskje bruke string istedenfor her
     private int damage;
     private int windAffectionFactor;    /*Antar wind er en Vector2, og denne
                                          *brukes bare til å multipliseres med*/
 
-    public Projectile() {
+    public Projectile(Image spriteImage) {
+        this.spriteImage = spriteImage;
         //To-Do fullføre konstruktfør med spriteimage og startposisjon++
 
     }

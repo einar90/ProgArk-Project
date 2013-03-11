@@ -1,5 +1,7 @@
 package com.example.arcade.tankwars;
 
+import sheep.graphics.Image;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Dzenan
@@ -8,8 +10,9 @@ package com.example.arcade.tankwars;
  * To change this template use File | Settings | File Templates.
  */
 public class Bullet extends Projectile {
+    private static Image bulletImage;
 
     public Bullet() {
-        super();
+        super(bulletImage);
     }
 }
