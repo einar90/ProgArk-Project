@@ -16,17 +16,19 @@ import sheep.game.State;
  */
 public class UserInterface extends State implements MiniGame {
 
-    Point canvasSize = null;
+    Point displaySize;
     Polygon map;
 
-    public UserInterface() {
-
+    public UserInterface(Point displaySize) {
+        displaySize = displaySize;
+        map = (new Map(displaySize)).getMapPolygon();
 
     }
 
 
     public void draw(Canvas canvas) {
-        canvasSize = new Point(canvas.getWidth(), canvas.getHeight());
+
+
     }
 
     public void update(float dt) {

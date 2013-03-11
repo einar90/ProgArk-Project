@@ -22,8 +22,10 @@ public class GamesMenu extends State {
     TextButton wormsButton;
     TextButton coldWarIIButton;
     TextButton battleShipButton;
+    Point displaySize;
 
     public GamesMenu(Point displaySize) {
+        this.displaySize = displaySize;
         tankWarsButton = new TextButton(MainMenu.getWidthPosition(displaySize), displaySize.y / 5, "Tank Wars");
         wormsButton = new TextButton(MainMenu.getWidthPosition(displaySize), MainMenu.getHeightPosition(1, tankWarsButton, displaySize), "Worms");
         coldWarIIButton = new TextButton(MainMenu.getWidthPosition(displaySize), MainMenu.getHeightPosition(2, tankWarsButton, displaySize), "Cold War II");
@@ -46,7 +48,7 @@ public class GamesMenu extends State {
     @Override
     public boolean onTouchDown(MotionEvent event) {
         if (tankWarsButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            getGame().pushState(new UserInterface());
+            getGame().pushState(new UserInterface(displaySize));
             Log.d("Tapped", "Tank Wars button tapped.");
         } else if (wormsButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Worms button tapped.");
