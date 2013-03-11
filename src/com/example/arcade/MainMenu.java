@@ -21,21 +21,23 @@ public class MainMenu extends State {
     TextButton highscoresButton;
     TextButton settingsButton;
 
+    Point displaySize;
+
 
     /**
      * Constructor
      */
     public MainMenu(Resources resouces) {
         DisplayMetrics displayMetrics = resouces.getDisplayMetrics();
-        Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
-        gamesButton = new TextButton(setRelativeMenuWidthPosition(displaySize), displaySize.y / 5, "Games");
-        highscoresButton = new TextButton(setRelativeMenuWidthPosition(displaySize), setRelativeMenuHeightPosition(1, gamesButton, displaySize), "Highscores");
-        settingsButton = new TextButton(setRelativeMenuWidthPosition(displaySize), setRelativeMenuHeightPosition(2, gamesButton, displaySize), "Settings");
+        displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        gamesButton = new TextButton(getWidthPosition(displaySize), displaySize.y / 5, "Games");
+        highscoresButton = new TextButton(getWidthPosition(displaySize), getHeightPosition(1, gamesButton, displaySize), "Highscores");
+        settingsButton = new TextButton(getWidthPosition(displaySize), getHeightPosition(2, gamesButton, displaySize), "Settings");
 
 
     }
 
-    private static int setRelativeMenuHeightPosition(int posistion, TextButton relativeTo, Point displaySize) {
+    public static int getHeightPosition(int posistion, TextButton relativeTo, Point displaySize) {
         float[] boxPoints = relativeTo.getBoundingBox().getPoints();
         float yPos = boxPoints[3] - boxPoints[1];
         yPos = 3 * yPos * posistion;
@@ -46,18 +48,18 @@ public class MainMenu extends State {
 
     }
 
-    private static int setRelativeMenuWidthPosition(Point displaySize) {
+    public static int getWidthPosition(Point displaySize) {
         return displaySize.x / 5;
     }
 
     @Override
     public void update(float dt) {
-        super.update(dt);    //To change body of overridden methods use File | Settings | File Templates.
+        super.update(dt);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas);    //To change body of overridden methods use File | Settings | File Templates.
+        super.draw(canvas);
         gamesButton.draw(canvas);
         highscoresButton.draw(canvas);
         settingsButton.draw(canvas);
@@ -68,6 +70,7 @@ public class MainMenu extends State {
     public boolean onTouchDown(MotionEvent event) {
         if (gamesButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Games button tapped.");
+            getGame().pushState(new GamesMenu(displaySize));
         } else if (highscoresButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Highscore button tapped.");
         } else if (settingsButton.getBoundingBox().contains(event.getX(), event.getY())) {
