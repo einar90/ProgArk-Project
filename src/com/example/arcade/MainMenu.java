@@ -6,6 +6,9 @@ import android.graphics.Point;
 import android.util.DisplayMetrics;
 import sheep.game.State;
 import sheep.gui.TextButton;
+import sheep.gui.Widget;
+import sheep.gui.WidgetAction;
+import sheep.gui.WidgetListener;
 
 /**
  * Created by:
@@ -13,7 +16,7 @@ import sheep.gui.TextButton;
  * Date: 11.03.13
  * Time: 12:03
  */
-public class MainMenu extends State {
+public class MainMenu extends State implements WidgetListener {
 
     TextButton gamesButton;
     TextButton highscoresButton;
@@ -29,6 +32,11 @@ public class MainMenu extends State {
         gamesButton = new TextButton(setRelativeMenuWidthPosition(displaySize), displaySize.y / 5, "Games");
         highscoresButton = new TextButton(setRelativeMenuWidthPosition(displaySize), setRelativeMenuHeightPosition(1, gamesButton, displaySize), "Highscores");
         settingsButton = new TextButton(setRelativeMenuWidthPosition(displaySize), setRelativeMenuHeightPosition(2, gamesButton, displaySize), "Settings");
+
+        gamesButton.addWidgetListener(this);
+        settingsButton.addWidgetListener(this);
+        highscoresButton.addWidgetListener(this);
+
 
     }
 
@@ -58,5 +66,12 @@ public class MainMenu extends State {
         gamesButton.draw(canvas);
         highscoresButton.draw(canvas);
         settingsButton.draw(canvas);
+    }
+
+    @Override
+    public void actionPerformed(WidgetAction action) {
+        Widget dummy = action.getSource();
+
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
