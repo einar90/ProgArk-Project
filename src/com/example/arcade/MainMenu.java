@@ -1,7 +1,11 @@
 package com.example.arcade;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Point;
+import android.util.DisplayMetrics;
 import sheep.game.State;
+import sheep.gui.TextButton;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,10 +16,17 @@ import sheep.game.State;
  */
 public class MainMenu extends State {
 
+    TextButton gamesButton;
+    TextButton highscoresButton;
+    TextButton settingsButton;
+
     /**
      * Constructor
      */
-    public MainMenu() {
+    public MainMenu(Resources resouces) {
+        DisplayMetrics displayMetrics = resouces.getDisplayMetrics();
+        Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        gamesButton = new TextButton(displaySize.x / 2, displaySize.y / 5, "Games");
 
     }
 
@@ -27,5 +38,6 @@ public class MainMenu extends State {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);    //To change body of overridden methods use File | Settings | File Templates.
+        gamesButton.draw(canvas);
     }
 }

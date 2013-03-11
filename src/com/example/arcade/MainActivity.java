@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
 
         Game game = new Game(this, null);
 
-        game.pushState(new MainMenu());
+        game.pushState(new MainMenu(game.getResources()));
 
         setContentView(game);
 
