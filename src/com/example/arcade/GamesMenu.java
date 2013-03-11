@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.util.Log;
+import android.view.MotionEvent;
 import sheep.game.State;
 import sheep.gui.TextButton;
 
@@ -38,5 +40,19 @@ public class GamesMenu extends State {
         coldWarIIButton.draw(canvas);
         battleShipButton.draw(canvas);
 
+    }
+
+    @Override
+    public boolean onTouchDown(MotionEvent event) {
+        if (tankWarsButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            Log.d("Tapped", "Tank Wars button tapped.");
+        } else if (wormsButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            Log.d("Tapped", "Worms button tapped.");
+        } else if (coldWarIIButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            Log.d("Tapped", "Cold War II button tapped.");
+        } else if (battleShipButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            Log.d("Tapped", "Battleship button tapped.");
+        }
+        return true;
     }
 }
