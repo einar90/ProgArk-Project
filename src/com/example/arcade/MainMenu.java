@@ -20,6 +20,7 @@ public class MainMenu extends State {
     TextButton highscoresButton;
     TextButton settingsButton;
 
+
     /**
      * Constructor
      */
@@ -27,6 +28,19 @@ public class MainMenu extends State {
         DisplayMetrics displayMetrics = resouces.getDisplayMetrics();
         Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
         gamesButton = new TextButton(displaySize.x / 2, displaySize.y / 5, "Games");
+        highscoresButton = new TextButton(displaySize.x / 2, setRelativeMenuPosition(1, gamesButton, displaySize), "Highscores");
+        settingsButton = new TextButton(displaySize.x / 2, setRelativeMenuPosition(2, gamesButton, displaySize), "Settings");
+
+    }
+
+    public static int setRelativeMenuPosition(int posistion, TextButton relativeTo, Point displaySize) {
+        float[] boxPoints = relativeTo.getBoundingBox().getPoints();
+        float yPos = boxPoints[3] - boxPoints[1];
+        yPos = 2 * yPos * posistion;
+        yPos += displaySize.y / 5;
+
+        return (int) yPos;
+
 
     }
 
@@ -39,5 +53,7 @@ public class MainMenu extends State {
     public void draw(Canvas canvas) {
         super.draw(canvas);    //To change body of overridden methods use File | Settings | File Templates.
         gamesButton.draw(canvas);
+        highscoresButton.draw(canvas);
+        settingsButton.draw(canvas);
     }
 }
