@@ -1,11 +1,16 @@
 package com.example.arcade.tankwars;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
+import com.example.arcade.R;
 import sheep.collision.Polygon;
+import sheep.game.Sprite;
 import sheep.game.State;
+import sheep.graphics.Image;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,14 +24,22 @@ public class UserInterface extends State implements MiniGame {
     Point displaySize;
     Polygon map;
 
+    /**
+     * Temp stuff
+     */
+    Sprite mapGround;
+
     public UserInterface(Point displaySize) {
         displaySize = displaySize;
-        map = (new Map(displaySize)).getMapPolygon();
+        mapGround = new Sprite(new Image(R.drawable.map_bottombox));
 
     }
 
 
     public void draw(Canvas canvas) {
+
+        canvas.drawPaint(new Paint(Color.BLUE));
+        mapGround.draw(canvas);
 
 
     }
