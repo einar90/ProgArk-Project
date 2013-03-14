@@ -3,6 +3,7 @@ package com.example.arcade.tankwars;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
@@ -39,14 +40,14 @@ public class UserInterface extends State implements MiniGame {
         mapGroundImage = new Image(R.drawable.map_bottombox);
         mapGround = new Sprite(mapGroundImage);
         float[] mapGroundSize = new float[]{mapGroundImage.getWidth() * scaling[0], mapGroundImage.getHeight() * scaling[1]};
-        mapGround.setPosition(mapGroundSize[0] / 2, displaySize.y - mapGroundSize[1] / 2);
         mapGround.setScale(scaling[0], scaling[1]);
+        mapGround.setPosition(mapGroundSize[0] / 2, displaySize.y);
 
         mapPoopImage = new Image(R.drawable.map_poop);
         mapPoop = new Sprite(mapPoopImage);
         float[] mapPoopSize = new float[]{mapPoopImage.getWidth() * scaling[0], mapPoopImage.getHeight() * scaling[1]};
-        mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapGroundSize[1]);
         mapPoop.setScale(scaling[0], scaling[1]);
+        mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapGroundSize[1] * 0.7f);
 
     }
 
@@ -54,7 +55,7 @@ public class UserInterface extends State implements MiniGame {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        canvas.drawColor(Color.BLUE);
+        canvas.drawColor(Color.CYAN);
         mapPoop.draw(canvas);
         mapGround.draw(canvas);
 
