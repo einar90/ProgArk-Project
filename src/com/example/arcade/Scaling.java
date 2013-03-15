@@ -5,6 +5,8 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -29,6 +31,14 @@ public class Scaling {
             displaySize.y / 800
     );
 
+
+    /**
+     * Method that returns an Image scaled for the display size, relative to a 1280x800 standard resolution
+     * (which ALL images should initially be created for)
+     *
+     * @param filename The name of the file (placed in the root of the 'assets' directory to scale.
+     * @return Returns the scaled image if successful, otherwise null.
+     */
     public Image getScaledImage(String filename) {
         AssetManager assetManager = Game.getInstance().getResources().getAssets();
         InputStream imageIn;
@@ -36,13 +46,13 @@ public class Scaling {
         try {
             imageIn = assetManager.open(filename, AssetManager.ACCESS_BUFFER);
             bitmapImage = BitmapFactory.decodeStream(imageIn);
+            Point originalSize = new Point(bitmapImage.getWidth(), bitmapImage.getHeight());
+            bitmapImage = Bitmap.createScaledBitmap(bitmapImage, originalSize.x * scalingFactor.x, originalSize.y * scalingFactor.y, true);
+            Drawable drawableImage = new BitmapDrawable(bitmapImage);
+            return new Image(drawableImage);
         } catch (IOException e) {
             Log.e("Error", "Could not open image " + filename);
         }
-
-        Point originalSize = new Point(bitmapImage.getWidth(), bitmapImage.getHeight());
-
-        bitmapImage = Bitmap.createScaledBitmap(bitmapImage, originalSize.x * scalingFactor.x, originalSize.y * scalingFactor.y);
-
+        return null;
     }
 }
