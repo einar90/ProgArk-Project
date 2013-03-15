@@ -1,10 +1,9 @@
 package com.example.arcade.tankwars;
 
-import android.graphics.Canvas;
+import android.graphics.Point;
 import com.example.arcade.Scaling;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
-import sheep.math.Vector2;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -19,28 +18,52 @@ import java.util.Map;
  */
 public class Tank extends Sprite {
 
-    private final Image tankImage1 = new Scaling().getScaledImage("tankbody1");
-    private final Image tankImage2 = new Scaling().getScaledImage("tankbody2");
+
+    private static final Image tankImage1 = new Scaling().getScaledImage("tankbody1");
+    private static final Image tankImage2 = new Scaling().getScaledImage("tankbody2");
+    private static final Tank tank1 = new Tank(tankImage1);
+    private static final Tank tank2 = new Tank(tankImage2);
+
     private int barrelAngle;
     private int power;
     private int hp;
     Projectile projectilePicked;
     private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
 
-    public Tank(Vector2 position, int playerNo) {
-
-        if (playerNo == 1) {
-            //Velg første bilde
-        } else {
-            //Velg andre bilde
-        }
-
-        this.setPosition(position);
+    public Tank(Image tankImage) {
+        super(tankImage);
         this.hp = 100;
         this.power = 0;
         this.barrelAngle = 0;
         this.projectileAmmo = setStartingAmmo(15, 1, 3);
 
+    }
+
+    public static Tank getTank1() {
+        return tank1;
+    }
+
+    public static Tank getTank2() {
+        return tank2;
+    }
+
+    public static void setInitialTankPositions(Point size) {
+        tank1.setPosition(size.x / 10, size.y / 3);
+        tank2.setPosition(size.x - size.x / 10, size.y / 3);
+        //Setter de litt i løse lufta foreløpig
+    }
+
+    public void reduceHp(int dmg) {
+        this.hp = this.hp - dmg;
+    }
+
+    public void reduceAmmo(String ammoName) {
+        this.projectileAmmo.put(ammoName, Integer.parseInt(this.projectileAmmo.get(ammoName).toString()) - 1);
+    }
+
+    public boolean checkAmmo(String ammoName) {
+        if (Integer.parseInt(this.projectileAmmo.get(ammoName).toString()) > 0) return true;
+        return false;
     }
 
     private static Dictionary setStartingAmmo(final int tankshells, final int nukes, final int thermites) {
@@ -53,12 +76,4 @@ public class Tank extends Sprite {
         return (Dictionary) map;
     }
 
-    public void draw(Canvas canvas) {
-
-
-    }
-
-    public void update(float dt) {
-
-    }
 }
