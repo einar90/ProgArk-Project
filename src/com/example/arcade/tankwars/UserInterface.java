@@ -6,6 +6,7 @@ import android.graphics.Point;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
+import com.example.arcade.Scaling;
 import sheep.collision.Polygon;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -36,16 +37,13 @@ public class UserInterface extends State implements MiniGame {
         this.displaySize = displaySize;
         this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
 
+        mapGroundImage = Scaling.getScaledImage("map_bottombox.png");
+        mapGround = new Sprite(mapGroundImage);
+        mapGround.setPosition(mapGroundImage.getWidth() / 2, displaySize.y);
 
-        float[] mapGroundSize = new float[]{mapGroundImage.getWidth() * scaling[0], mapGroundImage.getHeight() * scaling[1]};
-        mapGround.setScale(scaling[0], scaling[1]);
-        mapGround.setPosition(mapGroundSize[0] / 2, displaySize.y);
-
-        mapPoopImage = new Image(R.drawable.map_poop);
+        mapPoopImage = Scaling.getScaledImage("mountain_level1.png");
         mapPoop = new Sprite(mapPoopImage);
-        float[] mapPoopSize = new float[]{mapPoopImage.getWidth() * scaling[0], mapPoopImage.getHeight() * scaling[1]};
-        mapPoop.setScale(scaling[0], scaling[1]);
-        mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapGroundSize[1] * 0.7f);
+        mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapPoopImage.getHeight() / 2);
 
     }
 

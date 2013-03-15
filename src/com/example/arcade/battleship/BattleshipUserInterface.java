@@ -3,9 +3,11 @@ package com.example.arcade.battleship;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
+
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import com.example.arcade.Scaling;
+
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
