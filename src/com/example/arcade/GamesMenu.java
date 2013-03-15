@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.example.arcade.battleship.BattleshipUserInterface;
+import com.example.arcade.coldWarII.ColdWarGame;
 import com.example.arcade.tankwars.UserInterface;
 import sheep.game.State;
 import sheep.gui.TextButton;
@@ -54,6 +55,7 @@ public class GamesMenu extends State {
         } else if (wormsButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Worms button tapped.");
         } else if (coldWarIIButton.getBoundingBox().contains(event.getX(), event.getY())) {
+        	getGame().pushState(new ColdWarGame());
             Log.d("Tapped", "Cold War II button tapped.");
         } else if (battleShipButton.getBoundingBox().contains(event.getX(), event.getY())) {
             getGame().pushState(new BattleshipUserInterface(displaySize));

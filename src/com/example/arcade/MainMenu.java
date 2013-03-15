@@ -1,5 +1,7 @@
 package com.example.arcade;
 
+import com.example.arcade.utilities.Constants;
+
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -29,6 +31,8 @@ public class MainMenu extends State {
      */
     public MainMenu(Resources resouces) {
         DisplayMetrics displayMetrics = resouces.getDisplayMetrics();
+        Constants.WINDOW_HEIGHT = displayMetrics.heightPixels;
+        Constants.WINDOW_WIDTH = displayMetrics.widthPixels;
         displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
         gamesButton = new TextButton(getWidthPosition(displaySize), displaySize.y / 5, "Games");
         highscoresButton = new TextButton(getWidthPosition(displaySize), getHeightPosition(1, gamesButton, displaySize), "Highscores");
