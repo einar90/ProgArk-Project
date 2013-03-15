@@ -26,10 +26,10 @@ public class Scaling {
     private static DisplayMetrics displayMetrics = Game.getInstance().getResources().getDisplayMetrics();
     private static Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
 
-    private static Point scalingFactor = new Point(
-            displaySize.x / 1280,
-            displaySize.y / 800
-    );
+    private static double[] scalingFactor = new double[]{
+            displaySize.x / 1280.0,
+            displaySize.y / 800.0
+    };
 
 
     /**
@@ -47,7 +47,7 @@ public class Scaling {
             imageIn = assetManager.open(filename, AssetManager.ACCESS_BUFFER);
             bitmapImage = BitmapFactory.decodeStream(imageIn);
             Point originalSize = new Point(bitmapImage.getWidth(), bitmapImage.getHeight());
-            bitmapImage = Bitmap.createScaledBitmap(bitmapImage, originalSize.x * scalingFactor.x, originalSize.y * scalingFactor.y, true);
+            bitmapImage = Bitmap.createScaledBitmap(bitmapImage, (int) (originalSize.x * scalingFactor[0]), (int) (originalSize.y * scalingFactor[1]), true);
             Drawable drawableImage = new BitmapDrawable(bitmapImage);
             return new Image(drawableImage);
         } catch (IOException e) {
