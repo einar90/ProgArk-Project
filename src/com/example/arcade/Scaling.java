@@ -39,7 +39,7 @@ public class Scaling {
      * @param filename The name of the file (placed in the root of the 'assets' directory to scale.
      * @return Returns the scaled image if successful, otherwise null.
      */
-    public Image getScaledImage(String filename) {
+    public static Image getScaledImage(String filename) {
         AssetManager assetManager = Game.getInstance().getResources().getAssets();
         InputStream imageIn;
         Bitmap bitmapImage;
