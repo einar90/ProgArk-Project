@@ -25,23 +25,31 @@ public class ColdWarGame extends State implements MiniGame{
 	private int h,w;
 	private TextButton upsl, upsn, att, place;
 	private SnowUnitSprite iceball,ice;
-	private Sprite back;
+	private Sprite back,backfade;
 	private boolean menu;
-	private Image icb = new Image(R.drawable.ironball);
+	private Image icb = new Image(R.drawable.ball);
 	private Image bg = new Image(R.drawable.winter);
+	private Image bgfade = new Image(R.drawable.winterfade);
 	private float[] scaling;
+	private long eventTime;
 	
 	public ColdWarGame(){
 		h = Constants.WINDOW_HEIGHT;
 		w = Constants.WINDOW_WIDTH;
-		menu = true;
+		
         scaling = new float[]{w / bg.getWidth(), h / bg.getHeight()};
 		con = new SnowUnitSpriteContainer();
 		plOneCon = new SnowUnitSpriteContainer();
 		plTwoCon = new SnowUnitSpriteContainer();
-		back = new Sprite(bg);
+		
 		Log.d("ColdWarGame", "Start ColdWar, scale: "+scaling[0]+", "+scaling[1]+". Size: "+w+", "+h);
-		back.setPosition((h * scaling[0]) / 2, (w * scaling[0]) / 2);
+
+		back = new Sprite(bg);
+		backfade = new Sprite(bgfade);
+		back.setPosition(w, h);
+		back.setScale(scaling[0], scaling[1]);
+		backfade.setPosition(w,h);
+		backfade.setScale(scaling[0], scaling[1]);
 		addToContainer(back, con);
 		
 		ice = new SnowUnitSprite(icb);
@@ -51,27 +59,42 @@ public class ColdWarGame extends State implements MiniGame{
 		iceball = new SnowUnitSprite(icb);
 		iceball.setPosition(30, h - 10);
 		addToContainer(iceball, con);
+		menu = true;
+		initMenu();
 	}
 	@Override
     public void update(float dt) {
-		ArrayList<Sprite> sprites = con.getSprites();
-		for(Sprite s:sprites){
-			s.update(dt);
+		if(!menu){
+			ArrayList<Sprite> sprites = con.getSprites();
+			for(Sprite s:sprites){
+				s.update(dt);
+			}
+			
+			if(ice.collides(iceball) || iceball.collides(ice)){
+				Log.d("Collision!", "ice collided with iceball");
+				ice.die();
+				iceball.die();
+			}
+			
 		}
-        
-        if(ice.collides(iceball) || iceball.collides(ice)){
-        	Log.d("Collision!", "ice collided with iceball");
-        	ice.die();
-        	iceball.die();
-        }
+		else{
+			backfade.update(dt);
+		}
     }
 
     @Override
     public void draw(Canvas canvas) {
     	if(canvas != null){
-    		ArrayList<Sprite> sprites = con.getSprites();
-    		for(Sprite s:sprites){
-    			s.draw(canvas);
+    		if(!menu){
+    			ArrayList<Sprite> sprites = con.getSprites();
+    			for(Sprite s:sprites){
+    				s.draw(canvas);
+    			}
+    			Log.d("Scale", "BACKGROUND scale:"+back.getPosition().getX()+", "+back.getPosition().getY());
+    			
+    		}
+    		else{
+    			drawMenu(canvas);
     		}
     	}
     }
@@ -81,14 +104,32 @@ public class ColdWarGame extends State implements MiniGame{
     }
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		if(upsn.getBoundingBox().contains(event.getX(), event.getY())){
-			
-		}
-		if(!menu){
+		long time = event.getEventTime();
+		
+		if(!menu && (time - eventTime) > 500){
 			iceball.setSpeed(200, -250);
-			iceball.setAcceleration(0, (float) 98.1);
+			iceball.setAcceleration(0, (float) 118.1);
 			ice.setSpeed(-200, -250);
-			ice.setAcceleration(0, (float) 98.1);			
+			ice.setAcceleration(0, (float) 118.1);	
+			menu = true;
+			eventTime = time;
+		}else{
+			if(upsn.getBoundingBox().contains(event.getX(), event.getY())){
+				menu = false;
+				eventTime = time;
+			}
+			if(place.getBoundingBox().contains(event.getX(), event.getY())){
+				menu = false;
+				eventTime = time;
+			}
+			if(att.getBoundingBox().contains(event.getX(), event.getY())){
+				menu = false;
+				eventTime = time;
+			}
+			if(upsl.getBoundingBox().contains(event.getX(), event.getY())){
+				menu = false;
+				eventTime = time;
+			}
 		}
 		return false;
 	}
@@ -107,9 +148,21 @@ public class ColdWarGame extends State implements MiniGame{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	private void displayMenu(){
-		upsn = new TextButton(w / 2, h /2 , "Upgrade Snow Machine");
-		place = new TextButton(w / 2, h /2 , "Place Snow");
+	private void initMenu(){
+		upsl = new TextButton(w / 2, h /2 - 120 , "Upgrade Snow Machine");
+		upsn = new TextButton(w / 2, h /2 - 90, "Upgrade Snow Machine");
+		place = new TextButton(w / 2, h /2 - 60, "Place Snow");
+		att = new TextButton(w / 2, h /2 - 30, "Attack");
+	}
+	private void drawMenu(Canvas c){
+		backfade.draw(c);
+		Log.d("Scale", "backfade scale:"+backfade.getPosition().getX()+", "+backfade.getPosition().getY());
+		upsl.draw(c);
+		upsn.draw(c);
+		place.draw(c);
+		att.draw(c);
+	}
+	private void drawAttackMenu(){
 		
 	}
 }
