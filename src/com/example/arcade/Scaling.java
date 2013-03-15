@@ -46,9 +46,12 @@ public class Scaling {
         try {
             imageIn = assetManager.open(filename, AssetManager.ACCESS_BUFFER);
             bitmapImage = BitmapFactory.decodeStream(imageIn);
-            Point originalSize = new Point(bitmapImage.getWidth(), bitmapImage.getHeight());
-            bitmapImage = Bitmap.createScaledBitmap(bitmapImage, (int) (originalSize.x * scalingFactor[0]), (int) (originalSize.y * scalingFactor[1]), true);
+            Point scaledImageSize = new Point((int) ((double) (bitmapImage.getWidth() * scalingFactor[0])), (int) ((double) bitmapImage.getHeight() * scalingFactor[1]));
+            bitmapImage = Bitmap.createScaledBitmap(bitmapImage, scaledImageSize.x, scaledImageSize.y, true);
             Drawable drawableImage = new BitmapDrawable(bitmapImage);
+
+            Log.d("Value", "Scaled image size in Scaling: " + drawableImage.getIntrinsicWidth() + ", " + drawableImage.getIntrinsicHeight() + "\n\n");
+
             return new Image(drawableImage);
         } catch (IOException e) {
             Log.e("Error", "Could not open image " + filename);
