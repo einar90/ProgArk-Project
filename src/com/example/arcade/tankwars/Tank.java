@@ -77,6 +77,11 @@ public class Tank extends Sprite {
         this.hp = this.hp - dmg;
     }
 
+    public boolean isTankDead() {
+        if (this.hp < 0) return true;
+        return false;
+    }
+
     public void reduceAmmo(String ammoName) {
         this.projectileAmmo.put(ammoName, Integer.parseInt(this.projectileAmmo.get(ammoName).toString()) - 1);
     }
