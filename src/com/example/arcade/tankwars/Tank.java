@@ -1,7 +1,9 @@
 package com.example.arcade.tankwars;
 
 import android.graphics.Canvas;
+import com.example.arcade.R;
 import sheep.game.Sprite;
+import sheep.graphics.Image;
 import sheep.math.Vector2;
 
 import java.util.Dictionary;
@@ -17,7 +19,8 @@ import java.util.Map;
  */
 public class Tank extends Sprite {
 
-
+    private final Image tankImage1 = new Image(R.drawable.tankbody1);
+    private final Image tankImage2 = new Image(R.drawable.tankbody2);
     private int barrelAngle;
     private int power;
     private int hp;
@@ -25,7 +28,14 @@ public class Tank extends Sprite {
     Projectile projectilePicked;
     private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
 
-    public Tank(Vector2 position) {
+    public Tank(Vector2 position, int playerNo) {
+
+        if (playerNo == 1) {
+            //Velg første bilde
+        } else {
+            //Velg andre bilde
+        }
+
         this.position = position;
         this.hp = 100;
         this.power = 0;

@@ -3,7 +3,6 @@ package com.example.arcade.tankwars;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
@@ -37,8 +36,7 @@ public class UserInterface extends State implements MiniGame {
         this.displaySize = displaySize;
         this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
 
-        mapGroundImage = new Image(R.drawable.map_bottombox);
-        mapGround = new Sprite(mapGroundImage);
+
         float[] mapGroundSize = new float[]{mapGroundImage.getWidth() * scaling[0], mapGroundImage.getHeight() * scaling[1]};
         mapGround.setScale(scaling[0], scaling[1]);
         mapGround.setPosition(mapGroundSize[0] / 2, displaySize.y);
