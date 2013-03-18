@@ -97,6 +97,8 @@ public class Tank extends Sprite {
 
     public static void setInitalBarrelPositions(Point size) {
         Log.d("Tank", "Setting positions for both barrels");
+        tankBarrel1.setPosition(size.x / 10, size.y / 3);
+        tankBarrel2.setPosition(size.x - size.x / 10, size.y / 3);
         //sett posisjonen til barrels riktig i forhold til tanksene.
     }
 
