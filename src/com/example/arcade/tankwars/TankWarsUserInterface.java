@@ -38,8 +38,6 @@ public class TankWarsUserInterface extends State implements MiniGame {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        canvas.drawColor(Color.CYAN);
-
         map.drawMap(canvas);
         tanky.draw(canvas);
     }

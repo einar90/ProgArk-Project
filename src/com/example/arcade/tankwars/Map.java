@@ -2,6 +2,7 @@ package com.example.arcade.tankwars;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import com.example.arcade.Game;
 import com.example.arcade.R;
@@ -43,6 +44,7 @@ public class Map {
 
 
     public void drawMap(Canvas canvas) {
+        canvas.drawColor(Color.CYAN);
         mapGround.draw(canvas);
         mountainLevel1.draw(canvas);
         mountainLevel2.draw(canvas);
