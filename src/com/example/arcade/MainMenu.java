@@ -1,15 +1,16 @@
 package com.example.arcade;
 
+import android.graphics.*;
+import com.example.arcade.tankwars.Map;
 import com.example.arcade.utilities.Constants;
 
 import android.content.res.Resources;
-import android.graphics.Canvas;
-import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
+import sheep.graphics.Font;
 import sheep.graphics.Image;
 
 /**

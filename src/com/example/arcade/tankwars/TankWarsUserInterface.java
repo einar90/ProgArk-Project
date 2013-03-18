@@ -2,7 +2,9 @@ package com.example.arcade.tankwars;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.util.Log;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
@@ -10,6 +12,7 @@ import sheep.collision.CollisionLayer;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.game.State;
+import sheep.graphics.Font;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,9 +23,10 @@ import sheep.game.State;
  */
 public class TankWarsUserInterface extends State implements MiniGame, CollisionListener {
 
-    Point displaySize;
 
     CollisionLayer collisionLayer = new CollisionLayer();
+
+    private static final Font font = new Font(64, 64, 64, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
 
     Map map;
     Tank playerOneTank, playerTwoTank;
@@ -45,6 +49,8 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         map.drawMap(canvas);
 
         drawSprites(canvas);
+
+        canvas.drawText(Map.getWindString(), 20, 50, font);
 
     }
 
