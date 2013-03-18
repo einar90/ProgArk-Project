@@ -1,3 +1,4 @@
+
 package com.example.arcade.coldWarII;
 
 import java.util.ArrayList;
@@ -21,13 +22,13 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
-public class ColdWarGame extends State implements MiniGame,CollisionListener{
+public class ColdWarGame extends State implements MiniGame{
 	private SnowUnitSpriteContainer con,plOneCon,plTwoCon;
 	private int h,w;
 	private TextButton upsl, upsn, att, place;
 	private SnowUnitSprite iceball,ice;
 	private Sprite back,backfade,lGrid,rGrid;
-	private boolean menu,placing;
+	private ColdWarModel model;
 	private Image icb = new Image(R.drawable.ball);
 	private Image bg = new Image(R.drawable.winter);
 	private Image bgfade = new Image(R.drawable.winterfade);
@@ -44,6 +45,7 @@ public class ColdWarGame extends State implements MiniGame,CollisionListener{
 		con = new SnowUnitSpriteContainer();
 		plOneCon = new SnowUnitSpriteContainer();
 		plTwoCon = new SnowUnitSpriteContainer();
+		model = new ColdWarModel(plOneCon,plTwoCon);
 		
 		back = new Sprite(bg);
 		back.setPosition(w, h);
@@ -67,16 +69,15 @@ public class ColdWarGame extends State implements MiniGame,CollisionListener{
 		
 		iceball = new SnowUnitSprite(icb);
 		iceball.setPosition(30, h - 10);
-		iceball.addCollisionListener(this);
-		ice.addCollisionListener(this);
+		iceball.addCollisionListener(model);
+		ice.addCollisionListener(model);
 		addToContainer(iceball, con);
-		menu = true;
-		placing = false;
 		initMenu();
+		Log.d("Size", "Size: "+w+", "+h+". Scale: "+scaling[0]+", "+scaling[1]);
 	}
 	@Override
     public void update(float dt) {
-		if(!menu && !placing){
+		if(!model.isMenu() && !model.isPlacing()){
 			ArrayList<Sprite> sprites = con.getSprites();
 			for(Sprite s:sprites){
 				s.update(dt);
@@ -87,9 +88,13 @@ public class ColdWarGame extends State implements MiniGame,CollisionListener{
 		}
 		else{
 			backfade.update(dt);
-			if(placing){
-				rGrid.update(dt);
-				lGrid.update(dt);
+			if(model.isPlacing()){
+				if(model.isPlayerOne()){
+					lGrid.update(dt);					
+				}
+				else{
+					rGrid.update(dt);					
+				}
 			}
 		}
     }
@@ -97,7 +102,7 @@ public class ColdWarGame extends State implements MiniGame,CollisionListener{
     @Override
     public void draw(Canvas canvas) {
     	if(canvas != null){
-    		if(!menu){
+    		if(!model.isMenu()){
     			ArrayList<Sprite> sprites = con.getSprites();
     			for(Sprite s:sprites){
     				s.draw(canvas);
@@ -106,10 +111,14 @@ public class ColdWarGame extends State implements MiniGame,CollisionListener{
     		}
     		else{
     			drawMenu(canvas);
-    			if(placing){
+    			if(model.isPlacing()){
     				backfade.draw(canvas);
-    				rGrid.draw(canvas);
-    				lGrid.draw(canvas);
+    				if(model.isPlayerOne()){
+    					lGrid.draw(canvas);					
+    				}
+    				else{
+    					rGrid.draw(canvas);					
+    				}
     			}
     		}
     	}
@@ -121,39 +130,39 @@ public class ColdWarGame extends State implements MiniGame,CollisionListener{
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
 		long time = event.getEventTime();
-		if(rGrid.getBoundingBox().contains(event.getX(), event.getY()) && placing){
-			placing = false;
-			menu = false;
+		if(rGrid.getBoundingBox().contains(event.getX(), event.getY()) && model.isPlacing()){
+			model.reversePlacing();
+			model.reverseMenu();
 			eventTime = time;
-		}if(lGrid.getBoundingBox().contains(event.getX(), event.getY()) && placing){
-			placing = false;
-			menu = false;
+		}if(lGrid.getBoundingBox().contains(event.getX(), event.getY()) && model.isPlacing()){
+			model.reversePlacing();
+			model.reverseMenu();
 			eventTime = time;
 		}
-		if(!menu && (time - eventTime) > 500){
+		if(!model.isMenu() && (time - eventTime) > 500){
 			iceball.setSpeed(200, -250);
 			iceball.setAcceleration(0, (float) 118.1);
 			ice.setSpeed(-200, -250);
 			ice.setAcceleration(0, (float) 118.1);	
-			menu = true;
+			model.reverseMenu();
 			eventTime = time;
 		}else{
 			if(upsn.getBoundingBox().contains(event.getX(), event.getY())){
-				menu = false;
+				model.reverseMenu();
 				eventTime = time;
 			}
 			if(place.getBoundingBox().contains(event.getX(), event.getY())){
-				placing = true;
+				model.reversePlacing();
 				Log.d("Scale", "grids:"+lGrid.getPosition().getX()+", "+lGrid.getPosition().getY());
 				Log.d("Scale", "grids:"+rGrid.getPosition().getX()+", "+rGrid.getPosition().getY());
 				eventTime = time;
 			}
 			if(att.getBoundingBox().contains(event.getX(), event.getY())){
-				menu = false;
+				model.reverseMenu();
 				eventTime = time;
 			}
 			if(upsl.getBoundingBox().contains(event.getX(), event.getY())){
-				menu = false;
+				model.reverseMenu();
 				eventTime = time;
 			}
 		}
@@ -190,16 +199,5 @@ public class ColdWarGame extends State implements MiniGame,CollisionListener{
 	}
 	private void drawAttackMenu(){
 		
-	}
-	@Override
-	public void collided(Sprite a, Sprite b) {
-		Log.d("Collision!", ""+a.toString()+" collided with "+b.toString());
-		if(a == iceball || b == iceball){
-			if(a == ice || b == ice){
-				ice.die();
-				iceball.die();
-				
-			}
-		}
 	}
 }
