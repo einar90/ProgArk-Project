@@ -4,8 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.Log;
 import com.example.arcade.Game;
+import com.example.arcade.GraphicsHelper;
 import com.example.arcade.R;
-import com.example.arcade.Scaling;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -21,15 +21,16 @@ public class Tank extends Sprite {
     private static final Resources resources = Game.getInstance().getResources();
 
     //Tank
-    private static final Image tankImage1 = Scaling.getScaledImage(resources, R.drawable.tankbody1);
-    private static final Image tankImage2 = Scaling.getScaledImage(resources, R.drawable.tankbody2);
+    private static final Image tankImage1 = GraphicsHelper.getScaledImage(resources, R.drawable.tankbody1);
+    private static final Image tankImage2 = GraphicsHelper.getFlippedScaledImage(resources, R.drawable.tankbody2);
     private static Tank tank1 = new Tank(tankImage1);
     private static Tank tank2 = new Tank(tankImage2);
 
     //TankBarrel
-    private static final Image tankBarrelImage = Scaling.getScaledImage(resources, R.drawable.tankbarrel);
+    private static final Image tankBarrelImage = GraphicsHelper.getScaledImage(resources, R.drawable.tankbarrel);
+    private static final Image tankBarrelImageFlipped = GraphicsHelper.getFlippedScaledImage(resources, R.drawable.tankbarrel);
     private static Sprite tankBarrel1 = new Sprite(tankBarrelImage);
-    private static Sprite tankBarrel2 = new Sprite(tankBarrelImage);
+    private static Sprite tankBarrel2 = new Sprite(tankBarrelImageFlipped);
 
     //Extra stuff for Tank to hold
     private int barrelAngle;
@@ -91,14 +92,13 @@ public class Tank extends Sprite {
         Log.d("Tank", "Setting positions for both tanks");
         tank1.setPosition(size.x / 10, size.y / 3);
         tank2.setPosition(size.x - size.x / 10, size.y / 3);
-        //Setter de litt i løse lufta foreløpig
         setInitalBarrelPositions(size);
     }
 
     public static void setInitalBarrelPositions(Point size) {
         Log.d("Tank", "Setting positions for both barrels");
-        tankBarrel1.setPosition(size.x / 10, size.y / 3);
-        tankBarrel2.setPosition(size.x - size.x / 10, size.y / 3);
+        tankBarrel1.setPosition(size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2);
+        tankBarrel2.setPosition(size.x - size.x / 10 - tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage2.getHeight() / 2);
         //sett posisjonen til barrels riktig i forhold til tanksene.
     }
 
@@ -113,17 +113,31 @@ public class Tank extends Sprite {
         return false;
     }
 
+    public static void flipTank() {
+        Log.d("Ori", "Tank1 ori:  " + tank1.getOrientation());
+
+
+    }
+
     public static void setStartSpeed() {
         tank1.setYSpeed(50);
-        tankBarrel1.setYSpeed(50);
-        tankBarrel2.setYSpeed(50);
+        tank2.setYSpeed(50);
+        tankBarrel1.setYSpeed(100);
+        tankBarrel2.setYSpeed(100);
     }
 
     public static void stopStartSpeed() {
+        Log.d("Speed", "Tank1 speed is: " + tank1.getSpeed().toString());
+        Log.d("Speed", "Tank2 speed is: " + tank2.getSpeed().toString());
+        Log.d("Speed", "Tankbarrel1 speed is: " + tankBarrel1.getSpeed().toString());
         tank1.setYSpeed(0);
         tank2.setYSpeed(0);
         getTankBarrel1().setYSpeed(0);
         getTankBarrel2().setYSpeed(0);
+
+        //Avoid future collisions
+        tank1.setPosition(tank1.getPosition().getX(), tank1.getPosition().getY() - 1);
+        tank2.setPosition(tank2.getPosition().getX(), tank2.getPosition().getY() - 1);
     }
      /*
     public void reduceAmmo(String ammoName) {

@@ -1,12 +1,11 @@
 package com.example.arcade;
 
-import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import sheep.graphics.Image;
@@ -20,7 +19,7 @@ import java.io.InputStream;
  * Date: 15.03.13
  * Time: 11:19
  */
-public class Scaling {
+public class GraphicsHelper {
     private static DisplayMetrics displayMetrics = Game.getInstance().getResources().getDisplayMetrics();
     private static Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
 
@@ -41,21 +40,39 @@ public class Scaling {
     public static Image getScaledImage(Resources res, int id) {
         Image scaledImage = null;
         try {
-            Log.d("Value", "Scaling factor: " + scalingFactor[0] + ", " + scalingFactor[1]);
             Bitmap unscaledBitmap = BitmapFactory.decodeResource(res, id);
-            Log.d("Value", "Original size: " + unscaledBitmap.getWidth() + ", " + unscaledBitmap.getHeight());
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (unscaledBitmap.getWidth() * scalingFactor[0]), (int) (unscaledBitmap.getHeight() * scalingFactor[1]), true);
-            Log.d("Value", "Scaled size: " + scaledBitmap.getWidth() + ", " + scaledBitmap.getHeight());
-            Log.d("Value", "Calculated scale: " + (int) (unscaledBitmap.getWidth() * scalingFactor[0]) + ", " + (int) (unscaledBitmap.getHeight() * scalingFactor[1]));
             BitmapDrawable scaledDrawable = new BitmapDrawable(res, scaledBitmap);
             scaledDrawable.setTargetDensity(res.getDisplayMetrics().densityDpi);
-            Log.d("Value", "Scaled drawable size: " + scaledDrawable.getIntrinsicWidth() + ", " + scaledDrawable.getIntrinsicHeight());
             scaledImage = new Image(scaledDrawable);
         } catch (Exception e) {
             Log.e("MyClass", "Could not open image " + id, e);
         }
 
-//TODO: calculate width and height to fill or fit screen
+        return scaledImage;
+    }
+
+    public static Image getFlippedScaledImage(Resources res, int id) {
+        Image scaledImage = null;
+        try {
+            // Getting the bitmap
+            Bitmap unscaledBitmap = BitmapFactory.decodeResource(res, id);
+
+            // Scaling the bitmap
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (unscaledBitmap.getWidth() * scalingFactor[0]), (int) (unscaledBitmap.getHeight() * scalingFactor[1]), true);
+
+            //Rotating the bitmap
+            Matrix m = new Matrix();
+            m.preScale(-1, 1);
+            Bitmap scaledFlippedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), m, false);
+
+            // Creating the end-image via BitmapDrawable
+            BitmapDrawable scaledFlippedDrawable = new BitmapDrawable(res, scaledFlippedBitmap);
+            scaledFlippedDrawable.setTargetDensity(res.getDisplayMetrics().densityDpi);
+            scaledImage = new Image(scaledFlippedDrawable);
+        } catch (Exception e) {
+            Log.e("MyClass", "Could not open image " + id, e);
+        }
 
         return scaledImage;
     }

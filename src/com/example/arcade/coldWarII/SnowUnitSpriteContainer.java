@@ -27,4 +27,8 @@ public class SnowUnitSpriteContainer implements SpriteContainer {
     public ArrayList<Sprite> getSprites() {
         return sprites;
     }
+
+    public boolean contains(SnowUnitSprite s) {
+        return sprites.contains(s);
+    }
 }
