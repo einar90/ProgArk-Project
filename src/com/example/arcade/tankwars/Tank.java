@@ -112,6 +112,12 @@ public class Tank extends Sprite {
         return false;
     }
 
+    public static void flipTank() {
+        Log.d("Ori", "Tank1 ori:  " + tank1.getOrientation());
+
+
+    }
+
     public static void setStartSpeed() {
         tank1.setYSpeed(50);
         tank2.setYSpeed(50);
