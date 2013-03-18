@@ -112,6 +112,11 @@ public class Tank extends Sprite {
         if (this.hp < 0) return true;
         return false;
     }
+
+    public static void setStartSpeed() {
+        tank1.setSpeed(0, 50);
+        tank2.setSpeed(0, 50);
+    }
      /*
     public void reduceAmmo(String ammoName) {
         Log.d("Tank", "Reducing ammo of: " + ammoName);

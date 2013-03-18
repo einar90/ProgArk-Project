@@ -54,6 +54,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         playerOneTank = Tank.getTank1();
         playerTwoTank = Tank.getTank2();
         Tank.setInitialTankPositions(new Point(displaySize.x, 100));
+        Tank.setStartSpeed();
 
     }
 
