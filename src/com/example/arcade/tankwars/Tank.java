@@ -4,8 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.Log;
 import com.example.arcade.Game;
-import com.example.arcade.R;
 import com.example.arcade.GraphicsHelper;
+import com.example.arcade.R;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -22,14 +22,15 @@ public class Tank extends Sprite {
 
     //Tank
     private static final Image tankImage1 = GraphicsHelper.getScaledImage(resources, R.drawable.tankbody1);
-    private static final Image tankImage2 = GraphicsHelper.getScaledImage(resources, R.drawable.tankbody2);
+    private static final Image tankImage2 = GraphicsHelper.getFlippedScaledImage(resources, R.drawable.tankbody2);
     private static Tank tank1 = new Tank(tankImage1);
     private static Tank tank2 = new Tank(tankImage2);
 
     //TankBarrel
     private static final Image tankBarrelImage = GraphicsHelper.getScaledImage(resources, R.drawable.tankbarrel);
+    private static final Image tankBarrelImageFlipped = GraphicsHelper.getFlippedScaledImage(resources, R.drawable.tankbarrel);
     private static Sprite tankBarrel1 = new Sprite(tankBarrelImage);
-    private static Sprite tankBarrel2 = new Sprite(tankBarrelImage);
+    private static Sprite tankBarrel2 = new Sprite(tankBarrelImageFlipped);
 
     //Extra stuff for Tank to hold
     private int barrelAngle;
@@ -97,7 +98,7 @@ public class Tank extends Sprite {
     public static void setInitalBarrelPositions(Point size) {
         Log.d("Tank", "Setting positions for both barrels");
         tankBarrel1.setPosition(size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2);
-        tankBarrel2.setPosition(size.x - size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage2.getHeight() / 2);
+        tankBarrel2.setPosition(size.x - size.x / 10 - tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage2.getHeight() / 2);
         //sett posisjonen til barrels riktig i forhold til tanksene.
     }
 
