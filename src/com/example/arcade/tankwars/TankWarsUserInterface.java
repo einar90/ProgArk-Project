@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
+import sheep.collision.CollisionLayer;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -19,6 +20,8 @@ import sheep.game.State;
 public class TankWarsUserInterface extends State implements MiniGame, CollisionListener {
 
     Point displaySize;
+
+    CollisionLayer collisionLayer;
 
     Map map;
     Tank playerOneTank, playerTwoTank;
@@ -70,8 +73,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private void addSpritesToCollisionLayer() {
         playerOneTank.addCollisionListener(this);
         playerTwoTank.addCollisionListener(this);
-
-
+        Map.addToCollisionLayer(collisionLayer);
     }
 
     private void drawSprites(Canvas canvas) {

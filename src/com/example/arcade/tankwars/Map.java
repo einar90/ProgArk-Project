@@ -7,8 +7,11 @@ import android.graphics.Point;
 import com.example.arcade.Game;
 import com.example.arcade.R;
 import com.example.arcade.Scaling;
+import sheep.collision.CollisionLayer;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
+
+import java.util.ArrayList;
 
 /**
  * Created by:
@@ -60,6 +63,24 @@ public class Map {
         mountainLevel3.update(dt);
         mountainLevel4.update(dt);
 
+    }
+
+    public static void addToCollisionLayer(CollisionLayer collisionLayer) {
+        collisionLayer.addSprite(mapGround);
+        collisionLayer.addSprite(mountainLevel1);
+        collisionLayer.addSprite(mountainLevel2);
+        collisionLayer.addSprite(mountainLevel3);
+        collisionLayer.addSprite(mountainLevel4);
+    }
+
+    public static ArrayList<Sprite> getMapSprites() {
+        ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+        sprites.add(mapGround);
+        sprites.add(mountainLevel1);
+        sprites.add(mountainLevel2);
+        sprites.add(mountainLevel3);
+        sprites.add(mountainLevel4);
+        return sprites;
     }
 
 
