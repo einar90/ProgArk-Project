@@ -44,7 +44,7 @@ public class Scaling {
      */
     public static Image getScaledImage(Drawable original) {
         try {
-            Drawable scaledImage = new ScaleDrawable(original, Gravity.CENTER, scalingFactor[0], scalingFactor[1]);
+            Drawable scaledImage = new ScaleDrawable(original, Gravity.START, scalingFactor[0], scalingFactor[1]);
             Log.d("Value", "Scaled image size in Scaling: " + scaledImage.getIntrinsicWidth() + ", " + scaledImage.getIntrinsicHeight() + "\n\n");
             return new Image(scaledImage);
         } catch (Exception e) {

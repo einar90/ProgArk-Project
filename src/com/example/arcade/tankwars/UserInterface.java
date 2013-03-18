@@ -41,7 +41,7 @@ public class UserInterface extends State implements MiniGame {
 
         mapGroundImage = Scaling.getScaledImage(resources.getDrawable(R.drawable.map_bottombox));
         mapGround = new Sprite(mapGroundImage);
-        mapGround.setPosition(mapGroundImage.getWidth(), displaySize.y);
+        mapGround.setPosition(300, 300);
 
         mapPoopImage = Scaling.getScaledImage(resources.getDrawable(R.drawable.mountain_level1));
         mapPoop = new Sprite(mapPoopImage);
