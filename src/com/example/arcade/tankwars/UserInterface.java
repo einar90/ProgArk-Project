@@ -23,31 +23,13 @@ import sheep.graphics.Image;
 public class UserInterface extends State implements MiniGame {
 
     Point displaySize;
-    Polygon map;
 
-    /**
-     * Temp stuff
-     */
-    Image mapGroundImage;
-    Image mapPoopImage;
-    Sprite mapGround;
-    Sprite mapPoop;
-    float[] scaling;
-
+    Map map;
     Tank tanky;
 
     public UserInterface(Point displaySize, Resources resources) {
-        this.displaySize = displaySize;
-        this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
 
-        mapGroundImage = Scaling.getScaledImage(resources, R.drawable.map_bottombox);
-        mapGround = new Sprite(mapGroundImage);
-        mapGround.setPosition(mapGroundImage.getWidth() / 2, displaySize.y - mapGroundImage.getHeight() / 2);
-
-        mapPoopImage = Scaling.getScaledImage(resources, R.drawable.mountain_level1);
-        mapPoop = new Sprite(mapPoopImage);
-        mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapPoopImage.getHeight() / 2);
-
+        map = new Map();
         tanky = Tank.getTank1();
         Tank.setInitialTankPositions(displaySize);
     }
@@ -57,17 +39,15 @@ public class UserInterface extends State implements MiniGame {
         super.draw(canvas);
 
         canvas.drawColor(Color.CYAN);
-        mapPoop.draw(canvas);
-        mapGround.draw(canvas);
 
+        map.drawMap(canvas);
         tanky.draw(canvas);
     }
 
     public void update(float dt) {
+        super.update(dt);
 
-        mapGround.update(dt);
-        mapPoop.update(dt);
-
+        map.updateMap(dt);
         tanky.update(dt);
     }
 
