@@ -6,6 +6,7 @@ import android.graphics.Point;
 
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
+import com.example.arcade.R;
 import com.example.arcade.Scaling;
 
 import sheep.game.Sprite;
@@ -23,7 +24,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
      */
     public BattleshipUserInterface(Point displaySize) {
         this.displaySize = displaySize;
-        battleshipXImage = Scaling.getScaledImage("battleshipX.png");
+        battleshipXImage = Scaling.getScaledImage(getGame().getResources().getDrawable(R.drawable.battleshipX));
         battleshipX = new Sprite(battleshipXImage);
     }
 

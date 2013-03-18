@@ -1,6 +1,9 @@
 package com.example.arcade.tankwars;
 
+import android.content.res.Resources;
 import android.graphics.Point;
+import com.example.arcade.Game;
+import com.example.arcade.R;
 import com.example.arcade.Scaling;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
@@ -14,7 +17,8 @@ import sheep.graphics.Image;
 public class Map extends Sprite {
 
     private Point displaySize;
-    private static final Image mapGroundImage = new Scaling().getScaledImage("map_bottombox");
+    private static Resources resources = Game.getInstance().getResources();
+    private static final Image mapGroundImage = new Scaling().getScaledImage(resources.getDrawable(R.drawable.map_bottombox));
 
     //Get scaling array
 
