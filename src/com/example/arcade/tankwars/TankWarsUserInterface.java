@@ -2,6 +2,7 @@ package com.example.arcade.tankwars;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.util.Log;
 import com.example.arcade.HighscoreList;
@@ -93,6 +94,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         Tank.getTankBarrel2().draw(canvas);
         Tank.getTankBarrel1().draw(canvas);
         playerOneTank.draw(canvas);
+
+        //Forsøk på å flippe tank nr 2
+        Matrix m = new Matrix();
+        m.setScale(-1, 1);
         playerTwoTank.draw(canvas);
 
 
@@ -119,6 +124,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         if (a.getClass() == Tank.class) {
             if (b.getClass() == Sprite.class) {    //Denne er rævva
                 Tank.stopStartSpeed();
+                Tank.flipTank();
 
             }
         }
