@@ -1,5 +1,6 @@
 package com.example.arcade.battleship;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -15,6 +16,7 @@ import sheep.graphics.Image;
 
 
 public class BattleshipUserInterface extends State implements MiniGame {
+    Resources resources = getGame().getResources();
     Point displaySize;
     Image battleshipXImage, battleshipYImage;
     Sprite battleshipX, battleshipY;
@@ -24,7 +26,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
      */
     public BattleshipUserInterface(Point displaySize) {
         this.displaySize = displaySize;
-        battleshipXImage = Scaling.getScaledImage(getGame().getResources().getDrawable(R.drawable.battleshipx));
+        battleshipXImage = Scaling.getScaledImage(resources, R.drawable.battleshipx);
         battleshipX = new Sprite(battleshipXImage);
     }
 

@@ -39,11 +39,11 @@ public class UserInterface extends State implements MiniGame {
         this.displaySize = displaySize;
         this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
 
-        mapGroundImage = Scaling.getScaledImage(resources.getDrawable(R.drawable.map_bottombox));
+        mapGroundImage = Scaling.getScaledImage(resources, R.drawable.map_bottombox);
         mapGround = new Sprite(mapGroundImage);
         mapGround.setPosition(300, 300);
 
-        mapPoopImage = Scaling.getScaledImage(resources.getDrawable(R.drawable.mountain_level1));
+        mapPoopImage = Scaling.getScaledImage(resources, R.drawable.mountain_level1);
         mapPoop = new Sprite(mapPoopImage);
         mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapPoopImage.getHeight() / 2);
 

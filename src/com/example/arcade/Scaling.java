@@ -1,6 +1,5 @@
 package com.example.arcade;
 
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -8,12 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.WindowManager;
 import sheep.graphics.Image;
 
 import java.io.IOException;
@@ -39,17 +34,25 @@ public class Scaling {
      * Method that returns an Image scaled for the display size, relative to a 1280x800 standard resolution
      * (which ALL images should initially be created for)
      *
-     * @param original A drawable object from res/drawable-nodpi to scale
+     * @param res The Resources for the app
+     * @param id  The id of the image to scale. id = R.drawable.imagename
      * @return Returns the scaled image if successful, otherwise null.
      */
-    public static Image getScaledImage(Drawable original) {
+    public static Image getScaledImage(Resources res, int id) {
+        Image scaledImage = null;
         try {
-            Drawable scaledImage = new ScaleDrawable(original, Gravity.START, scalingFactor[0], scalingFactor[1]);
-            Log.d("Value", "Scaled image size in Scaling: " + scaledImage.getIntrinsicWidth() + ", " + scaledImage.getIntrinsicHeight() + "\n\n");
-            return new Image(scaledImage);
+            Bitmap unscaledBitmap = BitmapFactory.decodeResource(res, id);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (displaySize.x * scalingFactor[0]), (int) (displaySize.y * scalingFactor[1]), true);
+            BitmapDrawable scaledDrawable = new BitmapDrawable(scaledBitmap);
+            scaledImage = new Image(scaledDrawable);
         } catch (Exception e) {
-            Log.e("Error", "Could not open image " + original.toString());
+            Log.e("MyClass", "Could not open image " + id, e);
         }
-        return null;
+
+//TODO: calculate width and height to fill or fit screen
+
+        return scaledImage;
     }
+
+
 }

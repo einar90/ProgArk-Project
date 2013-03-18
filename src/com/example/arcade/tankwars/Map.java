@@ -18,7 +18,7 @@ public class Map extends Sprite {
 
     private Point displaySize;
     private static Resources resources = Game.getInstance().getResources();
-    private static final Image mapGroundImage = new Scaling().getScaledImage(resources.getDrawable(R.drawable.map_bottombox));
+    private static final Image mapGroundImage = new Scaling().getScaledImage(resources, R.drawable.map_bottombox);
 
     //Get scaling array
 
