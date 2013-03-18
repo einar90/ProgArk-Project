@@ -12,6 +12,7 @@ import sheep.game.Sprite;
 import sheep.graphics.Image;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by:
@@ -23,6 +24,8 @@ public class Map {
 
     private static Resources resources = Game.getInstance().getResources();
     private Point displaySize = new Point(resources.getDisplayMetrics().widthPixels, resources.getDisplayMetrics().heightPixels);
+
+    private static int windVector = 0;
 
     private static final Image mapGroundImage = Scaling.getScaledImage(resources, R.drawable.map_bottombox);
     private static final Image mountainLevel1Image = Scaling.getScaledImage(resources, R.drawable.mountain_level1);
@@ -81,6 +84,21 @@ public class Map {
         sprites.add(mountainLevel3);
         sprites.add(mountainLevel4);
         return sprites;
+    }
+
+
+    /**
+     * Sets a new value for the wind vector.
+     * The value is between -10 and +10.
+     * Negative windVector values indicates wind to the left; positive indicates wind to the right.
+     */
+    public static void changeWindVector() {
+        Random numberGenerator = new Random(161864654);
+        windVector = numberGenerator.nextInt(20) - 10;
+    }
+
+    public static int getWindVector() {
+        return windVector;
     }
 
 
