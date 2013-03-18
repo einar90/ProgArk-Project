@@ -9,10 +9,6 @@ import com.example.arcade.Scaling;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Dzenan
@@ -41,7 +37,7 @@ public class Tank extends Sprite {
     private int hp;
     private Sprite tankBarrel;
     Projectile projectilePicked;
-    private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
+    // private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
 
     protected Tank(Image tankimage) {
         super(tankimage);
@@ -114,7 +110,7 @@ public class Tank extends Sprite {
         if (this.hp < 0) return true;
         return false;
     }
-
+     /*
     public void reduceAmmo(String ammoName) {
         Log.d("Tank", "Reducing ammo of: " + ammoName);
         this.projectileAmmo.put(ammoName, Integer.parseInt(this.projectileAmmo.get(ammoName).toString()) - 1);
@@ -136,5 +132,5 @@ public class Tank extends Sprite {
         }};
         return (Dictionary) map;
     }
-
+      */
 }
