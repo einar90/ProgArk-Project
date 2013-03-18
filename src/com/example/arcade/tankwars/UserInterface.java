@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
@@ -35,6 +34,8 @@ public class UserInterface extends State implements MiniGame {
     Sprite mapPoop;
     float[] scaling;
 
+    Tank tanky;
+
     public UserInterface(Point displaySize, Resources resources) {
         this.displaySize = displaySize;
         this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
@@ -47,6 +48,8 @@ public class UserInterface extends State implements MiniGame {
         mapPoop = new Sprite(mapPoopImage);
         mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapPoopImage.getHeight() / 2);
 
+        tanky = Tank.getTank1();
+        Tank.setInitialTankPositions(displaySize);
     }
 
 
@@ -57,7 +60,7 @@ public class UserInterface extends State implements MiniGame {
         mapPoop.draw(canvas);
         mapGround.draw(canvas);
 
-
+        tanky.draw(canvas);
     }
 
     public void update(float dt) {
@@ -65,6 +68,7 @@ public class UserInterface extends State implements MiniGame {
         mapGround.update(dt);
         mapPoop.update(dt);
 
+        tanky.update(dt);
     }
 
     @Override
