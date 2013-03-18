@@ -8,8 +8,9 @@ import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
+import sheep.game.Sprite;
 import sheep.game.State;
-import sheep.gui.TextButton;
+import sheep.graphics.Image;
 
 /**
  * Created by:
@@ -19,12 +20,11 @@ import sheep.gui.TextButton;
  */
 public class MainMenu extends State {
 
-    Resources resources;
-    TextButton gamesButton;
-    TextButton highscoresButton;
-    TextButton settingsButton;
-
-    Point displaySize;
+    private static Resources resources;
+    private static Point displaySize;
+    private Sprite playButton;
+    private Sprite highscoresButton;
+    private Sprite settingsButton;
 
 
     /**
@@ -36,37 +36,38 @@ public class MainMenu extends State {
         Constants.WINDOW_HEIGHT = displayMetrics.heightPixels;
         Constants.WINDOW_WIDTH = displayMetrics.widthPixels;
         displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
-        gamesButton = new TextButton(getWidthPosition(displaySize), displaySize.y / 5, "Games");
-        highscoresButton = new TextButton(getWidthPosition(displaySize), getHeightPosition(1, gamesButton, displaySize), "Highscores");
-        settingsButton = new TextButton(getWidthPosition(displaySize), getHeightPosition(2, gamesButton, displaySize), "Settings");
+
+        initButtons();
 
 
     }
 
-    public static int getHeightPosition(int posistion, TextButton relativeTo, Point displaySize) {
-        float[] boxPoints = relativeTo.getBoundingBox().getPoints();
-        float yPos = boxPoints[3] - boxPoints[1];
-        yPos = 3 * yPos * posistion;
-        yPos += displaySize.y / 5;
+    private void initButtons() {
+        Image playButtonImage = Scaling.getScaledImage(resources, R.drawable.play_button);
+        Image highscoresButtonImage = Scaling.getScaledImage(resources, R.drawable.highscore_button);
+        Image settingsButtonImage = Scaling.getScaledImage(resources, R.drawable.settings_button);
 
-        return (int) yPos;
+        playButton = new Sprite(playButtonImage);
+        highscoresButton = new Sprite(highscoresButtonImage);
+        settingsButton = new Sprite(settingsButtonImage);
 
-
-    }
-
-    public static int getWidthPosition(Point displaySize) {
-        return displaySize.x / 5;
+        playButton.setPosition(displaySize.x / 2, displaySize.y / 4);
+        highscoresButton.setPosition(displaySize.x / 2, displaySize.y / 2);
+        settingsButton.setPosition(displaySize.x / 2, displaySize.y / 4 * 3);
     }
 
     @Override
     public void update(float dt) {
         super.update(dt);
+        playButton.update(dt);
+        highscoresButton.update(dt);
+        settingsButton.update(dt);
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        gamesButton.draw(canvas);
+        playButton.draw(canvas);
         highscoresButton.draw(canvas);
         settingsButton.draw(canvas);
     }
@@ -74,7 +75,7 @@ public class MainMenu extends State {
 
     @Override
     public boolean onTouchDown(MotionEvent event) {
-        if (gamesButton.getBoundingBox().contains(event.getX(), event.getY())) {
+        if (playButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Games button tapped.");
             getGame().pushState(new GamesMenu(displaySize, resources));
         } else if (highscoresButton.getBoundingBox().contains(event.getX(), event.getY())) {
