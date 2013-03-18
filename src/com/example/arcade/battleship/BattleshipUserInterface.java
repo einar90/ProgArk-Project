@@ -1,33 +1,24 @@
 package com.example.arcade.battleship;
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
 
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
-import com.example.arcade.R;
-import com.example.arcade.GraphicsHelper;
 
-import sheep.game.Sprite;
 import sheep.game.State;
-import sheep.graphics.Image;
 
 
 public class BattleshipUserInterface extends State implements MiniGame {
-    Resources resources = getGame().getResources();
-    Point displaySize;
-    Image battleshipXImage, battleshipYImage;
-    Sprite battleshipX, battleshipY;
-
+	Map map;
+	Battleship battleship1, battleship2;
+    
     /**
      * Constructor
      */
     public BattleshipUserInterface(Point displaySize) {
-        this.displaySize = displaySize;
-        battleshipXImage = GraphicsHelper.getScaledImage(resources, R.drawable.battleshipx);
-        battleshipX = new Sprite(battleshipXImage);
+    	map = new Map(); 
+    	getSprites(displaySize);
     }
 
     /**
@@ -35,15 +26,32 @@ public class BattleshipUserInterface extends State implements MiniGame {
      */
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        canvas.drawColor(Color.BLUE);
-        battleshipX.draw(canvas);
+    	map.drawMap(canvas);
+        drawSprites(canvas);
     }
 
     /**
      * Update
      */
     public void update(float dt) {
-        battleshipX.update(dt);
+    	super.update(dt);
+    	updateSprites(dt);
+    }
+    
+    public void getSprites(Point displaySize){
+    	battleship1 = Battleship.getBattleship1();
+    	battleship2 = Battleship.getBattleship2();
+    	Battleship.setInitialBattleshipPositions(new Point(displaySize.x, displaySize.y));
+    }
+    
+    public void updateSprites(float dt){
+    	battleship1.update(dt);
+    	battleship2.update(dt);
+    }
+    
+    public void drawSprites(Canvas canvas){
+    	battleship1.draw(canvas);
+    	battleship2.draw(canvas);
     }
 
     @Override
