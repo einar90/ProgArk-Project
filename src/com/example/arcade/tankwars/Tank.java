@@ -20,13 +20,13 @@ import java.util.Map;
 public class Tank extends Sprite {
 
     //Tank
-    private static final Image tankImage1 = new Scaling().getScaledImage("tankbody1");
-    private static final Image tankImage2 = new Scaling().getScaledImage("tankbody2");
+    private static final Image tankImage1 = Scaling.getScaledImage("tankbody1");
+    private static final Image tankImage2 = Scaling.getScaledImage("tankbody2");
     private static final Tank tank1 = new Tank(tankImage1);
     private static final Tank tank2 = new Tank(tankImage2);
 
     //TankBarrel
-    private static final Image tankBarrelImage = new Scaling().getScaledImage("tankbarrel");
+    private static final Image tankBarrelImage = Scaling.getScaledImage("tankbarrel");
     private static Sprite tankBarrel1 = new Sprite(tankBarrelImage);
     private static Sprite tankBarrel2 = new Sprite(tankBarrelImage);
 
