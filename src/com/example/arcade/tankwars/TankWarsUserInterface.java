@@ -20,14 +20,14 @@ import sheep.graphics.Image;
  * Time: 13:39
  * To change this template use File | Settings | File Templates.
  */
-public class UserInterface extends State implements MiniGame {
+public class TankWarsUserInterface extends State implements MiniGame {
 
     Point displaySize;
 
     Map map;
     Tank tanky;
 
-    public UserInterface(Point displaySize, Resources resources) {
+    public TankWarsUserInterface(Point displaySize, Resources resources) {
 
         map = new Map();
         tanky = Tank.getTank1();
