@@ -41,9 +41,15 @@ public class Scaling {
     public static Image getScaledImage(Resources res, int id) {
         Image scaledImage = null;
         try {
+            Log.d("Value", "Scaling factor: " + scalingFactor[0] + ", " + scalingFactor[1]);
             Bitmap unscaledBitmap = BitmapFactory.decodeResource(res, id);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (displaySize.x * scalingFactor[0]), (int) (displaySize.y * scalingFactor[1]), true);
-            BitmapDrawable scaledDrawable = new BitmapDrawable(scaledBitmap);
+            Log.d("Value", "Original size: " + unscaledBitmap.getWidth() + ", " + unscaledBitmap.getHeight());
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (unscaledBitmap.getWidth() * scalingFactor[0]), (int) (unscaledBitmap.getHeight() * scalingFactor[1]), true);
+            Log.d("Value", "Scaled size: " + scaledBitmap.getWidth() + ", " + scaledBitmap.getHeight());
+            Log.d("Value", "Calculated scale: " + (int) (unscaledBitmap.getWidth() * scalingFactor[0]) + ", " + (int) (unscaledBitmap.getHeight() * scalingFactor[1]));
+            BitmapDrawable scaledDrawable = new BitmapDrawable(res, scaledBitmap);
+            scaledDrawable.setTargetDensity(res.getDisplayMetrics().densityDpi);
+            Log.d("Value", "Scaled drawable size: " + scaledDrawable.getIntrinsicWidth() + ", " + scaledDrawable.getIntrinsicHeight());
             scaledImage = new Image(scaledDrawable);
         } catch (Exception e) {
             Log.e("MyClass", "Could not open image " + id, e);
