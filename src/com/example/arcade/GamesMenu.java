@@ -13,7 +13,6 @@ import com.example.arcade.tankwars.TankWarsUserInterface;
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
-import sheep.gui.TextButton;
 
 /**
  * Created by:
@@ -41,10 +40,10 @@ public class GamesMenu extends State {
     }
 
     private void initGameButtons() {
-        Image tankWarsImage = Scaling.getScaledImage(resources, R.drawable.tankwars_button);
-        Image wormsImage = Scaling.getScaledImage(resources, R.drawable.worms_button);
-        Image battleshipImage = Scaling.getScaledImage(resources, R.drawable.battleship_button);
-        Image coldWarIiImage = Scaling.getScaledImage(resources, R.drawable.coldwarii_button);
+        Image tankWarsImage = GraphicsHelper.getScaledImage(resources, R.drawable.tankwars_button);
+        Image wormsImage = GraphicsHelper.getScaledImage(resources, R.drawable.worms_button);
+        Image battleshipImage = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_button);
+        Image coldWarIiImage = GraphicsHelper.getScaledImage(resources, R.drawable.coldwarii_button);
 
         tankWarsButton = new Sprite(tankWarsImage);
         wormsButton = new Sprite(wormsImage);

@@ -1,7 +1,6 @@
 package com.example.arcade;
 
 import android.graphics.*;
-import com.example.arcade.tankwars.Map;
 import com.example.arcade.utilities.Constants;
 
 import android.content.res.Resources;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import sheep.game.Sprite;
 import sheep.game.State;
-import sheep.graphics.Font;
 import sheep.graphics.Image;
 
 /**
@@ -44,9 +42,9 @@ public class MainMenu extends State {
     }
 
     private void initButtons() {
-        Image playButtonImage = Scaling.getScaledImage(resources, R.drawable.play_button);
-        Image highscoresButtonImage = Scaling.getScaledImage(resources, R.drawable.highscore_button);
-        Image settingsButtonImage = Scaling.getScaledImage(resources, R.drawable.settings_button);
+        Image playButtonImage = GraphicsHelper.getScaledImage(resources, R.drawable.play_button);
+        Image highscoresButtonImage = GraphicsHelper.getScaledImage(resources, R.drawable.highscore_button);
+        Image settingsButtonImage = GraphicsHelper.getScaledImage(resources, R.drawable.settings_button);
 
         playButton = new Sprite(playButtonImage);
         highscoresButton = new Sprite(highscoresButtonImage);

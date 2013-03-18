@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import com.example.arcade.Game;
 import com.example.arcade.R;
-import com.example.arcade.Scaling;
+import com.example.arcade.GraphicsHelper;
 import sheep.collision.CollisionLayer;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
@@ -27,11 +27,11 @@ public class Map {
 
     private static int windVector = 0;
 
-    private static final Image mapGroundImage = Scaling.getScaledImage(resources, R.drawable.map_bottombox);
-    private static final Image mountainLevel1Image = Scaling.getScaledImage(resources, R.drawable.mountain_level1);
-    private static final Image mountainLevel2Image = Scaling.getScaledImage(resources, R.drawable.mountain_level2);
-    private static final Image mountainLevel3Image = Scaling.getScaledImage(resources, R.drawable.mountain_level3);
-    private static final Image mountainLevel4Image = Scaling.getScaledImage(resources, R.drawable.mountain_level4);
+    private static final Image mapGroundImage = GraphicsHelper.getScaledImage(resources, R.drawable.map_bottombox);
+    private static final Image mountainLevel1Image = GraphicsHelper.getScaledImage(resources, R.drawable.mountain_level1);
+    private static final Image mountainLevel2Image = GraphicsHelper.getScaledImage(resources, R.drawable.mountain_level2);
+    private static final Image mountainLevel3Image = GraphicsHelper.getScaledImage(resources, R.drawable.mountain_level3);
+    private static final Image mountainLevel4Image = GraphicsHelper.getScaledImage(resources, R.drawable.mountain_level4);
 
     private static final Sprite mapGround = new Sprite(mapGroundImage);
     private static final Sprite mountainLevel1 = new Sprite(mountainLevel1Image);

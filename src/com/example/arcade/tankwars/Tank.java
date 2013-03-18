@@ -5,7 +5,7 @@ import android.graphics.Point;
 import android.util.Log;
 import com.example.arcade.Game;
 import com.example.arcade.R;
-import com.example.arcade.Scaling;
+import com.example.arcade.GraphicsHelper;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -21,13 +21,13 @@ public class Tank extends Sprite {
     private static final Resources resources = Game.getInstance().getResources();
 
     //Tank
-    private static final Image tankImage1 = Scaling.getScaledImage(resources, R.drawable.tankbody1);
-    private static final Image tankImage2 = Scaling.getScaledImage(resources, R.drawable.tankbody2);
+    private static final Image tankImage1 = GraphicsHelper.getScaledImage(resources, R.drawable.tankbody1);
+    private static final Image tankImage2 = GraphicsHelper.getScaledImage(resources, R.drawable.tankbody2);
     private static Tank tank1 = new Tank(tankImage1);
     private static Tank tank2 = new Tank(tankImage2);
 
     //TankBarrel
-    private static final Image tankBarrelImage = Scaling.getScaledImage(resources, R.drawable.tankbarrel);
+    private static final Image tankBarrelImage = GraphicsHelper.getScaledImage(resources, R.drawable.tankbarrel);
     private static Sprite tankBarrel1 = new Sprite(tankBarrelImage);
     private static Sprite tankBarrel2 = new Sprite(tankBarrelImage);
 
