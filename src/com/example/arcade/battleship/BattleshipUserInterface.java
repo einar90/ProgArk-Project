@@ -24,7 +24,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
      */
     public BattleshipUserInterface(Point displaySize) {
         this.displaySize = displaySize;
-        battleshipXImage = Scaling.getScaledImage(getGame().getResources().getDrawable(R.drawable.battleshipX));
+        battleshipXImage = Scaling.getScaledImage(getGame().getResources().getDrawable(R.drawable.battleshipx));
         battleshipX = new Sprite(battleshipXImage);
     }
 
