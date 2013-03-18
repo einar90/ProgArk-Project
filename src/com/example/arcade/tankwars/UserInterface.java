@@ -8,6 +8,7 @@ import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
 import com.example.arcade.Scaling;
+import sheep.collision.CollisionLayer;
 import sheep.collision.Polygon;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -34,7 +35,9 @@ public class UserInterface extends State implements MiniGame {
     Sprite mapPoop;
     float[] scaling;
 
-    Tank tanky;
+    Tank playerOneTank, playerTwoTank;
+    private CollisionLayer collisionLayer = new CollisionLayer();
+
 
     public UserInterface(Point displaySize, Resources resources) {
         this.displaySize = displaySize;
@@ -48,8 +51,9 @@ public class UserInterface extends State implements MiniGame {
         mapPoop = new Sprite(mapPoopImage);
         mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapPoopImage.getHeight() / 2);
 
-        tanky = Tank.getTank1();
-        Tank.setInitialTankPositions(displaySize);
+        getSprites(displaySize);
+        addSpritesToCollisionLayer();
+
     }
 
 
@@ -60,7 +64,9 @@ public class UserInterface extends State implements MiniGame {
         mapPoop.draw(canvas);
         mapGround.draw(canvas);
 
-        tanky.draw(canvas);
+        drawSprites(canvas);
+
+
     }
 
     public void update(float dt) {
@@ -68,7 +74,33 @@ public class UserInterface extends State implements MiniGame {
         mapGround.update(dt);
         mapPoop.update(dt);
 
-        tanky.update(dt);
+        updateSprites(dt);
+
+
+    }
+
+    private void getSprites(Point displaySize) {
+        playerOneTank = Tank.getTank1();
+        playerTwoTank = Tank.getTank2();
+        Tank.setInitialTankPositions(new Point(displaySize.x, 100));
+
+    }
+
+    private void updateSprites(float dt) {
+        playerOneTank.update(dt);
+        playerTwoTank.update(dt);
+        playerOneTank.setSpeed(0, 50);
+        playerTwoTank.setSpeed(0, 50);
+    }
+
+    private void drawSprites(Canvas canvas) {
+        playerOneTank.draw(canvas);
+        playerTwoTank.draw(canvas);
+    }
+
+    private void addSpritesToCollisionLayer() {
+        //playerOneTank.addCollisionListener(this);
+        //playerTwoTank.addCollisionListener(this);
     }
 
     @Override
