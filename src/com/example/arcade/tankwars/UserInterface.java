@@ -8,7 +8,6 @@ import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
 import com.example.arcade.Scaling;
-import sheep.collision.CollisionLayer;
 import sheep.collision.Polygon;
 import sheep.game.Sprite;
 import sheep.game.State;
@@ -24,36 +23,15 @@ import sheep.graphics.Image;
 public class UserInterface extends State implements MiniGame {
 
     Point displaySize;
-    Polygon map;
 
-    /**
-     * Temp stuff
-     */
-    Image mapGroundImage;
-    Image mapPoopImage;
-    Sprite mapGround;
-    Sprite mapPoop;
-    float[] scaling;
-
-    Tank playerOneTank, playerTwoTank;
-    private CollisionLayer collisionLayer = new CollisionLayer();
-
+    Map map;
+    Tank tanky;
 
     public UserInterface(Point displaySize, Resources resources) {
-        this.displaySize = displaySize;
-        this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
 
-        mapGroundImage = Scaling.getScaledImage(resources, R.drawable.map_bottombox);
-        mapGround = new Sprite(mapGroundImage);
-        mapGround.setPosition(mapGroundImage.getWidth() / 2, displaySize.y - mapGroundImage.getHeight() / 2);
-
-        mapPoopImage = Scaling.getScaledImage(resources, R.drawable.mountain_level1);
-        mapPoop = new Sprite(mapPoopImage);
-        mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapPoopImage.getHeight() / 2);
-
-        getSprites(displaySize);
-        addSpritesToCollisionLayer();
-
+        map = new Map();
+        tanky = Tank.getTank1();
+        Tank.setInitialTankPositions(displaySize);
     }
 
 
@@ -61,46 +39,16 @@ public class UserInterface extends State implements MiniGame {
         super.draw(canvas);
 
         canvas.drawColor(Color.CYAN);
-        mapPoop.draw(canvas);
-        mapGround.draw(canvas);
 
-        drawSprites(canvas);
-
-
+        map.drawMap(canvas);
+        tanky.draw(canvas);
     }
 
     public void update(float dt) {
+        super.update(dt);
 
-        mapGround.update(dt);
-        mapPoop.update(dt);
-
-        updateSprites(dt);
-
-
-    }
-
-    private void getSprites(Point displaySize) {
-        playerOneTank = Tank.getTank1();
-        playerTwoTank = Tank.getTank2();
-        Tank.setInitialTankPositions(new Point(displaySize.x, 100));
-
-    }
-
-    private void updateSprites(float dt) {
-        playerOneTank.update(dt);
-        playerTwoTank.update(dt);
-        playerOneTank.setSpeed(0, 50);
-        playerTwoTank.setSpeed(0, 50);
-    }
-
-    private void drawSprites(Canvas canvas) {
-        playerOneTank.draw(canvas);
-        playerTwoTank.draw(canvas);
-    }
-
-    private void addSpritesToCollisionLayer() {
-        //playerOneTank.addCollisionListener(this);
-        //playerTwoTank.addCollisionListener(this);
+        map.updateMap(dt);
+        tanky.update(dt);
     }
 
     @Override
