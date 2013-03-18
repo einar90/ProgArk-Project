@@ -113,7 +113,7 @@ public class Tank extends Sprite {
     }
 
     public static void flipTank() {
-        Log.d("Ori", "Tank1 ori: " + tank1.getOrientation());
+        Log.d("Ori", "Tank1 ori:  " + tank1.getOrientation());
 
 
     }
