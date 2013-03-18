@@ -26,6 +26,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     Map map;
     Tank playerOneTank, playerTwoTank;
+    Sprite playerOneBarrel, playerTwoBarrel;
 
     public TankWarsUserInterface(Point displaySize, Resources resources) {
 
@@ -89,10 +90,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     }
 
     private void drawSprites(Canvas canvas) {
-        playerOneTank.draw(canvas);
-        playerTwoTank.draw(canvas);
         Tank.getTankBarrel2().draw(canvas);
         Tank.getTankBarrel1().draw(canvas);
+        playerOneTank.draw(canvas);
+        playerTwoTank.draw(canvas);
 
 
     }

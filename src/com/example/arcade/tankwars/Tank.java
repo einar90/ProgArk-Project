@@ -91,14 +91,13 @@ public class Tank extends Sprite {
         Log.d("Tank", "Setting positions for both tanks");
         tank1.setPosition(size.x / 10, size.y / 3);
         tank2.setPosition(size.x - size.x / 10, size.y / 3);
-        //Setter de litt i løse lufta foreløpig
         setInitalBarrelPositions(size);
     }
 
     public static void setInitalBarrelPositions(Point size) {
         Log.d("Tank", "Setting positions for both barrels");
-        tankBarrel1.setPosition(size.x / 10, size.y / 3);
-        tankBarrel2.setPosition(size.x - size.x / 10, size.y / 3);
+        tankBarrel1.setPosition(size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2);
+        tankBarrel2.setPosition(size.x - size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage2.getHeight() / 2);
         //sett posisjonen til barrels riktig i forhold til tanksene.
     }
 
@@ -116,8 +115,8 @@ public class Tank extends Sprite {
     public static void setStartSpeed() {
         tank1.setYSpeed(50);
         tank2.setYSpeed(50);
-        tankBarrel1.setYSpeed(50);
-        tankBarrel2.setYSpeed(50);
+        tankBarrel1.setYSpeed(100);
+        tankBarrel2.setYSpeed(100);
     }
 
     public static void stopStartSpeed() {
