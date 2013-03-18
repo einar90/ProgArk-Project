@@ -3,6 +3,7 @@ package com.example.arcade.tankwars;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.util.Log;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import sheep.collision.CollisionLayer;
@@ -21,7 +22,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     Point displaySize;
 
-    CollisionLayer collisionLayer;
+    CollisionLayer collisionLayer = new CollisionLayer();
 
     Map map;
     Tank playerOneTank, playerTwoTank;
@@ -30,7 +31,9 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         map = new Map();
         getSprites(displaySize);
+
         addSpritesToCollisionLayer();
+        addSpritesToCollisionListener();
 
     }
 
@@ -66,14 +69,23 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         playerTwoTank.update(dt);
         Tank.getTankBarrel1().update(dt);
         Tank.getTankBarrel2().update(dt);
+        collisionLayer.update(dt);
 
 
     }
 
     private void addSpritesToCollisionLayer() {
+        collisionLayer.addSprite(playerOneTank);
+        collisionLayer.addSprite(playerTwoTank);
+        Map.addToCollisionLayer(collisionLayer);
+
+
+    }
+
+    private void addSpritesToCollisionListener() {
         playerOneTank.addCollisionListener(this);
         playerTwoTank.addCollisionListener(this);
-        Map.addToCollisionLayer(collisionLayer);
+        Map.getMapSprites().get(0).addCollisionListener(this);
     }
 
     private void drawSprites(Canvas canvas) {
@@ -81,6 +93,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         playerTwoTank.draw(canvas);
         Tank.getTankBarrel2().draw(canvas);
         Tank.getTankBarrel1().draw(canvas);
+
 
     }
 
@@ -101,6 +114,13 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public void collided(Sprite a, Sprite b) {
+        Log.d("Collision", "Something collided: " + a.getClass().toString() + " and " + b.getClass().toString());
+        if (a.getClass() == Tank.class) {
+            if (b.getClass() == Sprite.class) {    //Denne er rævva
+                Tank.stopStartSpeed();
+
+            }
+        }
         //To change body of implemented methods use File | Settings | File Templates.
     }
 }

@@ -114,8 +114,16 @@ public class Tank extends Sprite {
     }
 
     public static void setStartSpeed() {
-        tank1.setSpeed(0, 50);
-        tank2.setSpeed(0, 50);
+        tank1.setYSpeed(50);
+        tankBarrel1.setYSpeed(50);
+        tankBarrel2.setYSpeed(50);
+    }
+
+    public static void stopStartSpeed() {
+        tank1.setYSpeed(0);
+        tank2.setYSpeed(0);
+        getTankBarrel1().setYSpeed(0);
+        getTankBarrel2().setYSpeed(0);
     }
      /*
     public void reduceAmmo(String ammoName) {
@@ -140,4 +148,6 @@ public class Tank extends Sprite {
         return (Dictionary) map;
     }
       */
+
+
 }
