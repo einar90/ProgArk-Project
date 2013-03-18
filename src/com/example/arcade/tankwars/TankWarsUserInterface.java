@@ -2,7 +2,6 @@ package com.example.arcade.tankwars;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
@@ -61,6 +60,8 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private void updateSprites(float dt) {
         playerOneTank.update(dt);
         playerTwoTank.update(dt);
+        Tank.getTankBarrel1().update(dt);
+        Tank.getTankBarrel2().update(dt);
 
 
     }
@@ -75,6 +76,8 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private void drawSprites(Canvas canvas) {
         playerOneTank.draw(canvas);
         playerTwoTank.draw(canvas);
+        Tank.getTankBarrel2().draw(canvas);
+        Tank.getTankBarrel1().draw(canvas);
 
     }
 
