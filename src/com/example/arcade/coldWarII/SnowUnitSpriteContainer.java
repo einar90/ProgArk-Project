@@ -7,22 +7,24 @@ import android.graphics.Canvas;
 import sheep.game.Sprite;
 import sheep.game.SpriteContainer;
 
-public class SnowUnitSpriteContainer implements SpriteContainer{
-	private ArrayList<Sprite> sprites;
-	
-	public SnowUnitSpriteContainer(){
-		sprites = new ArrayList<Sprite>();
-	}
-	@Override
-	public void addSprite(Sprite sprite) {
-		sprites.add(sprite);
-	}
+public class SnowUnitSpriteContainer implements SpriteContainer {
+    private ArrayList<Sprite> sprites;
 
-	@Override
-	public void removeSprite(Sprite sprite) {
-		sprites.remove(sprite);
-	}
-	public ArrayList<Sprite> getSprites(){
-		return sprites;
-	}
+    public SnowUnitSpriteContainer() {
+        sprites = new ArrayList<Sprite>();
+    }
+
+    @Override
+    public void addSprite(Sprite sprite) {
+        sprites.add(sprite);
+    }
+
+    @Override
+    public void removeSprite(Sprite sprite) {
+        sprites.remove(sprite);
+    }
+
+    public ArrayList<Sprite> getSprites() {
+        return sprites;
+    }
 }
