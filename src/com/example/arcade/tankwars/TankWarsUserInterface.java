@@ -85,7 +85,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private void addSpritesToCollisionListener() {
         playerOneTank.addCollisionListener(this);
         playerTwoTank.addCollisionListener(this);
-        Map.getMapSprites().get(0).addCollisionListener(this);
+
     }
 
     private void drawSprites(Canvas canvas) {

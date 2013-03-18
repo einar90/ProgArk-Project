@@ -115,15 +115,23 @@ public class Tank extends Sprite {
 
     public static void setStartSpeed() {
         tank1.setYSpeed(50);
+        tank2.setYSpeed(50);
         tankBarrel1.setYSpeed(50);
         tankBarrel2.setYSpeed(50);
     }
 
     public static void stopStartSpeed() {
+        Log.d("Speed", "Tank1 speed is: " + tank1.getSpeed().toString());
+        Log.d("Speed", "Tank2 speed is: " + tank2.getSpeed().toString());
+        Log.d("Speed", "Tankbarrel1 speed is: " + tankBarrel1.getSpeed().toString());
         tank1.setYSpeed(0);
         tank2.setYSpeed(0);
         getTankBarrel1().setYSpeed(0);
         getTankBarrel2().setYSpeed(0);
+
+        //Avoid future collisions
+        tank1.setPosition(tank1.getPosition().getX(), tank1.getPosition().getY() - 1);
+        tank2.setPosition(tank2.getPosition().getX(), tank2.getPosition().getY() - 1);
     }
      /*
     public void reduceAmmo(String ammoName) {
