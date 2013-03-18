@@ -101,6 +101,16 @@ public class Map {
         return windVector;
     }
 
+    public static String getWindString() {
+        String windString = "Wind: 0";
+        if (windVector < 0) {
+            windString = "Wind: " + (-windVector) + "\t<--";
+        } else if (windVector > 0) {
+            windString = "Wind: " + windVector + "\t-->";
+        }
+        return windString;
+    }
+
 
     public static int getGroundHeight() {
         return (int) mapGroundImage.getHeight();
