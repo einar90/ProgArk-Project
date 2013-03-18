@@ -19,6 +19,7 @@ import sheep.gui.TextButton;
  */
 public class MainMenu extends State {
 
+    Resources resources;
     TextButton gamesButton;
     TextButton highscoresButton;
     TextButton settingsButton;
@@ -30,6 +31,7 @@ public class MainMenu extends State {
      * Constructor
      */
     public MainMenu(Resources resouces) {
+        this.resources = resouces;
         DisplayMetrics displayMetrics = resouces.getDisplayMetrics();
         Constants.WINDOW_HEIGHT = displayMetrics.heightPixels;
         Constants.WINDOW_WIDTH = displayMetrics.widthPixels;
@@ -74,7 +76,7 @@ public class MainMenu extends State {
     public boolean onTouchDown(MotionEvent event) {
         if (gamesButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Games button tapped.");
-            getGame().pushState(new GamesMenu(displaySize));
+            getGame().pushState(new GamesMenu(displaySize, resources));
         } else if (highscoresButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Highscore button tapped.");
         } else if (settingsButton.getBoundingBox().contains(event.getX(), event.getY())) {

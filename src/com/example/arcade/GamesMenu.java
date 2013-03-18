@@ -1,5 +1,6 @@
 package com.example.arcade;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,13 +21,15 @@ import sheep.gui.TextButton;
  */
 public class GamesMenu extends State {
 
+    Resources resources;
     TextButton tankWarsButton;
     TextButton wormsButton;
     TextButton coldWarIIButton;
     TextButton battleShipButton;
     Point displaySize;
 
-    public GamesMenu(Point displaySize) {
+    public GamesMenu(Point displaySize, Resources resources) {
+        this.resources = resources;
         this.displaySize = displaySize;
         tankWarsButton = new TextButton(MainMenu.getWidthPosition(displaySize), displaySize.y / 5, "Tank Wars");
         wormsButton = new TextButton(MainMenu.getWidthPosition(displaySize), MainMenu.getHeightPosition(1, tankWarsButton, displaySize), "Worms");
@@ -50,12 +53,12 @@ public class GamesMenu extends State {
     @Override
     public boolean onTouchDown(MotionEvent event) {
         if (tankWarsButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            getGame().pushState(new UserInterface(displaySize));
+            getGame().pushState(new UserInterface(displaySize, resources));
             Log.d("Tapped", "Tank Wars button tapped.");
         } else if (wormsButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Worms button tapped.");
         } else if (coldWarIIButton.getBoundingBox().contains(event.getX(), event.getY())) {
-        	getGame().pushState(new ColdWarGame());
+            getGame().pushState(new ColdWarGame());
             Log.d("Tapped", "Cold War II button tapped.");
         } else if (battleShipButton.getBoundingBox().contains(event.getX(), event.getY())) {
             getGame().pushState(new BattleshipUserInterface(displaySize));

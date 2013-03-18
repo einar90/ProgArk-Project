@@ -29,14 +29,13 @@ public class UserInterface extends State implements MiniGame {
     /**
      * Temp stuff
      */
-    private Resources resources = getGame().getResources();
     Image mapGroundImage;
     Image mapPoopImage;
     Sprite mapGround;
     Sprite mapPoop;
     float[] scaling;
 
-    public UserInterface(Point displaySize) {
+    public UserInterface(Point displaySize, Resources resources) {
         this.displaySize = displaySize;
         this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
 
