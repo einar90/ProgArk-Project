@@ -2,7 +2,6 @@ package com.example.arcade.tankwars;
 
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import com.example.arcade.Game;
 import com.example.arcade.R;
@@ -28,8 +27,8 @@ public class Tank extends Sprite {
     //Tank
     private static final Image tankImage1 = Scaling.getScaledImage(resources.getDrawable(R.drawable.tankbody1));
     private static final Image tankImage2 = Scaling.getScaledImage(resources.getDrawable(R.drawable.tankbody2));
-    private static final Tank tank1 = new Tank(tankImage1);
-    private static final Tank tank2 = new Tank(tankImage2);
+    private static Tank tank1 = new Tank(tankImage1);
+    private static Tank tank2 = new Tank(tankImage2);
 
     //TankBarrel
     private static final Image tankBarrelImage = Scaling.getScaledImage(resources.getDrawable(R.drawable.tankbarrel));
@@ -56,23 +55,39 @@ public class Tank extends Sprite {
 
     public static Tank getTank1() {
         Log.d("Tank", "Returning tank1");
+        if (tank1 == null) {
+            tank1 = new Tank(tankImage1);
+        }
         return tank1;
     }
 
     public static Tank getTank2() {
         Log.d("Tank", "Returning tank2");
+        if (tank2 == null) {
+            tank2 = new Tank(tankImage2);
+        }
         return tank2;
     }
 
     public static Sprite getTankBarrel1() {
-        tank1.tankBarrel = tankBarrel1;
         Log.d("Tank", "Returning tankbarrel1");
+        if (tankBarrel1 == null) {
+            tankBarrel1 = new Sprite(tankBarrelImage);
+            tank1.tankBarrel = tankBarrel1;
+        } else {
+            tank1.tankBarrel = tankBarrel1;
+        }
         return tank1.tankBarrel;
     }
 
     public static Sprite getTankBarrel2() {
-        tank2.tankBarrel = tankBarrel2;
-        Log.d("Tank", "Returning tankbarrel2");
+        Log.d("Tank", "Returning tankbarrel1");
+        if (tankBarrel2 == null) {
+            tankBarrel2 = new Sprite(tankBarrelImage);
+            tank2.tankBarrel = tankBarrel2;
+        } else {
+            tank2.tankBarrel = tankBarrel2;
+        }
         return tank2.tankBarrel;
     }
 
