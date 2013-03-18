@@ -38,7 +38,7 @@ public class UserInterface extends State implements MiniGame {
         this.displaySize = displaySize;
         this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
 
-        mapGroundImage = Scaling.getScaledImage("map_bottombox.png");
+        mapGroundImage = Scaling.getScaledImage(R.drawable.);
         mapGround = new Sprite(mapGroundImage);
         mapGround.setPosition(mapGroundImage.getWidth(), displaySize.y);
 

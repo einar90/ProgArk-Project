@@ -2,6 +2,7 @@ package com.example.arcade;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -39,7 +40,9 @@ public class Scaling {
      * @param filename The name of the file (placed in the root of the 'assets' directory to scale.
      * @return Returns the scaled image if successful, otherwise null.
      */
-    public static Image getScaledImage(String filename) {
+    public static Image getScaledImage(Drawable original) {
+
+        Drawable original = Drawable.createFromResourceStream(R.drawable, , )
         AssetManager assetManager = Game.getInstance().getResources().getAssets();
         InputStream imageIn;
         Bitmap bitmapImage;
