@@ -1,5 +1,6 @@
 package com.example.arcade.tankwars;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -28,6 +29,7 @@ public class UserInterface extends State implements MiniGame {
     /**
      * Temp stuff
      */
+    private Resources resources = getGame().getResources();
     Image mapGroundImage;
     Image mapPoopImage;
     Sprite mapGround;
@@ -38,11 +40,11 @@ public class UserInterface extends State implements MiniGame {
         this.displaySize = displaySize;
         this.scaling = new float[]{displaySize.x / 1280.0f, displaySize.y / 800.0f};
 
-        mapGroundImage = Scaling.getScaledImage(R.drawable.);
+        mapGroundImage = Scaling.getScaledImage(resources.getDrawable(R.drawable.map_bottombox));
         mapGround = new Sprite(mapGroundImage);
         mapGround.setPosition(mapGroundImage.getWidth(), displaySize.y);
 
-        mapPoopImage = Scaling.getScaledImage("mountain_level1.png");
+        mapPoopImage = Scaling.getScaledImage(resources.getDrawable(R.drawable.mountain_level1));
         mapPoop = new Sprite(mapPoopImage);
         mapPoop.setPosition(displaySize.x / 2, displaySize.y - mapPoopImage.getHeight() / 2);
 

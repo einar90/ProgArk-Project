@@ -8,9 +8,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.WindowManager;
 import sheep.graphics.Image;
 
@@ -27,9 +29,9 @@ public class Scaling {
     private static DisplayMetrics displayMetrics = Game.getInstance().getResources().getDisplayMetrics();
     private static Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
 
-    private static double[] scalingFactor = new double[]{
-            displaySize.x / 1280.0,
-            displaySize.y / 800.0
+    private static float[] scalingFactor = new float[]{
+            displaySize.x / 1280.0f,
+            displaySize.y / 800.0f
     };
 
 
@@ -37,27 +39,16 @@ public class Scaling {
      * Method that returns an Image scaled for the display size, relative to a 1280x800 standard resolution
      * (which ALL images should initially be created for)
      *
-     * @param filename The name of the file (placed in the root of the 'assets' directory to scale.
+     * @param original A drawable object from res/drawable-nodpi to scale
      * @return Returns the scaled image if successful, otherwise null.
      */
     public static Image getScaledImage(Drawable original) {
-
-        Drawable original = Drawable.createFromResourceStream(R.drawable, , )
-        AssetManager assetManager = Game.getInstance().getResources().getAssets();
-        InputStream imageIn;
-        Bitmap bitmapImage;
         try {
-            imageIn = assetManager.open(filename, AssetManager.ACCESS_BUFFER);
-            bitmapImage = BitmapFactory.decodeStream(imageIn);
-            Point scaledImageSize = new Point((int) ((double) (bitmapImage.getWidth() * scalingFactor[0])), (int) ((double) bitmapImage.getHeight() * scalingFactor[1]));
-            bitmapImage = Bitmap.createScaledBitmap(bitmapImage, scaledImageSize.x, scaledImageSize.y, true);
-            Drawable drawableImage = new BitmapDrawable(bitmapImage);
-
-            Log.d("Value", "Scaled image size in Scaling: " + drawableImage.getIntrinsicWidth() + ", " + drawableImage.getIntrinsicHeight() + "\n\n");
-
-            return new Image(drawableImage);
-        } catch (IOException e) {
-            Log.e("Error", "Could not open image " + filename);
+            Drawable scaledImage = new ScaleDrawable(original, Gravity.CENTER, scalingFactor[0], scalingFactor[1]);
+            Log.d("Value", "Scaled image size in Scaling: " + scaledImage.getIntrinsicWidth() + ", " + scaledImage.getIntrinsicHeight() + "\n\n");
+            return new Image(scaledImage);
+        } catch (Exception e) {
+            Log.e("Error", "Could not open image " + original.toString());
         }
         return null;
     }

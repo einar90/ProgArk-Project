@@ -1,7 +1,11 @@
 package com.example.arcade.tankwars;
 
+import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
+import com.example.arcade.Game;
+import com.example.arcade.R;
 import com.example.arcade.Scaling;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
@@ -19,14 +23,16 @@ import java.util.Map;
  */
 public class Tank extends Sprite {
 
+    private static final Resources resources = Game.getInstance().getResources();
+
     //Tank
-    private static final Image tankImage1 = Scaling.getScaledImage("tankbody1");
-    private static final Image tankImage2 = Scaling.getScaledImage("tankbody2");
+    private static final Image tankImage1 = Scaling.getScaledImage(resources.getDrawable(R.drawable.tankbody1));
+    private static final Image tankImage2 = Scaling.getScaledImage(resources.getDrawable(R.drawable.tankbody2));
     private static final Tank tank1 = new Tank(tankImage1);
     private static final Tank tank2 = new Tank(tankImage2);
 
     //TankBarrel
-    private static final Image tankBarrelImage = Scaling.getScaledImage("tankbarrel");
+    private static final Image tankBarrelImage = Scaling.getScaledImage(resources.getDrawable(R.drawable.tankbarrel));
     private static Sprite tankBarrel1 = new Sprite(tankBarrelImage);
     private static Sprite tankBarrel2 = new Sprite(tankBarrelImage);
 
