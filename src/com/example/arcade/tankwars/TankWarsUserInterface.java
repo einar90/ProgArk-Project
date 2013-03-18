@@ -36,8 +36,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        canvas.drawColor(Color.CYAN);
-
         map.drawMap(canvas);
 
         drawSprites(canvas);
