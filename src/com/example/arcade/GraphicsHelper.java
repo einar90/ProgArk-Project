@@ -1,17 +1,19 @@
 package com.example.arcade;
 
+import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ViewConfiguration;
 import sheep.graphics.Image;
 
-import java.io.IOException;
-import java.io.InputStream;
+import com.example.arcade.utilities.Constants;
 
 /**
  * Created by:
@@ -24,11 +26,26 @@ public class GraphicsHelper {
     private static Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
 
     private static float[] scalingFactor = new float[]{
-            displaySize.x / 1280.0f,
-            displaySize.y / 800.0f
+    	displaySize.x / 1280.0f,
+        getRealHeight() / 800.0f
     };
 
-
+    
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH) 
+    public static float getRealHeight(){
+    	float realHeight = displaySize.y;
+    	//If the API level is below 14 it should not have software navigation bar
+    	if(android.os.Build.VERSION.SDK_INT >= 14){
+	    	boolean hasSoftNavBar = !ViewConfiguration.get(Game.getInstance().getContext()).hasPermanentMenuKey();
+	    	if(hasSoftNavBar){
+	    		float density = displayMetrics.density;
+	    		float navBarHeight = 48*density;
+	    		realHeight = realHeight - navBarHeight;
+	    		Constants.WINDOW_HEIGHT = (int) realHeight;
+	    	}
+    	}
+    	return realHeight;
+    }
     /**
      * Method that returns an Image scaled for the display size, relative to a 1280x800 standard resolution
      * (which ALL images should initially be created for)
