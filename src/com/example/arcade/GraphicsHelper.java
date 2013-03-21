@@ -5,10 +5,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ViewConfiguration;
 import sheep.graphics.Image;
@@ -22,11 +20,9 @@ import com.example.arcade.utilities.Constants;
  * Time: 11:19
  */
 public class GraphicsHelper {
-    private static DisplayMetrics displayMetrics = Game.getInstance().getResources().getDisplayMetrics();
-    private static Point displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
-
+    
     private static float[] scalingFactor = new float[]{
-    	displaySize.x / 1280.0f,
+    	Constants.WINDOW_WIDTH / 1280.0f,
         Constants.WINDOW_HEIGHT / 800.0f
     };
 
@@ -38,19 +34,21 @@ public class GraphicsHelper {
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH) 
     public static float getRealHeight(){
-    	float realHeight = displaySize.y;
+    	float realHeight = Game.getInstance().getResources().getDisplayMetrics().heightPixels;
+    	
     	//If the API level is below 14 it should not have software navigation bar
     	if(android.os.Build.VERSION.SDK_INT >= 14){
 	    	boolean hasSoftNavBar = !ViewConfiguration.get(Game.getInstance().getContext()).hasPermanentMenuKey();
 	    	if(hasSoftNavBar){
-	    		float density = displayMetrics.density;
+	    		float density = Game.getInstance().getResources().getDisplayMetrics().density;
 	    		float navBarHeight = 48*density;
 	    		realHeight = realHeight - navBarHeight;
-	    		Constants.WINDOW_HEIGHT = (int) realHeight;
 	    	}
     	}
     	return realHeight;
     }
+    
+    
     /**
      * Method that returns an Image scaled for the display size, relative to a 1280x800 standard resolution
      * (which ALL images should initially be created for)
@@ -61,6 +59,8 @@ public class GraphicsHelper {
      */
     public static Image getScaledImage(Resources res, int id) {
         Image scaledImage = null;
+        Log.d("bæ", "w: "+scalingFactor[0]);
+        Log.d("bæ", "h: "+scalingFactor[1]);
         try {
             Bitmap unscaledBitmap = BitmapFactory.decodeResource(res, id);
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (unscaledBitmap.getWidth() * scalingFactor[0]), (int) (unscaledBitmap.getHeight() * scalingFactor[1]), true);

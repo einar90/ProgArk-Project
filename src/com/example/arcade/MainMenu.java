@@ -30,12 +30,11 @@ public class MainMenu extends State {
 	/**
 	 * Constructor
 	 */
-	public MainMenu(Resources resouces) {
-		this.resources = resouces;
-		DisplayMetrics displayMetrics = resouces.getDisplayMetrics();
-		Constants.WINDOW_HEIGHT = GraphicsHelper.getRealHeight();
-		Constants.WINDOW_WIDTH = displayMetrics.widthPixels;
-		displaySize = new Point(displayMetrics.widthPixels, displayMetrics.heightPixels);
+	public MainMenu(Resources resources) {
+		Constants.initConstants();
+		this.resources = resources;
+		DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+		displaySize = new Point((int)Constants.WINDOW_WIDTH, (int)Constants.WINDOW_HEIGHT);
 
 		initButtons();
 
@@ -59,9 +58,11 @@ public class MainMenu extends State {
 	@Override
 	public void update(float dt) {
 		super.update(dt);
-		playButton.update(dt);
-		highscoresButton.update(dt);
-		settingsButton.update(dt);
+		if(playButton != null){
+			playButton.update(dt);
+			highscoresButton.update(dt);
+			settingsButton.update(dt);
+		}
 	}
 
 	@Override
