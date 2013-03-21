@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,7 +29,7 @@ import sheep.input.TouchListener;
 public class ColdWarGame extends State implements MiniGame{
 	private static Resources res = Game.getInstance().getResources();
 	private SnowUnitSpriteContainer con,plOneCon,plTwoCon;
-	private int h,w;
+	private float h,w;
 	private TextButton upsl, upsn, att, place;
 	private SnowUnitSprite iceball,ice;
 	private Sprite back,backfade,lGrid,rGrid;
@@ -132,6 +134,7 @@ public class ColdWarGame extends State implements MiniGame{
 	@Override
     public void draw(Canvas canvas) {
     	if(canvas != null){
+    		canvas.drawPaint(new Paint(Color.BLACK));
     		if(!model.isMenu()){
     			back.draw(canvas);
     			drawSnowUnits(canvas);

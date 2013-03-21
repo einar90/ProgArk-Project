@@ -82,8 +82,8 @@ public class ColdWarModel implements CollisionListener {
     public void collided(Sprite a, Sprite b) {
         SnowUnitSprite sa = (SnowUnitSprite) a;
         SnowUnitSprite sb = (SnowUnitSprite) b;
-//        sa.die();
-//        sb.die();
+        sa.die();
+        sb.die();
         Log.d("Collision!", "Model, Collision" + a.getClass().getName() + " collided with " + b.getClass().getName());
     }
 }
