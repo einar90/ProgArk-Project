@@ -27,10 +27,15 @@ public class GraphicsHelper {
 
     private static float[] scalingFactor = new float[]{
     	displaySize.x / 1280.0f,
-        getRealHeight() / 800.0f
+        Constants.WINDOW_HEIGHT / 800.0f
     };
 
     
+    /**
+     * Calculating the pixel height of devices with a software navigation bar. 
+     * Physical height minus navbar height.
+     * @return
+     */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH) 
     public static float getRealHeight(){
     	float realHeight = displaySize.y;
