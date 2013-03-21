@@ -5,7 +5,7 @@ import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 
 public class ColdWarModel implements CollisionListener {
-    private boolean menu, placing;
+    private boolean menu, placing,attack;
     private ColdWarPlayer active, plOne, plTwo;
     private SnowUnitSpriteContainer plOneCon, plTwoCon;
 
@@ -26,6 +26,12 @@ public class ColdWarModel implements CollisionListener {
         else
             menu = true;
     }
+    public void reverseAttack() {
+        if (attack)
+        	attack = false;
+        else
+        	attack = true;
+    }
 
     public void reversePlacing() {
         if (placing)
@@ -36,6 +42,10 @@ public class ColdWarModel implements CollisionListener {
 
     public boolean isPlacing() {
         return placing;
+    }
+    
+    public boolean isAttack() {
+        return attack;
     }
 
     public boolean isMenu() {
@@ -72,7 +82,8 @@ public class ColdWarModel implements CollisionListener {
     public void collided(Sprite a, Sprite b) {
         SnowUnitSprite sa = (SnowUnitSprite) a;
         SnowUnitSprite sb = (SnowUnitSprite) b;
-        Log.d("Collision!", "" + a.toString() + " collided with " + b.toString());
-
+//        sa.die();
+//        sb.die();
+        Log.d("Collision!", "Model, Collision" + a.getClass().getName() + " collided with " + b.getClass().getName());
     }
 }

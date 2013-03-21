@@ -31,4 +31,5 @@ public class SnowUnitSpriteContainer implements SpriteContainer {
     public boolean contains(SnowUnitSprite s) {
         return sprites.contains(s);
     }
+    
 }

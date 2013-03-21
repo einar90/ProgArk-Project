@@ -37,13 +37,14 @@ public class ColdWarGame extends State implements MiniGame{
 	private Image bgfade = GraphicsHelper.getScaledImage(res, R.drawable.winterfade2);
 	private Image gridA = new Image(R.drawable.wintergrida);
 	private Image gridB = new Image(R.drawable.wintergridb);
-	private float[] scaling;
+	private float[] scaling,posScale;
 	private long eventTime;
 	
 	public ColdWarGame(){
 		h = Constants.WINDOW_HEIGHT;
 		w = Constants.WINDOW_WIDTH;
 		
+		posScale = new float[]{(510f/1600f),(1300f/1600f),(210/1600),(360/960)};
         scaling = new float[]{w / 1600f, h / 960f};
 		con = new SnowUnitSpriteContainer();
 		plOneCon = new SnowUnitSpriteContainer();
@@ -57,35 +58,34 @@ public class ColdWarGame extends State implements MiniGame{
 		backfade = new Sprite(bgfade);
 		backfade.setPosition(w/2,h/2);
 		
+		Log.d("Size", "Size: "+w+", "+h+". Scale: "+scaling[0]+", "+scaling[1]);
+		Log.d("Size", "SizeImage: "+bg.getWidth()+", "+bg.getHeight()+"pos: "+back.getX()+", "+back.getY());
+		Log.d("Size", "PosScale: "+posScale[0]+", "+posScale[1]+"comp: "+back.getScale().getX()+", "+back.getScale().getY());
+		
+		
 		lGrid = new Sprite(gridA);
 		rGrid = new Sprite(gridB);
 		rGrid.setScale(scaling[0], scaling[1]);
 		lGrid.setScale(scaling[0], scaling[1]);
 		lGrid.setPosition(490*scaling[0], h);
-		rGrid.setPosition(1280*scaling[0], h);
+		rGrid.setPosition(w*posScale[1] - 15, h);
 		
 		ice = new SnowUnitSprite(icb);
 		ice.setPosition(w - 30,h - 10);
-		addToContainer(ice, con);
+		addToContainer(ice, plOneCon);
 		
 		iceball = new SnowUnitSprite(icb);
 		iceball.setPosition(30, h - 10);
 		iceball.addCollisionListener(model);
 		ice.addCollisionListener(model);
-		addToContainer(iceball, con);
+		addToContainer(iceball, plTwoCon);
 		initMenu();
-		Log.d("Size", "Size: "+w+", "+h+". Scale: "+scaling[0]+", "+scaling[1]);
 	}
 	@Override
     public void update(float dt) {
 		if(!model.isMenu() && !model.isPlacing()){
-			ArrayList<Sprite> sprites = con.getSprites();
-			for(Sprite s:sprites){
-				s.update(dt);
-			}
-			
-			
-			
+			back.update(dt);
+			updateSnowUnits(dt);
 		}
 		else{
 			backfade.update(dt);
@@ -98,17 +98,43 @@ public class ColdWarGame extends State implements MiniGame{
 				}
 			}
 		}
+		checkCollision();
     }
+	private void updateSnowUnits(float dt) {
+		ArrayList<Sprite> s1 = plOneCon.getSprites();
+		ArrayList<Sprite> s2 = plTwoCon.getSprites();
+		for(Sprite s:s1){
+			s.update(dt);
+		}
+		for(Sprite s:s2){
+			s.update(dt);
+		}
+	}
+	private void drawSnowUnits(Canvas c) {
+		ArrayList<Sprite> s1 = plOneCon.getSprites();
+		ArrayList<Sprite> s2 = plTwoCon.getSprites();
+		for(Sprite s:s1){
+			s.draw(c);
+		}
+		for(Sprite s:s2){
+			s.draw(c);
+		}
+	}
 
-    @Override
+    private void checkCollision() {
+		for(Sprite s : plOneCon.getSprites()){
+			for (Sprite s2 : plTwoCon.getSprites()) {
+				if(s.collides(s2))
+					Log.d("COllision", "checkCollision()");
+			}
+		}
+	}
+	@Override
     public void draw(Canvas canvas) {
     	if(canvas != null){
     		if(!model.isMenu()){
-    			ArrayList<Sprite> sprites = con.getSprites();
-    			for(Sprite s:sprites){
-    				s.draw(canvas);
-    			}
-    			
+    			back.draw(canvas);
+    			drawSnowUnits(canvas);
     		}
     		else{
     			drawMenu(canvas);
@@ -133,6 +159,7 @@ public class ColdWarGame extends State implements MiniGame{
 		long time = event.getEventTime();
 		checkPlacingBox(event, time);
 		if(!model.isMenu() && (time - eventTime) > 500){
+			Log.d("Ball", "started moving");
 			iceball.setSpeed(200, -250);
 			iceball.setAcceleration(0, (float) 118.1);
 			ice.setSpeed(-200, -250);
