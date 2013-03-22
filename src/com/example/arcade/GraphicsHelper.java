@@ -1,5 +1,7 @@
 package com.example.arcade;
 
+import java.util.Arrays;
+
 import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -8,7 +10,9 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.ViewConfiguration;
+import sheep.game.Sprite;
 import sheep.graphics.Image;
 
 import com.example.arcade.utilities.Constants;
@@ -59,8 +63,6 @@ public class GraphicsHelper {
      */
     public static Image getScaledImage(Resources res, int id) {
         Image scaledImage = null;
-        Log.d("bæ", "w: "+scalingFactor[0]);
-        Log.d("bæ", "h: "+scalingFactor[1]);
         try {
             Bitmap unscaledBitmap = BitmapFactory.decodeResource(res, id);
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (unscaledBitmap.getWidth() * scalingFactor[0]), (int) (unscaledBitmap.getHeight() * scalingFactor[1]), true);
@@ -98,6 +100,18 @@ public class GraphicsHelper {
 
         return scaledImage;
     }
-
+    
+    public static boolean isSpriteTouched(Sprite s, float spriteWidth, float spriteHeight, MotionEvent event){
+    	float minX = s.getX() - spriteWidth/2;
+    	float maxX = s.getX() + spriteWidth/2;
+    	float minY = s.getY() - spriteHeight/2;
+    	float maxY = s.getY() + spriteHeight/2;
+    	if(event.getX() > minX && event.getX() < maxX){
+    		if(event.getY() > minY && event.getY() < maxY){
+        		return true; 
+        	}
+    	}
+    	return false;
+    }
 
 }

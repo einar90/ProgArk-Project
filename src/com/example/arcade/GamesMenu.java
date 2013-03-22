@@ -24,11 +24,12 @@ public class GamesMenu extends State {
 
 	private static Resources resources;
 	private static Point displaySize;
-	private static Sprite tankWarsButton;
+	private Sprite tankWarsButton;
 	private Sprite wormsButton;
 	private Sprite coldWarIIButton;
 	private Sprite battleShipButton;
-
+	private float buttonHeight;
+	private float buttonWidth;
 
 	public GamesMenu(Point displaySize, Resources resources) {
 		this.resources = resources;
@@ -45,6 +46,9 @@ public class GamesMenu extends State {
 		Image battleshipImage = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_button);
 		Image coldWarIiImage = GraphicsHelper.getScaledImage(resources, R.drawable.coldwarii_button);
 
+		buttonHeight = tankWarsImage.getHeight();
+		buttonWidth = tankWarsImage.getWidth();
+		
 		tankWarsButton = new Sprite(tankWarsImage);
 		wormsButton = new Sprite(wormsImage);
 		battleShipButton = new Sprite(battleshipImage);
@@ -80,15 +84,15 @@ public class GamesMenu extends State {
 
 	@Override
 	public boolean onTouchDown(MotionEvent event) {
-		if (tankWarsButton.getBoundingBox().contains(event.getX(), event.getY())) {
+		if (GraphicsHelper.isSpriteTouched(tankWarsButton, buttonWidth, buttonHeight, event)) {
 			getGame().pushState(new TankWarsUserInterface(displaySize, resources));
 			Log.d("Tapped", "Tank Wars button tapped.");
-		} else if (wormsButton.getBoundingBox().contains(event.getX(), event.getY())) {
+		} else if (GraphicsHelper.isSpriteTouched(wormsButton, buttonWidth, buttonHeight, event)) {
 			Log.d("Tapped", "Worms button tapped.");
-		} else if (coldWarIIButton.getBoundingBox().contains(event.getX(), event.getY())) {
+		} else if (GraphicsHelper.isSpriteTouched(coldWarIIButton, buttonWidth, buttonHeight, event)) {
 			getGame().pushState(new ColdWarGame());
 			Log.d("Tapped", "Cold War II button tapped.");
-		} else if (battleShipButton.getBoundingBox().contains(event.getX(), event.getY())) {
+		} else if (GraphicsHelper.isSpriteTouched(battleShipButton, buttonWidth, buttonHeight, event)) {
 			getGame().pushState(new BattleshipUserInterface(displaySize));
 			Log.d("Tapped", "Battleship button tapped.");
 		}
