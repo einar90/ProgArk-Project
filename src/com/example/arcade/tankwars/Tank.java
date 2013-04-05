@@ -9,6 +9,9 @@ import com.example.arcade.R;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Dzenan
@@ -38,14 +41,15 @@ public class Tank extends Sprite {
     private int hp;
     private Sprite tankBarrel;
     Projectile projectilePicked;
-    // private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
+    private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
 
     protected Tank(Image tankimage) {
         super(tankimage);
-        //this.hp = 100;
-        //this.power = 0;
-        //this.barrelAngle = 0;
-        //this.projectileAmmo = setStartingAmmo(15, 1, 3);
+        this.hp = 100;
+        this.power = 0;
+        this.barrelAngle = 0;
+        this.projectileAmmo = setStartingAmmo(15, 1, 3);
+        Log.d("Tank", "Tank initialized and ammo is: \n" + this.projectileAmmo.toString());
 
     }
 
@@ -67,7 +71,7 @@ public class Tank extends Sprite {
     }
 
     public static Sprite getTankBarrel1() {
-        Log.d("Tank", "Returning tankbarrel1");
+        //Log.d("Tank", "Returning tankbarrel1");
         if (tankBarrel1 == null) {
             tankBarrel1 = new Sprite(tankBarrelImage);
             tank1.tankBarrel = tankBarrel1;
@@ -78,7 +82,7 @@ public class Tank extends Sprite {
     }
 
     public static Sprite getTankBarrel2() {
-        Log.d("Tank", "Returning tankbarrel1");
+        //Log.d("Tank", "Returning tankbarrel1");
         if (tankBarrel2 == null) {
             tankBarrel2 = new Sprite(tankBarrelImage);
             tank2.tankBarrel = tankBarrel2;
@@ -139,7 +143,7 @@ public class Tank extends Sprite {
         tank1.setPosition(tank1.getPosition().getX(), tank1.getPosition().getY() - 1);
         tank2.setPosition(tank2.getPosition().getX(), tank2.getPosition().getY() - 1);
     }
-     /*
+
     public void reduceAmmo(String ammoName) {
         Log.d("Tank", "Reducing ammo of: " + ammoName);
         this.projectileAmmo.put(ammoName, Integer.parseInt(this.projectileAmmo.get(ammoName).toString()) - 1);
@@ -153,15 +157,14 @@ public class Tank extends Sprite {
 
     private static Dictionary setStartingAmmo(final int tankshells, final int nukes, final int thermites) {
         Log.d("Tank", "Initializing ammo");
-        Map<String, Integer> map = new HashMap<String, Integer>() {{
+        Dictionary map = new Hashtable() {{
             put("Bullet", 999);
             put("TankShell", tankshells);
             put("Nukes", nukes);
             put("ThermiteShells", thermites);
         }};
-        return (Dictionary) map;
+        return map;
     }
-      */
 
 
 }
