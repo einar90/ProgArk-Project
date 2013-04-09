@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import com.example.arcade.Game;
 import com.example.arcade.R;
 import com.example.arcade.GraphicsHelper;
@@ -93,8 +94,9 @@ public class Map {
      * Negative windVector values indicates wind to the left; positive indicates wind to the right.
      */
     public static void changeWindVector() {
-        Random numberGenerator = new Random(161864654);
+        Random numberGenerator = new Random();
         windVector = numberGenerator.nextInt(20) - 10;
+        Log.d("Value", "Wind: " + windVector);
     }
 
     public static int getWindVector() {
