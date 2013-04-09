@@ -24,35 +24,36 @@ import com.example.arcade.utilities.Constants;
  * Time: 11:19
  */
 public class GraphicsHelper {
-    
+
     private static float[] scalingFactor = new float[]{
-    	Constants.WINDOW_WIDTH / 1280.0f,
-        Constants.WINDOW_HEIGHT / 800.0f
+            Constants.WINDOW_WIDTH / 1280.0f,
+            Constants.WINDOW_HEIGHT / 800.0f
     };
 
-    
+
     /**
-     * Calculating the pixel height of devices with a software navigation bar. 
+     * Calculating the pixel height of devices with a software navigation bar.
      * Physical height minus navbar height.
+     *
      * @return
      */
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH) 
-    public static float getRealHeight(){
-    	float realHeight = Game.getInstance().getResources().getDisplayMetrics().heightPixels;
-    	
-    	//If the API level is below 14 it should not have software navigation bar
-    	if(android.os.Build.VERSION.SDK_INT >= 14){
-	    	boolean hasSoftNavBar = !ViewConfiguration.get(Game.getInstance().getContext()).hasPermanentMenuKey();
-	    	if(hasSoftNavBar){
-	    		float density = Game.getInstance().getResources().getDisplayMetrics().density;
-	    		float navBarHeight = 48*density;
-	    		realHeight = realHeight - navBarHeight;
-	    	}
-    	}
-    	return realHeight;
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public static float getRealHeight() {
+        float realHeight = Game.getInstance().getResources().getDisplayMetrics().heightPixels;
+
+        //If the API level is below 14 it should not have software navigation bar
+        if (android.os.Build.VERSION.SDK_INT >= 14) {
+            boolean hasSoftNavBar = !ViewConfiguration.get(Game.getInstance().getContext()).hasPermanentMenuKey();
+            if (hasSoftNavBar) {
+                float density = Game.getInstance().getResources().getDisplayMetrics().density;
+                float navBarHeight = 48 * density;
+                realHeight = realHeight - navBarHeight;
+            }
+        }
+        return realHeight;
     }
-    
-    
+
+
     /**
      * Method that returns an Image scaled for the display size, relative to a 1280x800 standard resolution
      * (which ALL images should initially be created for)
@@ -76,6 +77,15 @@ public class GraphicsHelper {
         return scaledImage;
     }
 
+
+    /**
+     * Method that returns an FLIPPED Image scaled for the display size, relative to a 1280x800 standard resolution
+     * (which ALL images should initially be created for)
+     *
+     * @param res The Resources for the app
+     * @param id  The id of the image to scale. id = R.drawable.imagename
+     * @return Returns the flipped and scaled image if successful, otherwise null.
+     */
     public static Image getFlippedScaledImage(Resources res, int id) {
         Image scaledImage = null;
         try {
@@ -100,18 +110,18 @@ public class GraphicsHelper {
 
         return scaledImage;
     }
-    
-    public static boolean isSpriteTouched(Sprite s, float spriteWidth, float spriteHeight, MotionEvent event){
-    	float minX = s.getX() - spriteWidth/2;
-    	float maxX = s.getX() + spriteWidth/2;
-    	float minY = s.getY() - spriteHeight/2;
-    	float maxY = s.getY() + spriteHeight/2;
-    	if(event.getX() > minX && event.getX() < maxX){
-    		if(event.getY() > minY && event.getY() < maxY){
-        		return true; 
-        	}
-    	}
-    	return false;
+
+    public static boolean isSpriteTouched(Sprite s, float spriteWidth, float spriteHeight, MotionEvent event) {
+        float minX = s.getX() - spriteWidth / 2;
+        float maxX = s.getX() + spriteWidth / 2;
+        float minY = s.getY() - spriteHeight / 2;
+        float maxY = s.getY() + spriteHeight / 2;
+        if (event.getX() > minX && event.getX() < maxX) {
+            if (event.getY() > minY && event.getY() < maxY) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

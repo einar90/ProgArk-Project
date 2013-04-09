@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.view.MotionEvent;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import sheep.collision.CollisionLayer;
@@ -129,5 +130,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
             }
         }
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean onTouchDown(MotionEvent event) {
+        Controller.aimBarrel(Tank.getTank1(), new Point((int) event.getX(), (int) event.getY()));
+        return true;
     }
 }
