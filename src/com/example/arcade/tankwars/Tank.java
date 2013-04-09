@@ -106,6 +106,11 @@ public class Tank extends Sprite {
         //sett posisjonen til barrels riktig i forhold til tanksene.
     }
 
+    public void setBarrelAngle(int angle) {
+        this.barrelAngle = angle;
+        tankBarrel.rotate(-angle);
+    }
+
     public void reduceHp(int dmg) {
         Log.d("Tank", "Reducing hp");
         this.hp = this.hp - dmg;

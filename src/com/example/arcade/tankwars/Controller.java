@@ -21,16 +21,16 @@ public class Controller {
      * @param touchPos The point on the screen being touched
      */
     public static void aimBarrel(Tank tank, Point touchPos) {
+        // Calculating angle
         Point tankPos = new Point((int) tank.getPosition().getX(), (int) tank.getPosition().getY());
-        Log.d("Value", "tankPos: " + tankPos.x + ", " + tankPos.y);
         Vector2 aimVector = new Vector2(Math.abs(touchPos.x - tankPos.x), Math.abs(touchPos.y - tankPos.y));
-        Log.d("Value", "aimVector: " + aimVector.getX() + ", " + aimVector.getY());
         Vector2 normalizedAimVector = aimVector.getNormalized();
-        Log.d("Value", "normalizedAimVector: " + normalizedAimVector.getX() + ", " + normalizedAimVector.getY());
-        Vector2 horizontaVector = new Vector2(Math.abs(touchPos.x - tankPos.y), 0);
-        Log.d("Value", "horizontalVector: " + horizontaVector.getX() + ", " + horizontaVector.getY());
-        double angle = Math.acos(horizontaVector.getLength() / aimVector.getLength());
+        double dotProduct = normalizedAimVector.getX();
+        int angle = (int) Math.toDegrees(Math.acos(dotProduct));
         Log.d("Value", "angle: " + angle);
+
+        // Changing angle of tank barrel
+        tank.setBarrelAngle(angle);
     }
 
 
