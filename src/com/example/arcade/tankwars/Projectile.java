@@ -1,6 +1,10 @@
 package com.example.arcade.tankwars;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
+import com.example.arcade.Game;
+import com.example.arcade.GraphicsHelper;
+import com.example.arcade.R;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 import sheep.math.Vector2;
@@ -13,7 +17,9 @@ import sheep.math.Vector2;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class Projectile extends Sprite {
-    Image spriteImage;
+
+    private static final Resources resources = Game.getInstance().getResources();
+    static final Image spriteImage = GraphicsHelper.getScaledImage(resources, R.drawable.projectile);
 
     private Vector2 velocityVector;
     private Vector2 position;
@@ -22,8 +28,8 @@ public abstract class Projectile extends Sprite {
     private int windAffectionFactor;    /*Antar wind er en Vector2, og denne
                                          *brukes bare til å multipliseres med*/
 
-    public Projectile(Image spriteImage) {
-        this.spriteImage = spriteImage;
+    public Projectile() {
+        super(spriteImage);
         //To-Do fullføre konstruktfør med spriteimage og startposisjon++
 
     }
