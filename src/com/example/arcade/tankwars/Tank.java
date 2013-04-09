@@ -130,6 +130,16 @@ public class Tank extends Sprite {
 
     }
 
+    public void setTankPower(long timeHeld) {
+        if (timeHeld > 2000) {
+            this.power = 2000;
+        } else this.power = (int) timeHeld;
+    }
+
+    public int getTankPower() {
+        return this.power;
+    }
+
     public static void setStartSpeed() {
         tank1.setYSpeed(50);
         tank2.setYSpeed(50);
