@@ -44,6 +44,10 @@ public class Controller {
         double dotProduct = normalizedAimVector.getX();
         int angle = (int) Math.toDegrees(Math.acos(dotProduct));
 
+        // Changing sign of angle if tank 2 is active
+        if (activeTank == Tank.getTank2()) {
+            angle = -angle;
+        }
         // Changing angle of tank barrel
         activeTank.setBarrelAngle(angle);
     }
