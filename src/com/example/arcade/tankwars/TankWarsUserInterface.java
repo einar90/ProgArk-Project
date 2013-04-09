@@ -133,7 +133,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public boolean onTouchDown(MotionEvent event) {
-        Controller.aimBarrel(Tank.getTank1(), new Point((int) event.getX(), (int) event.getY()));
+        Controller.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
 
         Controller.recordPower();
 
@@ -144,6 +144,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     @Override
     public boolean onTouchUp(MotionEvent event) {
         Controller.calculatePower();
+        Controller.changeActiveTank();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
     }
 }
