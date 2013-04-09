@@ -2,7 +2,6 @@ package com.example.arcade.tankwars;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -135,6 +134,16 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     @Override
     public boolean onTouchDown(MotionEvent event) {
         Controller.aimBarrel(Tank.getTank1(), new Point((int) event.getX(), (int) event.getY()));
+
+        Controller.recordPower();
+
+
         return true;
+    }
+
+    @Override
+    public boolean onTouchUp(MotionEvent event) {
+        Controller.calculatePower();
+        return true;    //To change body of overridden methods use File | Settings | File Templates.
     }
 }

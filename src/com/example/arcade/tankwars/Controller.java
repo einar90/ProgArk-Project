@@ -4,6 +4,8 @@ import android.graphics.Point;
 import android.util.Log;
 import sheep.math.Vector2;
 
+import java.util.Calendar;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Dzenan
@@ -12,6 +14,10 @@ import sheep.math.Vector2;
  * To change this template use File | Settings | File Templates.
  */
 public class Controller {
+
+    static boolean firstPress = true;
+    static Calendar initialPressTime;
+    static Calendar releasePressTime;
 
 
     /**
@@ -33,5 +39,38 @@ public class Controller {
         tank.setBarrelAngle(angle);
     }
 
+
+    /**
+     * Used to calculate the power the bullet should be fired with
+     * given the time the user held down the shoot ability
+     */
+    public static void recordPower() {
+
+        Log.d("Controller", "Starting to record fire");
+        initialPressTime = Calendar.getInstance();
+
+    }
+
+
+    public static void calculatePower() {
+        //Released
+        if (firstPress == true) {
+            firstPress = false;
+            return;
+        }
+
+
+        releasePressTime = Calendar.getInstance();
+
+        //Dette er tidsforskjellen.
+
+        long timeHeld = releasePressTime.getTimeInMillis() - initialPressTime.getTimeInMillis();
+
+
+        Log.d("Controller", "Released the hold on fire, held for: " + timeHeld);
+        //tank.
+
+
+    }
 
 }
