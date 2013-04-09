@@ -101,7 +101,7 @@ public class Tank extends Sprite {
     public static void setInitalBarrelPositions(Point size) {
         Log.d("Tank", "Setting positions for both barrels");
         tankBarrel1.setPosition(size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2);
-        tankBarrel2.setPosition(size.x - size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage2.getHeight() / 2);
+        tankBarrel2.setPosition(size.x - size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2 + (size.y / 40));
         tankBarrel2.rotate(180);
 
         //sett posisjonen til barrels riktig i forhold til tanksene.
