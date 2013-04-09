@@ -18,7 +18,7 @@ public class Controller {
     static boolean firstPress = true;
     static Calendar initialPressTime;
     static Calendar releasePressTime;
-    static Tank activeTank = Tank.getTank1();
+    static Tank activeTank = Tank.getTank2();
 
 
     /**
