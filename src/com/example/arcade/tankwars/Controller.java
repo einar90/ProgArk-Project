@@ -18,24 +18,34 @@ public class Controller {
     static boolean firstPress = true;
     static Calendar initialPressTime;
     static Calendar releasePressTime;
+    static Tank activeTank = Tank.getTank1();
+
+
+    /**
+     * Changes the active tank
+     */
+    public static void changeActiveTank() {
+        if (activeTank == Tank.getTank1()) {
+            activeTank = Tank.getTank2();
+        } else activeTank = Tank.getTank1();
+    }
 
 
     /**
      * Used to aim the barrel of a tank. Changes the barrelAngle variable for the tank and rotates the sprite.
      *
-     * @param tank     The tank being manipulated
      * @param touchPos The point on the screen being touched
      */
-    public static void aimBarrel(Tank tank, Point touchPos) {
+    public static void aimBarrel(Point touchPos) {
         // Calculating angle
-        Point tankPos = new Point((int) tank.getPosition().getX(), (int) tank.getPosition().getY());
+        Point tankPos = new Point((int) activeTank.getPosition().getX(), (int) activeTank.getPosition().getY());
         Vector2 aimVector = new Vector2(Math.abs(touchPos.x - tankPos.x), Math.abs(touchPos.y - tankPos.y));
         Vector2 normalizedAimVector = aimVector.getNormalized();
         double dotProduct = normalizedAimVector.getX();
         int angle = (int) Math.toDegrees(Math.acos(dotProduct));
 
         // Changing angle of tank barrel
-        tank.setBarrelAngle(angle);
+        activeTank.setBarrelAngle(angle);
     }
 
 
@@ -63,9 +73,8 @@ public class Controller {
         //Dette er tidsforskjellen.
         long timeHeld = releasePressTime.getTimeInMillis() - initialPressTime.getTimeInMillis();
         Log.d("Controller", "Released the hold on fire, held for: " + timeHeld);
-        //tank.
 
-
+        activeTank.setTankPower(timeHeld);
     }
 
 }
