@@ -107,8 +107,10 @@ public class Tank extends Sprite {
     }
 
     public void setBarrelAngle(int angle) {
+        int barrelDiff = this.barrelAngle - angle;
         this.barrelAngle = angle;
-        tankBarrel.rotate(-angle);
+        tankBarrel.rotate(barrelDiff);
+        Log.d("Value", "new barrelAngle: " + this.barrelAngle);
     }
 
     public void reduceHp(int dmg) {

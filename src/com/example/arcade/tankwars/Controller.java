@@ -33,7 +33,6 @@ public class Controller {
         Vector2 normalizedAimVector = aimVector.getNormalized();
         double dotProduct = normalizedAimVector.getX();
         int angle = (int) Math.toDegrees(Math.acos(dotProduct));
-        Log.d("Value", "angle: " + angle);
 
         // Changing angle of tank barrel
         tank.setBarrelAngle(angle);
