@@ -142,10 +142,10 @@ public class Tank extends Sprite {
     }
 
     public static void setStartSpeed() {
-        tank1.setYSpeed(50);
-        tank2.setYSpeed(50);
-        tankBarrel1.setYSpeed(100);
-        tankBarrel2.setYSpeed(100);
+        tank1.setYSpeed(100);
+        tank2.setYSpeed(100);
+        tankBarrel1.setYSpeed(200);
+        tankBarrel2.setYSpeed(200);
     }
 
     public static void stopStartSpeed() {
