@@ -58,14 +58,10 @@ public class Controller {
             return;
         }
 
-
         releasePressTime = Calendar.getInstance();
 
         //Dette er tidsforskjellen.
-
         long timeHeld = releasePressTime.getTimeInMillis() - initialPressTime.getTimeInMillis();
-
-
         Log.d("Controller", "Released the hold on fire, held for: " + timeHeld);
         //tank.
 
