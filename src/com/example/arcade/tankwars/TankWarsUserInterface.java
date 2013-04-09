@@ -145,6 +145,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     public boolean onTouchUp(MotionEvent event) {
         Controller.calculatePower();
         Controller.changeActiveTank();
+        Map.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
     }
 }
