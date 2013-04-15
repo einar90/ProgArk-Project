@@ -31,6 +31,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     Map map;
     Tank playerOneTank, playerTwoTank;
     Sprite playerOneBarrel, playerTwoBarrel;
+    Projectile currentProjectile = null;
 
     public TankWarsUserInterface(Point displaySize, Resources resources) {
 
@@ -106,17 +107,17 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public void launchGame() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // Load something?
     }
 
     @Override
     public void exitGame() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // Save the highscore list
     }
 
     @Override
     public HighscoreList getHighscoreList() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;  // Return the highscore list
     }
 
     @Override
@@ -144,6 +145,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     @Override
     public boolean onTouchUp(MotionEvent event) {
         Controller.calculatePower();
+        currentProjectile = Controller.getProjectile();
         Controller.changeActiveTank();
         Map.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.

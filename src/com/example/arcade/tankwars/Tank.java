@@ -184,5 +184,12 @@ public class Tank extends Sprite {
         return map;
     }
 
+    /**
+     * @return Returns the barrel angle of the currently active tank
+     */
+    public static int getBarrelAngle() {
+        return Controller.getActiveTank().barrelAngle;
+    }
+
 
 }

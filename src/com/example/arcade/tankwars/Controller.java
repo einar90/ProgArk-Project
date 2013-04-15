@@ -18,7 +18,9 @@ public class Controller {
     private static boolean firstPress = true;
     private static Calendar initialPressTime;
     private static Calendar releasePressTime;
+
     private static Tank activeTank = Tank.getTank2();
+    private static String chosenProjectile = "Bullet";
 
 
     /**
@@ -83,6 +85,12 @@ public class Controller {
         Log.d("Controller", "Released the hold on fire, held for: " + timeHeld);
 
         activeTank.setTankPower(timeHeld);
+    }
+
+    public static Projectile getProjectile() {
+        if (chosenProjectile.equals("Bullet")) {
+            return new Bullet();
+        } else return new Bullet();
     }
 
 }

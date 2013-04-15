@@ -1,21 +1,19 @@
 package com.example.arcade;
 
-import java.util.Arrays;
-
 import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
+import com.example.arcade.utilities.Constants;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
-
-import com.example.arcade.utilities.Constants;
 
 /**
  * Created by:
@@ -29,6 +27,12 @@ public class GraphicsHelper {
             Constants.WINDOW_WIDTH / 1280.0f,
             Constants.WINDOW_HEIGHT / 800.0f
     };
+
+    public static Point getDisplaySize() {
+        int height = Game.getInstance().getResources().getDisplayMetrics().heightPixels;
+        int width = Game.getInstance().getResources().getDisplayMetrics().widthPixels;
+        return new Point(width, height);
+    }
 
 
     /**

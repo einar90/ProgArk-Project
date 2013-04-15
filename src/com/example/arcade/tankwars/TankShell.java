@@ -9,9 +9,15 @@ package com.example.arcade.tankwars;
  */
 public class TankShell extends Projectile {
 
-    private int explosionRadius;
+    private int explosionRadius = 10;
 
     public TankShell() {
         super();
+        damage = 20;
+    }
+
+    public void explode() {
+        return;
+        // TODO: Implement this
     }
 }
