@@ -88,6 +88,11 @@ public class Controller {
     }
 
     public static Projectile getProjectile() {
+        //Released
+        if (firstPress == true) {
+            firstPress = false;
+            return null;
+        }
         if (chosenProjectile.equals("Bullet")) {
             return new Bullet();
         } else return new Bullet();

@@ -3,6 +3,7 @@ package com.example.arcade.tankwars;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.util.Log;
 import com.example.arcade.Game;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.R;
@@ -54,6 +55,9 @@ public abstract class Projectile extends Sprite {
 
     public void draw(Canvas canvas) {
         this.draw(canvas);
+        Log.d("Projectile", "Position: " + this.getPosition().toString());
+        Log.d("Projectile", "Speed: " + this.getSpeed().toString());
+        Log.d("Projectile", "Acceleration: " + this.getAcceleration().toString());
     }
 
     public void update(float dt) {
