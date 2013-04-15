@@ -1,8 +1,6 @@
 package com.example.arcade.tankwars;
 
 import android.content.res.Resources;
-import android.graphics.Canvas;
-import android.graphics.Point;
 import android.util.Log;
 import com.example.arcade.Game;
 import com.example.arcade.GraphicsHelper;
@@ -27,23 +25,23 @@ public abstract class Projectile extends Sprite {
 
     public Projectile() {
         super(spriteImage);
-        Tank activeTank = Controller.getActiveTank();
         int windAffectionFactor = Map.getWindVector();
-        Point displaySize = GraphicsHelper.getDisplaySize();
 
         // Setting initial position for projectile
-        if (activeTank == Tank.getTank1()) {
-            this.setPosition(displaySize.x / 10, displaySize.y / 3);
-        } else this.setPosition(displaySize.x - displaySize.x / 10, displaySize.y / 3);
+        this.setPosition(Tank.getBarrelPosition().x, Tank.getBarrelPosition().y);
 
         // Setting initial speed vector for projectile as calculated from the barrel angle and power of the active tank
-        Vector2 initialSpeed = new Vector2(1 / (float) Math.cos(Tank.getBarrelAngle()), 1 / (float) Math.sin(Tank.getBarrelAngle()));
+        Vector2 initialSpeed = new Vector2(-1 / (float) Math.cos(Tank.getBarrelAngle()), -1 / (float) Math.sin(Tank.getBarrelAngle()));
         initialSpeed.normalize();
-        initialSpeed.multiply(activeTank.getTankPower());
+        initialSpeed.multiply(Tank.getTankPower());
         this.setSpeed(initialSpeed);
 
         // Setting acceleration vector for projectile, taking into account gravity and wind
-        this.setAcceleration(windAffectionFactor, -10);
+        //this.setAcceleration(windAffectionFactor, -10);
+
+        Log.d("Projectile", "Position: " + this.getPosition().toString());
+        Log.d("Projectile", "Speed: " + this.getSpeed().toString());
+        Log.d("Projectile", "Acceleration: " + this.getAcceleration().toString());
     }
 
 
@@ -52,17 +50,6 @@ public abstract class Projectile extends Sprite {
         return false;
     }
 
-
-    public void draw(Canvas canvas) {
-        this.draw(canvas);
-        Log.d("Projectile", "Position: " + this.getPosition().toString());
-        Log.d("Projectile", "Speed: " + this.getSpeed().toString());
-        Log.d("Projectile", "Acceleration: " + this.getAcceleration().toString());
-    }
-
-    public void update(float dt) {
-        this.update(dt);
-    }
 
     /**
      * Abstract methods

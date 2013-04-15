@@ -53,6 +53,9 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         canvas.drawText(Map.getWindString(), 20, 50, font);
 
+        if (currentProjectile != null) {
+            currentProjectile.draw(canvas);
+        }
     }
 
     public void update(float dt) {
@@ -61,6 +64,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         map.updateMap(dt);
 
         updateSprites(dt);
+
+        if (currentProjectile != null) {
+            currentProjectile.update(dt);
+        }
 
     }
 

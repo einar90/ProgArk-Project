@@ -39,7 +39,6 @@ public class Tank extends Sprite {
     private int power;
     private int hp;
     private Sprite tankBarrel;
-    Projectile projectilePicked;
     private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
 
     protected Tank(Image tankimage) {
@@ -125,11 +124,6 @@ public class Tank extends Sprite {
         return false;
     }
 
-    public static void flipTank() {
-        Log.d("Ori", "Tank1 ori:  " + tank1.getOrientation());
-
-
-    }
 
     public void setTankPower(long timeHeld) {
         if (timeHeld > 2000) {
@@ -137,8 +131,8 @@ public class Tank extends Sprite {
         } else this.power = (int) timeHeld;
     }
 
-    public int getTankPower() {
-        return this.power;
+    public static int getTankPower() {
+        return Controller.getActiveTank().power;
     }
 
     public static void setStartSpeed() {
@@ -189,6 +183,15 @@ public class Tank extends Sprite {
      */
     public static int getBarrelAngle() {
         return Controller.getActiveTank().barrelAngle;
+    }
+
+
+    /**
+     * @return Returns the position of the barrel of the active tank
+     */
+    public static Point getBarrelPosition() {
+        Sprite activeBarrel = Controller.getActiveTank().tankBarrel;
+        return new Point((int) activeBarrel.getX(), (int) activeBarrel.getY());
     }
 
 
