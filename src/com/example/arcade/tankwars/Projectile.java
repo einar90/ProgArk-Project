@@ -25,19 +25,19 @@ public abstract class Projectile extends Sprite {
 
     public Projectile() {
         super(spriteImage);
-        int windAffectionFactor = Map.getWindVector();
+        int windAffectionFactor = -Map.getWindVector();
 
         // Setting initial position for projectile
         this.setPosition(Tank.getBarrelPosition().x, Tank.getBarrelPosition().y);
 
         // Setting initial speed vector for projectile as calculated from the barrel angle and power of the active tank
-        Vector2 initialSpeed = new Vector2(-1 / (float) Math.cos(Tank.getBarrelAngle()), -1 / (float) Math.sin(Tank.getBarrelAngle()));
-        initialSpeed.normalize();
-        initialSpeed.multiply(Tank.getTankPower());
+        Vector2 initialSpeed = Tank.getBarrelVector();
+        initialSpeed.setX(initialSpeed.getX() * Tank.getTankPower());
+        initialSpeed.setY(initialSpeed.getY() * Tank.getTankPower());
         this.setSpeed(initialSpeed);
 
         // Setting acceleration vector for projectile, taking into account gravity and wind
-        //this.setAcceleration(windAffectionFactor, -10);
+        this.setAcceleration(windAffectionFactor * 5, 100);
 
         Log.d("Projectile", "Position: " + this.getPosition().toString());
         Log.d("Projectile", "Speed: " + this.getSpeed().toString());

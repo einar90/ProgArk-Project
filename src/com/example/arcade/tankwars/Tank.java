@@ -8,6 +8,7 @@ import com.example.arcade.GraphicsHelper;
 import com.example.arcade.R;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
+import sheep.math.Vector2;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -183,6 +184,15 @@ public class Tank extends Sprite {
      */
     public static int getBarrelAngle() {
         return Controller.getActiveTank().barrelAngle;
+    }
+
+
+    public static Vector2 getBarrelVector() {
+        if (Controller.getActiveTank() == tank1) {
+            return new Vector2(Math.abs(1 / (float) Math.cos(getBarrelAngle())),
+                    -Math.abs(1 / (float) Math.sin(getBarrelAngle()))).getNormalized();
+        } else return new Vector2(-Math.abs(1 / (float) Math.cos(getBarrelAngle())),
+                -Math.abs(1 / (float) Math.sin(getBarrelAngle()))).getNormalized();
     }
 
 
