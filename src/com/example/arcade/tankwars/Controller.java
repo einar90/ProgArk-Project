@@ -15,10 +15,10 @@ import java.util.Calendar;
  */
 public class Controller {
 
-    static boolean firstPress = true;
-    static Calendar initialPressTime;
-    static Calendar releasePressTime;
-    static Tank activeTank = Tank.getTank2();
+    private static boolean firstPress = true;
+    private static Calendar initialPressTime;
+    private static Calendar releasePressTime;
+    private static Tank activeTank = Tank.getTank2();
 
 
     /**
@@ -28,6 +28,10 @@ public class Controller {
         if (activeTank == Tank.getTank1()) {
             activeTank = Tank.getTank2();
         } else activeTank = Tank.getTank1();
+    }
+
+    public static Tank getActiveTank() {
+        return activeTank;
     }
 
 

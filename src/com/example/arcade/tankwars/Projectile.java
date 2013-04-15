@@ -21,15 +21,14 @@ public abstract class Projectile extends Sprite {
     private static final Resources resources = Game.getInstance().getResources();
     static final Image spriteImage = GraphicsHelper.getScaledImage(resources, R.drawable.projectile);
 
-    private Vector2 velocityVector;
-    private Vector2 position;
     private Projectile projectileType;  //Kan kanskje bruke string istedenfor her
     private int damage;
-    private int windAffectionFactor;    /*Antar wind er en Vector2, og denne
-                                         *brukes bare til å multipliseres med*/
 
-    public Projectile() {
+    public Projectile(int barrelAngle, int windAffectionFactor) {
         super(spriteImage);
+        this.setAcceleration(windAffectionFactor, -10);
+        Vector2 initialSpeed = new Vector2(1 / (float) Math.cos(barrelAngle), 1 / (float) Math.sin(barrelAngle));
+        this.setSpeed(initialSpeed);
         //To-Do fullføre konstruktfør med spriteimage og startposisjon++
 
     }
@@ -57,6 +56,6 @@ public abstract class Projectile extends Sprite {
     }
 
     public void update(float dt) {
-
+        super.update(dt);
     }
 }
