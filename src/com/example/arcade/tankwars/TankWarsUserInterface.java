@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
-import com.example.arcade.GraphicsHelper;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import sheep.collision.CollisionLayer;
@@ -13,9 +12,6 @@ import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Font;
-import sheep.gui.TextButton;
-
-import java.util.Dictionary;
 
 /**
  * Created by:
@@ -30,20 +26,19 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     private static final Font font = new Font(64, 64, 64, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
 
-    private Map map;
+    private TankWarsMap map;
     private Tank playerOneTank;
     private Tank playerTwoTank;
     private Projectile currentProjectile = null;
 
-    private TextButton bulletButton;
-    private TextButton shellButton;
-    private TextButton thermiteButton;
-    private TextButton nukeButton;
-
-
+    /**
+     * Constructor for the TankWarsUserinterface, does some
+     * important Initializing.
+     * @param displaySize
+     */
     public TankWarsUserInterface(Point displaySize) {
 
-        map = new Map();
+        map = new TankWarsMap();
         getSprites(displaySize);
 
         addSpritesToCollisionLayer();
@@ -59,52 +54,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         drawSprites(canvas);
 
-        canvas.drawText(Map.getWindString(), 20, 50, font);
-        drawAmmoText(canvas);
+        canvas.drawText(TankWarsMap.getWindString(), 20, 50, font);
 
         if (currentProjectile != null) {
             currentProjectile.draw(canvas);
-        }
-    }
-
-    private void drawAmmoText(Canvas canvas) {
-        Dictionary ammo = Controller.getActiveTank().getProjectileAmmo();
-        String bulletText = "Bullet: " + ammo.get("Bullet");
-        String tankShellText = "Shells: " + ammo.get("TankShell");
-        String thermiteText = "Thermite: " + ammo.get("ThermiteShells");
-        String nukeText = "Nuke: " + ammo.get("Nukes");
-        String pickedAmmoText = "Picked: " + Controller.getChosenProjectile();
-
-        int y = GraphicsHelper.getDisplaySize().y - GraphicsHelper.getDisplaySize().y / 8;
-        int yIncr = GraphicsHelper.getDisplaySize().y / 10;
-        int xWidth = GraphicsHelper.getDisplaySize().x / 4;
-        int xIncr = GraphicsHelper.getDisplaySize().x / 10;
-
-        bulletButton = new TextButton(xIncr, y, bulletText);
-        shellButton = new TextButton(xWidth + xIncr, y, tankShellText);
-        thermiteButton = new TextButton(xWidth * 2 + xIncr, y, tankShellText);
-        nukeButton = new TextButton(xWidth * 3 + xIncr, y, nukeText);
-
-        bulletButton.draw(canvas);
-        shellButton.draw(canvas);
-        thermiteButton.draw(canvas);
-        nukeButton.draw(canvas);
-        canvas.drawText(pickedAmmoText, xWidth * 2 - xIncr, y + yIncr, font);
-    }
-
-    private void changeAmmo(MotionEvent event) {
-        if (bulletButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Bullet");
-            Controller.setChosenProjectile("Bullet");
-        } else if (shellButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Shell");
-            Controller.setChosenProjectile("Tank Shell");
-        } else if (thermiteButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Thermite");
-            Controller.setChosenProjectile("Thermite Shell");
-        } else if (nukeButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Nuke");
-            Controller.setChosenProjectile("Nuke");
         }
     }
 
@@ -121,6 +74,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     }
 
+    /**
+     * Returns the singletons to the correct var's in
+     * TankWarsUserInterface
+     * @param displaySize
+     */
     private void getSprites(Point displaySize) {
         playerOneTank = Tank.getTank1();
         playerTwoTank = Tank.getTank2();
@@ -129,6 +87,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     }
 
+    /**
+     * Handles the updating of all the sprites
+     * @param dt
+     */
     private void updateSprites(float dt) {
         playerOneTank.update(dt);
         playerTwoTank.update(dt);
@@ -139,20 +101,30 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     }
 
+    /**
+     * Adds the sprites to the collision layer.
+     */
     private void addSpritesToCollisionLayer() {
         collisionLayer.addSprite(playerOneTank);
         collisionLayer.addSprite(playerTwoTank);
-        Map.addToCollisionLayer(collisionLayer);
+        TankWarsMap.addToCollisionLayer(collisionLayer);
 
 
     }
 
+    /**
+     * Adds the tanks to the collision listener.
+     */
     private void addSpritesToCollisionListener() {
         playerOneTank.addCollisionListener(this);
         playerTwoTank.addCollisionListener(this);
 
     }
 
+    /**
+     * Handles drawing all the sprites
+     * @param canvas
+     */
     private void drawSprites(Canvas canvas) {
         Tank.getTankBarrel2().draw(canvas);
         Tank.getTankBarrel1().draw(canvas);
@@ -182,7 +154,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         Log.d("Collision", "Something collided: " + a.getClass().toString() + " and " + b.getClass().toString());
 
         // To avoid friendly fire
-        if ((a == Controller.getFiringTank() || b == Controller.getFiringTank())
+        if ((a == TankWarsController.getFiringTank() || b == TankWarsController.getFiringTank())
                 && (a instanceof Projectile || b instanceof Projectile)) {
             return;
         }
@@ -209,14 +181,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public boolean onTouchDown(MotionEvent event) {
-        // Attempting to change ammo and returning if touch is below ground level
-        if (event.getY() > GraphicsHelper.getDisplaySize().y - Map.getGroundHeight()) {
-            Log.d("Tapped", "Trying to change projectile.");
-            changeAmmo(event);
-            return true;
-        }
-
-        Controller.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
+        TankWarsController.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
 
         // Clearing current projectile if it already exists.
         //   This may happen if a player attempts to fire a shot while one is already in the air.
@@ -225,7 +190,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
             currentProjectile = null;
         }
 
-        Controller.recordPower();
+        TankWarsController.recordPower();
 
 
         return true;
@@ -233,21 +198,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public boolean onTouchUp(MotionEvent event) {
-
-        // Attempting to change ammo and returning if touch is below ground level
-        if (event.getY() > GraphicsHelper.getDisplaySize().y - Map.getGroundHeight()) {
-            Log.d("Tapped", "Trying to change projectile.");
-            changeAmmo(event);
-            return true;
-        }
-
-        Controller.calculatePower();
-        currentProjectile = Controller.getProjectile();
+        TankWarsController.calculatePower();
+        currentProjectile = TankWarsController.getProjectile();
         collisionLayer.addSprite(currentProjectile);
-        Controller.changeActiveTank();
-        Map.changeWindVector();
+        TankWarsController.changeActiveTank();
+        TankWarsMap.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
     }
-
-
 }

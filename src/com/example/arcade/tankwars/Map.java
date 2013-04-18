@@ -22,7 +22,7 @@ import java.util.Random;
  * Time: 14:43
  */
 @SuppressWarnings("FieldCanBeLocal")
-class Map {
+class TankWarsMap {
 
     private static final Resources resources = Game.getInstance().getResources();
     @SuppressWarnings("FieldCanBeLocal")
@@ -42,8 +42,10 @@ class Map {
     private static final Sprite mountainLevel3 = new Sprite(mountainLevel3Image);
     private static final Sprite mountainLevel4 = new Sprite(mountainLevel4Image);
 
-
-    public Map() {
+    /**
+     * Sets the position of the map Sprites so they align correctly.
+     */
+    public TankWarsMap() {
         mapGround.setPosition(mapGroundImage.getWidth() / 2, displaySize.y - mapGroundImage.getHeight() / 2);
         mountainLevel1.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2);
         mountainLevel2.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2 * 3);
@@ -51,7 +53,10 @@ class Map {
         mountainLevel4.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2 * 7);
     }
 
-
+    /**
+     * Draw Method, calls draw on all map sprites.
+     * @param canvas
+     */
     public void drawMap(Canvas canvas) {
         canvas.drawColor(Color.CYAN);
         mapGround.draw(canvas);
@@ -61,7 +66,10 @@ class Map {
         mountainLevel4.draw(canvas);
     }
 
-
+    /**
+     * Update method, calls Update on all map sprites.
+     * @param dt
+     */
     public void updateMap(float dt) {
         mapGround.update(dt);
         mountainLevel1.update(dt);
@@ -71,6 +79,10 @@ class Map {
 
     }
 
+    /**
+     * Adds the mapsprites t othe collisionlayer specified.
+     * @param collisionLayer The layer which the sprites should be added to
+     */
     public static void addToCollisionLayer(CollisionLayer collisionLayer) {
         collisionLayer.addSprite(mapGround);
         collisionLayer.addSprite(mountainLevel1);
@@ -79,6 +91,9 @@ class Map {
         collisionLayer.addSprite(mountainLevel4);
     }
 
+    /**
+     * @return ArrayList containing all the map Sprites
+     */
     public static ArrayList<Sprite> getMapSprites() {
         ArrayList<Sprite> sprites = new ArrayList<Sprite>();
         sprites.add(mapGround);
@@ -101,10 +116,16 @@ class Map {
         Log.d("Value", "Wind: " + windVector);
     }
 
+    /**
+     * @return Returns the Wind Vector
+     */
     public static int getWindVector() {
         return windVector;
     }
 
+    /**
+     * @return Returns the Windvector as a String
+     */
     public static String getWindString() {
         String windString = "Wind: 0";
         if (windVector < 0) {
@@ -115,7 +136,9 @@ class Map {
         return windString;
     }
 
-
+    /**
+     * @return Returns the height of the green ground.
+     */
     public static int getGroundHeight() {
         return (int) mapGroundImage.getHeight();
     }
