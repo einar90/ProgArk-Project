@@ -22,6 +22,12 @@ public abstract class Projectile extends Sprite {
 
     int damage;
 
+    /**
+     * Contstructor for the Abstract class Projectile. All ammo types must call this!
+     * Sets WindAffection, speed and direction, and the acceleration(gravity)
+     * of the projectile. It also makes a call to Sprite() with the predefined
+     * spriteImage we are using.
+     */
     Projectile() {
         super(spriteImage);
         int windAffectionFactor = -TankWarsMap.getWindVector();
@@ -43,7 +49,11 @@ public abstract class Projectile extends Sprite {
         Log.d("Projectile", "Acceleration: " + this.getAcceleration().toString());
     }
 
-
+    /**
+     * Checks if the Projectile had a collision with another sprite,
+     * or map boundaries.
+     * @return True if Collision, else False
+     */
     public boolean collision() {
         //To-do implementere collision detection mot objekter
         return false;
@@ -52,6 +62,8 @@ public abstract class Projectile extends Sprite {
 
     /**
      * Abstract methods
+     * Going to be used in subclasses to draw
+     * the Explosions on the device screen.
      */
     abstract void explode();
 

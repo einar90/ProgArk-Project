@@ -80,7 +80,10 @@ class TankWarsController {
 
     }
 
-
+    /**
+     * Calculates the power the projectile is going to be fired with
+     * given the time the user held down the shoot ability. (Milliseconds)
+     */
     public static void calculatePower() {
         //Released
         if (firstPress) {
@@ -97,6 +100,11 @@ class TankWarsController {
         activeTank.setTankPower(timeHeld);
     }
 
+    /**
+     *
+     * @return Projectile that is selected
+     * If its not instantiated, it instantiates it.
+     */
     public static Projectile getProjectile() {
         //Released
         if (firstPress) {
