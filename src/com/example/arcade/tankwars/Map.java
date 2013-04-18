@@ -22,7 +22,7 @@ import java.util.Random;
  * Time: 14:43
  */
 @SuppressWarnings("FieldCanBeLocal")
-class TankWarsMap {
+class Map {
 
     private static final Resources resources = Game.getInstance().getResources();
     @SuppressWarnings("FieldCanBeLocal")
@@ -43,7 +43,7 @@ class TankWarsMap {
     private static final Sprite mountainLevel4 = new Sprite(mountainLevel4Image);
 
 
-    public TankWarsMap() {
+    public Map() {
         mapGround.setPosition(mapGroundImage.getWidth() / 2, displaySize.y - mapGroundImage.getHeight() / 2);
         mountainLevel1.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2);
         mountainLevel2.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2 * 3);

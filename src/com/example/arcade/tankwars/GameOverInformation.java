@@ -9,7 +9,7 @@ import sheep.game.State;
  * Date: 11.03.13
  * Time: 13:45
  */
-class TankWarsGameOverInformation extends State {
+class GameOverInformation extends State {
 
     String winner;
     int scorePlayerOne, scorePlayerTwo;
@@ -18,7 +18,7 @@ class TankWarsGameOverInformation extends State {
     String gamestatistics;
 
 
-    public TankWarsGameOverInformation() {
+    public GameOverInformation() {
 
     }
 

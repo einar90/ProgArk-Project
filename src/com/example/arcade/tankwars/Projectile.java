@@ -24,7 +24,7 @@ public abstract class Projectile extends Sprite {
 
     Projectile() {
         super(spriteImage);
-        int windAffectionFactor = -TankWarsMap.getWindVector();
+        int windAffectionFactor = -Map.getWindVector();
 
         // Setting initial position for projectile
         this.setPosition(Tank.getBarrelPosition().x, Tank.getBarrelPosition().y);

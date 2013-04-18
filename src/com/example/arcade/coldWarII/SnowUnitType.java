@@ -1,4 +1,5 @@
 package com.example.arcade.coldWarII;
-public enum SnowUnitType{
-		MASSIVE,ICECUBE,SNOWBALL,ICEWALL
+
+public enum SnowUnitType {
+    MASSIVE, ICECUBE, SNOWBALL, ICEWALL
 }

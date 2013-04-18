@@ -131,7 +131,7 @@ public class Tank extends Sprite {
     }
 
     public static int getTankPower() {
-        return TankWarsController.getActiveTank().power;
+        return Controller.getActiveTank().power;
     }
 
     public static void setStartSpeed() {
@@ -179,12 +179,12 @@ public class Tank extends Sprite {
      * @return Returns the barrel angle of the currently active tank
      */
     private static int getBarrelAngle() {
-        return TankWarsController.getActiveTank().barrelAngle;
+        return Controller.getActiveTank().barrelAngle;
     }
 
 
     public static Vector2 getBarrelVector() {
-        if (TankWarsController.getActiveTank() == tank1) {
+        if (Controller.getActiveTank() == tank1) {
             return new Vector2(Math.abs(1 / (float) Math.cos(getBarrelAngle())),
                     -Math.abs(1 / (float) Math.sin(getBarrelAngle()))).getNormalized();
         } else return new Vector2(-Math.abs(1 / (float) Math.cos(getBarrelAngle())),
@@ -196,8 +196,12 @@ public class Tank extends Sprite {
      * @return Returns the position of the barrel of the active tank
      */
     public static Point getBarrelPosition() {
-        Sprite activeBarrel = TankWarsController.getActiveTank().tankBarrel;
+        Sprite activeBarrel = Controller.getActiveTank().tankBarrel;
         return new Point((int) activeBarrel.getX(), (int) activeBarrel.getY());
+    }
+
+    public Dictionary<String, Integer> getProjectileAmmo() {
+        return projectileAmmo;
     }
 
 

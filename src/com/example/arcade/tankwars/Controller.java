@@ -12,7 +12,7 @@ import java.util.Calendar;
  * Date: 11.03.13
  * Time: 15:21
  */
-class TankWarsController {
+class Controller {
 
     private static boolean firstPress = true;
     private static Calendar initialPressTime;
@@ -46,6 +46,10 @@ class TankWarsController {
         } else return Tank.getTank1();
     }
 
+    public static void setChosenProjectile(String projectile) {
+        chosenProjectile = projectile;
+    }
+
 
     /**
      * Used to aim the barrel of a tank. Changes the barrelAngle variable for the tank and rotates the sprite.
@@ -75,7 +79,7 @@ class TankWarsController {
      */
     public static void recordPower() {
 
-        Log.d("TankWarsController", "Starting to record fire");
+        Log.d("Controller", "Starting to record fire");
         initialPressTime = Calendar.getInstance();
 
     }
@@ -92,7 +96,7 @@ class TankWarsController {
 
         //Dette er tidsforskjellen.
         long timeHeld = releasePressTime.getTimeInMillis() - initialPressTime.getTimeInMillis();
-        Log.d("TankWarsController", "Released the hold on fire, held for: " + timeHeld);
+        Log.d("Controller", "Released the hold on fire, held for: " + timeHeld);
 
         activeTank.setTankPower(timeHeld);
     }
@@ -105,7 +109,17 @@ class TankWarsController {
         }
         if (chosenProjectile.equals("Bullet")) {
             return new Bullet();
-        } else return new Bullet();
+        } else if (chosenProjectile.equals("Tank Shell")) {
+            return new TankShell();
+        } else if (chosenProjectile.equals("Thermite Shell")) {
+            return new ThermiteShell();
+        } else if (chosenProjectile.equals("Nuke")) {
+            return new Nuke();
+        } else return new Bullet(); // Returning bullet if everything else fails.
+    }
+
+    public static String getChosenProjectile() {
+        return chosenProjectile;
     }
 
 }
