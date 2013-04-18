@@ -31,6 +31,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private Tank playerTwoTank;
     private Projectile currentProjectile = null;
 
+    /**
+     * Constructor for the TankWarsUserinterface, does some
+     * important Initializing.
+     * @param displaySize
+     */
     public TankWarsUserInterface(Point displaySize) {
 
         map = new TankWarsMap();
@@ -69,6 +74,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     }
 
+    /**
+     * Returns the singletons to the correct var's in
+     * TankWarsUserInterface
+     * @param displaySize
+     */
     private void getSprites(Point displaySize) {
         playerOneTank = Tank.getTank1();
         playerTwoTank = Tank.getTank2();
@@ -77,6 +87,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     }
 
+    /**
+     * Handles the updating of all the sprites
+     * @param dt
+     */
     private void updateSprites(float dt) {
         playerOneTank.update(dt);
         playerTwoTank.update(dt);
@@ -87,6 +101,9 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     }
 
+    /**
+     * Adds the sprites to the collision layer.
+     */
     private void addSpritesToCollisionLayer() {
         collisionLayer.addSprite(playerOneTank);
         collisionLayer.addSprite(playerTwoTank);
@@ -95,12 +112,19 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     }
 
+    /**
+     * Adds the tanks to the collision listener.
+     */
     private void addSpritesToCollisionListener() {
         playerOneTank.addCollisionListener(this);
         playerTwoTank.addCollisionListener(this);
 
     }
 
+    /**
+     * Handles drawing all the sprites
+     * @param canvas
+     */
     private void drawSprites(Canvas canvas) {
         Tank.getTankBarrel2().draw(canvas);
         Tank.getTankBarrel1().draw(canvas);
