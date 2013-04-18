@@ -14,11 +14,10 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 /**
- * Created with IntelliJ IDEA.
+ * Created by:
  * User: Dzenan
  * Date: 11.03.13
  * Time: 13:50
- * To change this template use File | Settings | File Templates.
  */
 public class Tank extends Sprite {
 
@@ -42,7 +41,7 @@ public class Tank extends Sprite {
     private Sprite tankBarrel;
     private Dictionary projectileAmmo;    //Vet ikke om dictionary fungerer så bra
 
-    protected Tank(Image tankimage) {
+    Tank(Image tankimage) {
         super(tankimage);
         this.hp = 100;
         this.power = 0;
@@ -98,7 +97,7 @@ public class Tank extends Sprite {
         setInitalBarrelPositions(size);
     }
 
-    public static void setInitalBarrelPositions(Point size) {
+    private static void setInitalBarrelPositions(Point size) {
         Log.d("Tank", "Setting positions for both barrels");
         tankBarrel1.setPosition(size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2);
         tankBarrel2.setPosition(size.x - size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2 + (size.y / 40));
@@ -121,8 +120,7 @@ public class Tank extends Sprite {
 
     public boolean isTankDead() {
         Log.d("Tank", "Checking if tank is dead");
-        if (this.hp < 0) return true;
-        return false;
+        return this.hp < 0;
     }
 
 
@@ -133,7 +131,7 @@ public class Tank extends Sprite {
     }
 
     public static int getTankPower() {
-        return Controller.getActiveTank().power;
+        return TankWarsController.getActiveTank().power;
     }
 
     public static void setStartSpeed() {
@@ -159,36 +157,34 @@ public class Tank extends Sprite {
 
     public void reduceAmmo(String ammoName) {
         Log.d("Tank", "Reducing ammo of: " + ammoName);
-        this.projectileAmmo.put(ammoName, Integer.parseInt(this.projectileAmmo.get(ammoName).toString()) - 1);
+        this.projectileAmmo.put(ammoName, (Integer) this.projectileAmmo.get(ammoName) - 1);
     }
 
     public boolean checkAmmo(String ammoName) {
         Log.d("Tank", "Checking ammo of: " + ammoName);
-        if (Integer.parseInt(this.projectileAmmo.get(ammoName).toString()) > 0) return true;
-        return false;
+        return (Integer) this.projectileAmmo.get(ammoName) > 0;
     }
 
     private static Dictionary setStartingAmmo(final int tankshells, final int nukes, final int thermites) {
         Log.d("Tank", "Initializing ammo");
-        Dictionary map = new Hashtable() {{
+        return new Hashtable<String, Integer>() {{
             put("Bullet", 999);
             put("TankShell", tankshells);
             put("Nukes", nukes);
             put("ThermiteShells", thermites);
         }};
-        return map;
     }
 
     /**
      * @return Returns the barrel angle of the currently active tank
      */
-    public static int getBarrelAngle() {
-        return Controller.getActiveTank().barrelAngle;
+    private static int getBarrelAngle() {
+        return TankWarsController.getActiveTank().barrelAngle;
     }
 
 
     public static Vector2 getBarrelVector() {
-        if (Controller.getActiveTank() == tank1) {
+        if (TankWarsController.getActiveTank() == tank1) {
             return new Vector2(Math.abs(1 / (float) Math.cos(getBarrelAngle())),
                     -Math.abs(1 / (float) Math.sin(getBarrelAngle()))).getNormalized();
         } else return new Vector2(-Math.abs(1 / (float) Math.cos(getBarrelAngle())),
@@ -200,7 +196,7 @@ public class Tank extends Sprite {
      * @return Returns the position of the barrel of the active tank
      */
     public static Point getBarrelPosition() {
-        Sprite activeBarrel = Controller.getActiveTank().tankBarrel;
+        Sprite activeBarrel = TankWarsController.getActiveTank().tankBarrel;
         return new Point((int) activeBarrel.getX(), (int) activeBarrel.getY());
     }
 

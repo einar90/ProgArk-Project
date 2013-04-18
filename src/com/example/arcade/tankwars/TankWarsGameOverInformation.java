@@ -4,13 +4,12 @@ import android.graphics.Canvas;
 import sheep.game.State;
 
 /**
- * Created with IntelliJ IDEA.
+ * Created by:
  * User: Dzenan
  * Date: 11.03.13
  * Time: 13:45
- * To change this template use File | Settings | File Templates.
  */
-public class GameOverInformation extends State {
+class TankWarsGameOverInformation extends State {
 
     String winner;
     int scorePlayerOne, scorePlayerTwo;
@@ -19,7 +18,7 @@ public class GameOverInformation extends State {
     String gamestatistics;
 
 
-    public GameOverInformation() {
+    public TankWarsGameOverInformation() {
 
     }
 

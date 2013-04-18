@@ -32,8 +32,8 @@ public class GamesMenu extends State {
     private float buttonWidth;
 
     public GamesMenu(Point displaySize, Resources resources) {
-        this.resources = resources;
-        this.displaySize = displaySize;
+        GamesMenu.resources = resources;
+        GamesMenu.displaySize = displaySize;
 
         initGameButtons();
 
@@ -85,7 +85,7 @@ public class GamesMenu extends State {
     @Override
     public boolean onTouchUp(MotionEvent event) {
         if (GraphicsHelper.isSpriteTouched(tankWarsButton, buttonWidth, buttonHeight, event)) {
-            getGame().pushState(new TankWarsUserInterface(displaySize, resources));
+            getGame().pushState(new TankWarsUserInterface(displaySize));
             Log.d("Tapped", "Tank Wars button tapped.");
         } else if (GraphicsHelper.isSpriteTouched(wormsButton, buttonWidth, buttonHeight, event)) {
             Log.d("Tapped", "Worms button tapped.");

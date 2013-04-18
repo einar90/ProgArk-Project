@@ -1,6 +1,5 @@
 package com.example.arcade.tankwars;
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -15,27 +14,26 @@ import sheep.game.State;
 import sheep.graphics.Font;
 
 /**
- * Created with IntelliJ IDEA.
+ * Created by:
  * User: Dzenan
  * Date: 11.03.13
  * Time: 13:39
- * To change this template use File | Settings | File Templates.
  */
 public class TankWarsUserInterface extends State implements MiniGame, CollisionListener {
 
 
-    CollisionLayer collisionLayer = new CollisionLayer();
+    private CollisionLayer collisionLayer = new CollisionLayer();
 
     private static final Font font = new Font(64, 64, 64, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
 
-    Map map;
-    Tank playerOneTank, playerTwoTank;
-    Sprite playerOneBarrel, playerTwoBarrel;
-    Projectile currentProjectile = null;
+    private TankWarsMap map;
+    private Tank playerOneTank;
+    private Tank playerTwoTank;
+    private Projectile currentProjectile = null;
 
-    public TankWarsUserInterface(Point displaySize, Resources resources) {
+    public TankWarsUserInterface(Point displaySize) {
 
-        map = new Map();
+        map = new TankWarsMap();
         getSprites(displaySize);
 
         addSpritesToCollisionLayer();
@@ -51,7 +49,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         drawSprites(canvas);
 
-        canvas.drawText(Map.getWindString(), 20, 50, font);
+        canvas.drawText(TankWarsMap.getWindString(), 20, 50, font);
 
         if (currentProjectile != null) {
             currentProjectile.draw(canvas);
@@ -92,7 +90,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private void addSpritesToCollisionLayer() {
         collisionLayer.addSprite(playerOneTank);
         collisionLayer.addSprite(playerTwoTank);
-        Map.addToCollisionLayer(collisionLayer);
+        TankWarsMap.addToCollisionLayer(collisionLayer);
 
 
     }
@@ -132,7 +130,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         Log.d("Collision", "Something collided: " + a.getClass().toString() + " and " + b.getClass().toString());
 
         // To avoid friendly fire
-        if ((a == Controller.getFiringTank() || b == Controller.getFiringTank())
+        if ((a == TankWarsController.getFiringTank() || b == TankWarsController.getFiringTank())
                 && (a instanceof Projectile || b instanceof Projectile)) {
             return;
         }
@@ -152,7 +150,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         if (a.getClass() == Tank.class) {
             if (b.getClass() == Sprite.class) {    //Denne er rævva
                 Tank.stopStartSpeed();
-                return;
             }
         }
         //To change body of implemented methods use File | Settings | File Templates.
@@ -160,7 +157,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public boolean onTouchDown(MotionEvent event) {
-        Controller.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
+        TankWarsController.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
 
         // Clearing current projectile if it already exists.
         //   This may happen if a player attempts to fire a shot while one is already in the air.
@@ -169,7 +166,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
             currentProjectile = null;
         }
 
-        Controller.recordPower();
+        TankWarsController.recordPower();
 
 
         return true;
@@ -177,11 +174,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public boolean onTouchUp(MotionEvent event) {
-        Controller.calculatePower();
-        currentProjectile = Controller.getProjectile();
+        TankWarsController.calculatePower();
+        currentProjectile = TankWarsController.getProjectile();
         collisionLayer.addSprite(currentProjectile);
-        Controller.changeActiveTank();
-        Map.changeWindVector();
+        TankWarsController.changeActiveTank();
+        TankWarsMap.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
     }
 }

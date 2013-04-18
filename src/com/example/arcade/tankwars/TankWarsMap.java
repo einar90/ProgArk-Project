@@ -6,8 +6,8 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 import com.example.arcade.Game;
-import com.example.arcade.R;
 import com.example.arcade.GraphicsHelper;
+import com.example.arcade.R;
 import sheep.collision.CollisionLayer;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
@@ -21,10 +21,12 @@ import java.util.Random;
  * Date: 11.03.13
  * Time: 14:43
  */
-public class Map {
+@SuppressWarnings("FieldCanBeLocal")
+class TankWarsMap {
 
-    private static Resources resources = Game.getInstance().getResources();
-    private Point displaySize = new Point(resources.getDisplayMetrics().widthPixels, resources.getDisplayMetrics().heightPixels);
+    private static final Resources resources = Game.getInstance().getResources();
+    @SuppressWarnings("FieldCanBeLocal")
+    private final Point displaySize = new Point(resources.getDisplayMetrics().widthPixels, resources.getDisplayMetrics().heightPixels);
 
     private static int windVector = 0;
 
@@ -41,7 +43,7 @@ public class Map {
     private static final Sprite mountainLevel4 = new Sprite(mountainLevel4Image);
 
 
-    public Map() {
+    public TankWarsMap() {
         mapGround.setPosition(mapGroundImage.getWidth() / 2, displaySize.y - mapGroundImage.getHeight() / 2);
         mountainLevel1.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2);
         mountainLevel2.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2 * 3);

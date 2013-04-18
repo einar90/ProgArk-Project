@@ -10,22 +10,21 @@ import sheep.graphics.Image;
 import sheep.math.Vector2;
 
 /**
- * Created with IntelliJ IDEA.
+ * Created by:
  * User: Dzenan
  * Date: 11.03.13
  * Time: 14:01
- * To change this template use File | Settings | File Templates.
  */
 public abstract class Projectile extends Sprite {
 
     private static final Resources resources = Game.getInstance().getResources();
-    static final Image spriteImage = GraphicsHelper.getScaledImage(resources, R.drawable.projectile);
+    private static final Image spriteImage = GraphicsHelper.getScaledImage(resources, R.drawable.projectile);
 
-    protected int damage;
+    int damage;
 
-    public Projectile() {
+    Projectile() {
         super(spriteImage);
-        int windAffectionFactor = -Map.getWindVector();
+        int windAffectionFactor = -TankWarsMap.getWindVector();
 
         // Setting initial position for projectile
         this.setPosition(Tank.getBarrelPosition().x, Tank.getBarrelPosition().y);

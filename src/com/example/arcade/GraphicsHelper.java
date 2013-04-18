@@ -23,10 +23,11 @@ import sheep.graphics.Image;
  */
 public class GraphicsHelper {
 
-    private static float[] scalingFactor = new float[]{
+    private static final float[] scalingFactor = new float[]{
             Constants.WINDOW_WIDTH / 1280.0f,
             Constants.WINDOW_HEIGHT / 800.0f
     };
+
 
     public static Point getDisplaySize() {
         int height = Game.getInstance().getResources().getDisplayMetrics().heightPixels;
@@ -39,7 +40,7 @@ public class GraphicsHelper {
      * Calculating the pixel height of devices with a software navigation bar.
      * Physical height minus navbar height.
      *
-     * @return
+     * @return Returns the heght of the screen minus navbar height.
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static float getRealHeight() {

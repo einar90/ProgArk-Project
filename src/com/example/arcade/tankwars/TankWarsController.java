@@ -7,17 +7,15 @@ import sheep.math.Vector2;
 import java.util.Calendar;
 
 /**
- * Created with IntelliJ IDEA.
+ * Created by:
  * User: Dzenan
  * Date: 11.03.13
  * Time: 15:21
- * To change this template use File | Settings | File Templates.
  */
-public class Controller {
+class TankWarsController {
 
     private static boolean firstPress = true;
     private static Calendar initialPressTime;
-    private static Calendar releasePressTime;
 
     private static Tank activeTank = Tank.getTank1();
     private static String chosenProjectile = "Bullet";
@@ -77,7 +75,7 @@ public class Controller {
      */
     public static void recordPower() {
 
-        Log.d("Controller", "Starting to record fire");
+        Log.d("TankWarsController", "Starting to record fire");
         initialPressTime = Calendar.getInstance();
 
     }
@@ -85,23 +83,23 @@ public class Controller {
 
     public static void calculatePower() {
         //Released
-        if (firstPress == true) {
+        if (firstPress) {
             firstPress = false;
             return;
         }
 
-        releasePressTime = Calendar.getInstance();
+        Calendar releasePressTime = Calendar.getInstance();
 
         //Dette er tidsforskjellen.
         long timeHeld = releasePressTime.getTimeInMillis() - initialPressTime.getTimeInMillis();
-        Log.d("Controller", "Released the hold on fire, held for: " + timeHeld);
+        Log.d("TankWarsController", "Released the hold on fire, held for: " + timeHeld);
 
         activeTank.setTankPower(timeHeld);
     }
 
     public static Projectile getProjectile() {
         //Released
-        if (firstPress == true) {
+        if (firstPress) {
             firstPress = false;
             return null;
         }

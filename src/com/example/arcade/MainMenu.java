@@ -33,7 +33,7 @@ public class MainMenu extends State {
      */
     public MainMenu(Resources resources) {
         Constants.initConstants();
-        this.resources = resources;
+        MainMenu.resources = resources;
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         displaySize = new Point((int) Constants.WINDOW_WIDTH, (int) Constants.WINDOW_HEIGHT);
 
