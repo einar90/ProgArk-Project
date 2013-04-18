@@ -13,8 +13,8 @@ public class ColdWarModel implements CollisionListener {
     public ColdWarModel(SnowUnitSpriteContainer one, SnowUnitSpriteContainer two) {
         menu = true;
         placing = false;
-        plOne = new ColdWarPlayer("Christian");
-        plTwo = new ColdWarPlayer("J�rn");
+        plOne = new ColdWarPlayer("Arne");
+        plTwo = new ColdWarPlayer("Bjarne");
         active = plOne;
         plOneCon = one;
         plTwoCon = two;
@@ -25,6 +25,12 @@ public class ColdWarModel implements CollisionListener {
             menu = false;
         else
             menu = true;
+    }
+    public ColdWarPlayer getPlayerOne(){
+    	return plOne;
+    }
+    public ColdWarPlayer getPlayerTwo(){
+    	return plTwo;
     }
     public void reverseAttack() {
         if (attack)
