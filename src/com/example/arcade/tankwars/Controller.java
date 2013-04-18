@@ -105,9 +105,8 @@ class Controller {
     }
 
     /**
-     *
      * @return Projectile that is selected
-     * If its not instantiated, it instantiates it.
+     *         If its not instantiated, it instantiates it.
      */
     public static Projectile getProjectile() {
         //Released

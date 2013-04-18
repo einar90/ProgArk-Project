@@ -52,6 +52,7 @@ public abstract class Projectile extends Sprite {
     /**
      * Checks if the Projectile had a collision with another sprite,
      * or map boundaries.
+     *
      * @return True if Collision, else False
      */
     public boolean collision() {

@@ -45,6 +45,7 @@ public class Tank extends Sprite {
     /**
      * Constructor for tank, creates the tank object,
      * and sets initial values like hp, barrelangle etc.
+     *
      * @param tankimage The Sheep.Graphics.Image the tank will be using
      */
     Tank(Image tankimage) {
@@ -59,7 +60,8 @@ public class Tank extends Sprite {
 
     /**
      * Static method to retrieve Player One tank
-     * @return  Player One Tank
+     *
+     * @return Player One Tank
      */
     public static Tank getTank1() {
         Log.d("Tank", "Returning tank1");
@@ -71,7 +73,8 @@ public class Tank extends Sprite {
 
     /**
      * Static method to retrieve Player Two tank
-     * @return  Player Two Tank
+     *
+     * @return Player Two Tank
      */
     public static Tank getTank2() {
         Log.d("Tank", "Returning tank2");
@@ -83,6 +86,7 @@ public class Tank extends Sprite {
 
     /**
      * Static method to retrieve Player 1's TankBarrel
+     *
      * @return Player 1's TankBarrel
      */
     public static Sprite getTankBarrel1() {
@@ -98,6 +102,7 @@ public class Tank extends Sprite {
 
     /**
      * Static method to retrieve Player 2's TankBarrel
+     *
      * @return Player 2's TankBarrel
      */
     public static Sprite getTankBarrel2() {
@@ -113,6 +118,7 @@ public class Tank extends Sprite {
 
     /**
      * Sets the Tank's initial positions on the map.
+     *
      * @param size DisplaySize of the Device
      */
     public static void setInitialTankPositions(Point size) {
@@ -125,7 +131,8 @@ public class Tank extends Sprite {
     /**
      * Sets the TankBarrel's initial positions on the map,
      * and tries to place them on top of the tanks.
-     * @param size  DisplaySize of the Device
+     *
+     * @param size DisplaySize of the Device
      */
     private static void setInitalBarrelPositions(Point size) {
         Log.d("Tank", "Setting positions for both barrels");
@@ -139,6 +146,7 @@ public class Tank extends Sprite {
     /**
      * Sets the barrel angle of the tank to a specific angle,
      * and rotates it to the correct position.
+     *
      * @param angle The angle the barrel should be set to
      */
     public void setBarrelAngle(int angle) {
@@ -150,6 +158,7 @@ public class Tank extends Sprite {
 
     /**
      * Reduces a tanks healthpoints.
+     *
      * @param dmg The amount healthpoints should be reduced with
      */
     public void reduceHp(int dmg) {
@@ -160,6 +169,7 @@ public class Tank extends Sprite {
     /**
      * Method to check if the Tank lost too much hp,
      * and is now dead.
+     *
      * @return True if dead, False if not
      */
     public boolean isTankDead() {
@@ -170,6 +180,7 @@ public class Tank extends Sprite {
     /**
      * Sets the firing power of the tank, and
      * checks it hasn't been set over the max of 2000
+     *
      * @param timeHeld Total time user held down on the screen, Milliseconds
      */
     public void setTankPower(long timeHeld) {
@@ -180,6 +191,7 @@ public class Tank extends Sprite {
 
     /**
      * Get the specified power the tank had for that shot
+     *
      * @return Returns the Tanks firepower for that shot.
      */
     public static int getTankPower() {
@@ -217,6 +229,7 @@ public class Tank extends Sprite {
 
     /**
      * Method to reduce ammo, after said ammo has been fired.
+     *
      * @param ammoName The name of the Ammo to be reduced
      */
     public void reduceAmmo(String ammoName) {
@@ -226,6 +239,7 @@ public class Tank extends Sprite {
 
     /**
      * Method to check if there is more ammo of that kind left.
+     *
      * @param ammoName The name of the Ammo to be checked
      * @return True if ammo > 0, false if ammo =< 0.
      */
@@ -237,11 +251,12 @@ public class Tank extends Sprite {
     /**
      * Method to create the dictionary which keeps control of
      * the ammo within the Tank object.
+     *
      * @param tankshells Number of tankshells the tank will have.
-     * @param nukes Number of nukes the tank will have.
-     * @param thermites Number of thermites the tank will have.
+     * @param nukes      Number of nukes the tank will have.
+     * @param thermites  Number of thermites the tank will have.
      * @return A dictionary with the struct<String, Integer> where,
-     * String is Ammoname and Integer is number of rounds left
+     *         String is Ammoname and Integer is number of rounds left
      */
     private static Dictionary setStartingAmmo(final int tankshells, final int nukes, final int thermites) {
         Log.d("Tank", "Initializing ammo");
@@ -262,6 +277,7 @@ public class Tank extends Sprite {
 
     /**
      * Method to calculate the Vector2 the Projectile should follow as a path.
+     *
      * @return The Vector2 which should dictate the direction of the projectile
      */
     public static Vector2 getBarrelVector() {
