@@ -19,7 +19,7 @@ public class Controller {
     private static Calendar initialPressTime;
     private static Calendar releasePressTime;
 
-    private static Tank activeTank = Tank.getTank2();
+    private static Tank activeTank = Tank.getTank1();
     private static String chosenProjectile = "Bullet";
 
 
@@ -32,8 +32,20 @@ public class Controller {
         } else activeTank = Tank.getTank1();
     }
 
+    /**
+     * @return Returns the tank firing a projectile.
+     */
     public static Tank getActiveTank() {
         return activeTank;
+    }
+
+    /**
+     * @return Returns the tank that has a projectile in the air.
+     */
+    public static Tank getFiringTank() {
+        if (activeTank == Tank.getTank1()) {
+            return Tank.getTank2();
+        } else return Tank.getTank1();
     }
 
 

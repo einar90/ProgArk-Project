@@ -130,10 +130,29 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     @Override
     public void collided(Sprite a, Sprite b) {
         Log.d("Collision", "Something collided: " + a.getClass().toString() + " and " + b.getClass().toString());
+
+        // To avoid friendly fire
+        if ((a == Controller.getFiringTank() || b == Controller.getFiringTank())
+                && (a instanceof Projectile || b instanceof Projectile)) {
+            return;
+        }
+
+        // Projectile collision
+        if (a instanceof Projectile || b instanceof Projectile) {
+            Log.d("Collision", "Projectile collided");
+            // Explode
+            // Check tank in radius
+            // If so, reduce hp
+            collisionLayer.removeSprite(currentProjectile);
+            currentProjectile = null;
+            return;
+        }
+
+        // Initial tank fall collision
         if (a.getClass() == Tank.class) {
             if (b.getClass() == Sprite.class) {    //Denne er rævva
                 Tank.stopStartSpeed();
-
+                return;
             }
         }
         //To change body of implemented methods use File | Settings | File Templates.
@@ -142,6 +161,13 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     @Override
     public boolean onTouchDown(MotionEvent event) {
         Controller.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
+
+        // Clearing current projectile if it already exists.
+        //   This may happen if a player attempts to fire a shot while one is already in the air.
+        if (currentProjectile != null) {
+            collisionLayer.removeSprite(currentProjectile);
+            currentProjectile = null;
+        }
 
         Controller.recordPower();
 
@@ -153,6 +179,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     public boolean onTouchUp(MotionEvent event) {
         Controller.calculatePower();
         currentProjectile = Controller.getProjectile();
+        collisionLayer.addSprite(currentProjectile);
         Controller.changeActiveTank();
         Map.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
