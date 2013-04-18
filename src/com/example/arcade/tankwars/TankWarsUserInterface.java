@@ -34,6 +34,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     /**
      * Constructor for the TankWarsUserinterface, does some
      * important Initializing.
+     *
      * @param displaySize
      */
     public TankWarsUserInterface(Point displaySize) {
@@ -77,6 +78,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     /**
      * Returns the singletons to the correct var's in
      * TankWarsUserInterface
+     *
      * @param displaySize
      */
     private void getSprites(Point displaySize) {
@@ -89,6 +91,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     /**
      * Handles the updating of all the sprites
+     *
      * @param dt
      */
     private void updateSprites(float dt) {
@@ -123,6 +126,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     /**
      * Handles drawing all the sprites
+     *
      * @param canvas
      */
     private void drawSprites(Canvas canvas) {
@@ -154,7 +158,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         Log.d("Collision", "Something collided: " + a.getClass().toString() + " and " + b.getClass().toString());
 
         // To avoid friendly fire
-        if ((a == TankWarsController.getFiringTank() || b == TankWarsController.getFiringTank())
+        if ((a == Controller.getFiringTank() || b == Controller.getFiringTank())
                 && (a instanceof Projectile || b instanceof Projectile)) {
             return;
         }
@@ -181,7 +185,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public boolean onTouchDown(MotionEvent event) {
-        TankWarsController.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
+        Controller.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
 
         // Clearing current projectile if it already exists.
         //   This may happen if a player attempts to fire a shot while one is already in the air.
@@ -190,7 +194,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
             currentProjectile = null;
         }
 
-        TankWarsController.recordPower();
+        Controller.recordPower();
 
 
         return true;
@@ -198,10 +202,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public boolean onTouchUp(MotionEvent event) {
-        TankWarsController.calculatePower();
-        currentProjectile = TankWarsController.getProjectile();
+        Controller.calculatePower();
+        currentProjectile = Controller.getProjectile();
         collisionLayer.addSprite(currentProjectile);
-        TankWarsController.changeActiveTank();
+        Controller.changeActiveTank();
         TankWarsMap.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
     }
