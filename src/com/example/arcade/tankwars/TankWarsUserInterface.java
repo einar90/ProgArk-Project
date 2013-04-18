@@ -26,7 +26,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     private static final Font font = new Font(64, 64, 64, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
 
-    private TankWarsMap map;
+    private Map map;
     private Tank playerOneTank;
     private Tank playerTwoTank;
     private Projectile currentProjectile = null;
@@ -39,7 +39,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
      */
     public TankWarsUserInterface(Point displaySize) {
 
-        map = new TankWarsMap();
+        map = new Map();
         getSprites(displaySize);
 
         addSpritesToCollisionLayer();
@@ -55,7 +55,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         drawSprites(canvas);
 
-        canvas.drawText(TankWarsMap.getWindString(), 20, 50, font);
+        canvas.drawText(Map.getWindString(), 20, 50, font);
 
         if (currentProjectile != null) {
             currentProjectile.draw(canvas);
@@ -110,7 +110,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private void addSpritesToCollisionLayer() {
         collisionLayer.addSprite(playerOneTank);
         collisionLayer.addSprite(playerTwoTank);
-        TankWarsMap.addToCollisionLayer(collisionLayer);
+        Map.addToCollisionLayer(collisionLayer);
 
 
     }
@@ -206,7 +206,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         currentProjectile = Controller.getProjectile();
         collisionLayer.addSprite(currentProjectile);
         Controller.changeActiveTank();
-        TankWarsMap.changeWindVector();
+        Map.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
     }
 }

@@ -22,7 +22,7 @@ import java.util.Random;
  * Time: 14:43
  */
 @SuppressWarnings("FieldCanBeLocal")
-class TankWarsMap {
+class Map {
 
     private static final Resources resources = Game.getInstance().getResources();
     @SuppressWarnings("FieldCanBeLocal")
@@ -45,7 +45,7 @@ class TankWarsMap {
     /**
      * Sets the position of the map Sprites so they align correctly.
      */
-    public TankWarsMap() {
+    public Map() {
         mapGround.setPosition(mapGroundImage.getWidth() / 2, displaySize.y - mapGroundImage.getHeight() / 2);
         mountainLevel1.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2);
         mountainLevel2.setPosition(displaySize.x / 2, displaySize.y - mapGroundImage.getHeight() - mountainLevel1Image.getHeight() / 2 * 3);
@@ -55,6 +55,7 @@ class TankWarsMap {
 
     /**
      * Draw Method, calls draw on all map sprites.
+     *
      * @param canvas
      */
     public void drawMap(Canvas canvas) {
@@ -68,6 +69,7 @@ class TankWarsMap {
 
     /**
      * Update method, calls Update on all map sprites.
+     *
      * @param dt
      */
     public void updateMap(float dt) {
@@ -81,6 +83,7 @@ class TankWarsMap {
 
     /**
      * Adds the mapsprites t othe collisionlayer specified.
+     *
      * @param collisionLayer The layer which the sprites should be added to
      */
     public static void addToCollisionLayer(CollisionLayer collisionLayer) {
