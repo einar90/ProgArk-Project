@@ -41,12 +41,12 @@ public class ColdWarGame extends State implements MiniGame{
 	private float h,w;
 	private SnowUnitButton upsl, upsn, att, place;
 	private SnowUnitButton plSnowball, plMassiveSnowball, plIcecube, plIcewall, plActive;
-	private SnowUnitSprite sUSIceball,ice,icecub,sUSIcewall,sUSMassive;
+	private SnowUnitSprite sUSIcecube,sUSSnowball,ice,icecub,sUSIcewall,sUSMassive;
 	private Sprite back,backfade,lGrid,rGrid,plOneKing,plTwoKing;
 	private ColdWarModel model;
-	private Image icb = GraphicsHelper.getScaledImage(res, R.drawable.ball);
-	private Image bg = GraphicsHelper.getScaledImage(res, R.drawable.winter2);
-	private Image bgfade = GraphicsHelper.getScaledImage(res, R.drawable.winterfade2);
+	private Image bg = new Image(  R.drawable.winter);
+	private Image bgfade = new Image( R.drawable.winterfade);
+	private Image icb = new Image( R.drawable.coldwar_snowball);
 	private Image gridA = new Image(R.drawable.wintergrida);
 	private Image gridB = new Image(R.drawable.wintergridb);
 	private Image massiveSnow = new Image(R.drawable.massivesnowball);
@@ -63,10 +63,9 @@ public class ColdWarGame extends State implements MiniGame{
 
 	public ColdWarGame(){
 		h = Constants.WINDOW_HEIGHT;
-		w = bg.getWidth();
+		w = Constants.WINDOW_WIDTH;
 		updTime = System.currentTimeMillis();
 
-		posScale = new float[]{(510f/1600f),(1300f/1600f),(210/1600),(360/960)};
 		scaling = new float[]{w / 1600f, h / 960f};
 		update = new SnowUnitSpriteContainer();
 		guiobjects = new SnowUnitSpriteContainer();
@@ -93,10 +92,9 @@ public class ColdWarGame extends State implements MiniGame{
 		rGrid = new Sprite(gridB);
 		rGrid.setScale(scaling[0], scaling[1]);
 		lGrid.setScale(scaling[0], scaling[1]);
-		float lPos = (300+510)/2+((w-bg.getWidth())/2),rPos = (1090+1300)/2+((w-bg.getWidth())/2);
 
-		lGrid.setPosition(lPos*scaling[0], h);
-		rGrid.setPosition(rPos*scaling[1], h);
+		lGrid.setPosition(w/6, h);
+		rGrid.setPosition(w-w/6, h);
 		addToContainer(rGrid, guiobjects);
 		addToContainer(lGrid, guiobjects);
 		ice = new SnowUnitSprite(icb,model.getPlayerOne(),SnowUnitType.SNOWBALL);
@@ -113,11 +111,11 @@ public class ColdWarGame extends State implements MiniGame{
 		plTwoKing.setPosition(w-50, h);
 		plTwoKing.setScale(scaling[0], scaling[1]);
 
-		sUSIceball = new SnowUnitSprite(icb,model.getPlayerTwo(),SnowUnitType.SNOWBALL);
-		sUSIceball.setPosition(30, h - 10);
-		sUSIceball.addCollisionListener(model);
+		sUSSnowball = new SnowUnitSprite(icb,model.getPlayerTwo(),SnowUnitType.SNOWBALL);
+		sUSSnowball.setPosition(30, h - 10);
+		sUSSnowball.addCollisionListener(model);
 		ice.addCollisionListener(model);
-		addToContainer(sUSIceball, plTwoCon);
+		addToContainer(sUSSnowball, plTwoCon);
 		
 		initGUI();
 	}
@@ -143,7 +141,7 @@ public class ColdWarGame extends State implements MiniGame{
 		plIcecube = initSnowUnitButton("Icecube(2 su)",white);
 		plMassiveSnowball = initSnowUnitButton("Massive Snowball(4 su)",white);
 		plSnowball = initSnowUnitButton("Snowball(1 su)",white);
-		plIcewall = initSnowUnitButton("Icewall(1 su)",white);
+		plIcewall = initSnowUnitButton("Icewall(4 su)",white);
 		if(model.isPlayerOne()){
 			plIcecube.setPosition(150, 30);
 			plSnowball.setPosition(150, 100);
@@ -167,13 +165,13 @@ public class ColdWarGame extends State implements MiniGame{
 		placeButtons.add(plIcewall);
 		
 		sUSMassive = new SnowUnitSprite(massiveSnow,model.getPlayerOne(),SnowUnitType.MASSIVE);
-		sUSMassive.setPosition(150, 170 + 100);
+		sUSMassive.setPosition(150+220, 170+35);
 		sUSMassive.setScale(scaling[0], scaling[1]);
 		addToContainer(sUSMassive, guiobjects);
 		
 		
 		icecub = new SnowUnitSprite(icecube,model.getPlayerTwo(),SnowUnitType.ICECUBE);
-		icecub.setPosition(150+150, 30);
+		icecub.setPosition(150+160, 30+20);
 		icecub.setScale(scaling[0], scaling[1]);
 		addToContainer(icecub, guiobjects);
 		
@@ -289,8 +287,8 @@ public class ColdWarGame extends State implements MiniGame{
 		if(GraphicsHelper.isSpriteTouched(upsn, upsn.getImageWidth(), upsn.getImageHeight(), e)){
 			model.reverseMenu();
 			Log.d("Ball", "started moving");
-			sUSIceball.setSpeed(200, -250);
-			sUSIceball.setAcceleration(0, (float) 118.1);
+			sUSSnowball.setSpeed(200, -250);
+			sUSSnowball.setAcceleration(0, (float) 118.1);
 			ice.setSpeed(-200, -250);
 			ice.setAcceleration(0, (float) 118.1);
 		}
@@ -320,12 +318,28 @@ public class ColdWarGame extends State implements MiniGame{
 		SnowUnitSprite s;
 		if(plActive == null)
 			return;
-		if(plActive.equals(plMassiveSnowball))
-			s = sUSMassive;
+		else{
+			switch (plActive.getType()) {
+			case MASSIVE:
+				s = sUSMassive;
+				break;
+			case ICECUBE:
+				s = sUSIcewall;
+				break;
+			case ICEWALL:
+				s = sUSIcewall;	
+				break;
+			case SNOWBALL:
+				s = sUSMassive;		
+				break;
+			default:
+				break;
+			}
+			
+		}
 	}
 	private void checkPlacingButtons(MotionEvent event) {
 		if(GraphicsHelper.isSpriteTouched(plSnowball, plSnowball.getImageWidth(), plSnowball.getImageHeight(), event)){
-			Log.d("SnowUnitButton", "plsnowball");
 			setSnowUnitButton(plSnowball);
 		}
 		else if(GraphicsHelper.isSpriteTouched(plIcecube, plIcecube.getImageWidth(), plIcecube.getImageHeight(), event)){
