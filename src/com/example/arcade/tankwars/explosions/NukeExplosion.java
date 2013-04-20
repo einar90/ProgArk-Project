@@ -19,7 +19,7 @@ public class NukeExplosion extends Explosion {
     private static final int duration = 1; // In Seconds
 
 
-    NukeExplosion() {
+    public NukeExplosion() {
         super(duration, spriteImage);
     }
 }

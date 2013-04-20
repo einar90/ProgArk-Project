@@ -1,6 +1,7 @@
 package com.example.arcade.tankwars.explosions;
 
 import android.graphics.Canvas;
+import com.example.arcade.tankwars.TankWarsUserInterface;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -16,7 +17,6 @@ public abstract class Explosion extends Sprite {
     private int duration;
 
     Explosion() {
-
     }
 
     Explosion(int duration, Image spriteImage) {
@@ -26,18 +26,14 @@ public abstract class Explosion extends Sprite {
 
     }
 
-
-    public void Update(long dt) {
-        this.update(dt);
-
+    @Override
+    public void update(float dt) {
+        super.update(dt);
         if ((Calendar.getInstance().getTimeInMillis() - creationTime.getTimeInMillis()) / 1000 > duration) {
-            this.die();
+            TankWarsUserInterface.removeExplosion();
         }
     }
 
 
-    public void Draw(Canvas canvas) {
-        super.draw(canvas);
-    }
 
 }

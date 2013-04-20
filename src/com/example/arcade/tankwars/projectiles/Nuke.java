@@ -1,6 +1,10 @@
 package com.example.arcade.tankwars.projectiles;
 
+import android.util.Log;
 import com.example.arcade.tankwars.Controller;
+import com.example.arcade.tankwars.TankWarsUserInterface;
+import com.example.arcade.tankwars.explosions.Explosion;
+import com.example.arcade.tankwars.explosions.NukeExplosion;
 
 /**
  * Created by:
@@ -9,6 +13,7 @@ import com.example.arcade.tankwars.Controller;
  * Time: 14:25
  */
 public class Nuke extends Projectile {
+    Explosion lol;
 
     public Nuke() {
         super();
@@ -17,8 +22,12 @@ public class Nuke extends Projectile {
     }
 
     public void explode() {
+        Explosion DummyExplosion = new NukeExplosion();
+        DummyExplosion.setPosition(this.getPosition());
+        TankWarsUserInterface.createExplosion(DummyExplosion);
         if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getActiveTank().getPosition())) {
             // TODO: Do some badass explosion stuff!
+            Log.d("Collision", "It hit the tank :D:D:D");
         }
         return;
     }
