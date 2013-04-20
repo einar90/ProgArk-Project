@@ -8,7 +8,6 @@ import android.util.Log;
 import com.example.arcade.Game;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.R;
-import sheep.collision.CollisionLayer;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 
@@ -79,19 +78,6 @@ class Map {
         mountainLevel3.update(dt);
         mountainLevel4.update(dt);
 
-    }
-
-    /**
-     * Adds the mapsprites t othe collisionlayer specified.
-     *
-     * @param collisionLayer The layer which the sprites should be added to
-     */
-    public static void addToCollisionLayer(CollisionLayer collisionLayer) {
-        collisionLayer.addSprite(mapGround);
-        collisionLayer.addSprite(mountainLevel1);
-        collisionLayer.addSprite(mountainLevel2);
-        collisionLayer.addSprite(mountainLevel3);
-        collisionLayer.addSprite(mountainLevel4);
     }
 
     /**

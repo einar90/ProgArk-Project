@@ -110,9 +110,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private void addSpritesToCollisionLayer() {
         collisionLayer.addSprite(playerOneTank);
         collisionLayer.addSprite(playerTwoTank);
-        Map.addToCollisionLayer(collisionLayer);
 
-
+        // Add map sprites
+        for (Sprite sprite : Map.getMapSprites()) {
+            collisionLayer.addSprite(sprite);
+        }
     }
 
     /**
@@ -122,6 +124,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         playerOneTank.addCollisionListener(this);
         playerTwoTank.addCollisionListener(this);
 
+        // Add map sprites
+        for (Sprite sprite : Map.getMapSprites()) {
+            sprite.addCollisionListener(this);
+        }
     }
 
     /**
@@ -155,8 +161,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public void collided(Sprite a, Sprite b) {
-        Log.d("Collision", "Something collided: " + a.getClass().toString() + " and " + b.getClass().toString());
-
 
         // To avoid friendly fire
         if ((a == Controller.getFiringTank() || b == Controller.getFiringTank())
