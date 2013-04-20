@@ -171,8 +171,8 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
             // Check tank in radius
             // If so, reduce hp
             collisionLayer.removeSprite(currentProjectile);
-            currentProjectile = null;
             currentProjectile.explode();
+            currentProjectile = null;
             return;
         }
 
