@@ -44,10 +44,11 @@ public class ColdWarGame extends State implements MiniGame{
 	private SnowUnitButton upsl, upsn, att, place;
 	private SnowUnitButton plSnowball, plMassiveSnowball, plIcecube, plIcewall, plActive;
 	private SnowUnitSprite sUSIcecube,sUSSnowball,ice,icecub,sUSIcewall,sUSMassive;
-	private Sprite back,backfade,lGrid,rGrid,plOneKing,plTwoKing;
+	private Sprite back,backfade,lGrid,rGrid,plOneKing,plTwoKing,spriteSnowflake;
 	private ColdWarModel model;
 	private Image bg;
 	private Image bgfade;
+	private Image snowflake = new Image( R.drawable.coldwarii_snowflake);
 	private Image snowball = new Image( R.drawable.coldwar_snowball);
 	private Image gridA = new Image(R.drawable.wintergrida);
 	private Image gridB = new Image(R.drawable.wintergridb);
@@ -63,11 +64,13 @@ public class ColdWarGame extends State implements MiniGame{
 	private ArrayList<SnowUnitButton> placeButtons;
 	private SnowUnitSprite placeSprite;
 	private float updTime;
+	private int[] occupiedGrids;
 
 	public ColdWarGame(){
 		h = Constants.WINDOW_HEIGHT;
 		w = Constants.WINDOW_WIDTH;
 		updTime = System.currentTimeMillis();
+		occupiedGrids = new int[]{6,4,5,4};
 
 		scaling = new float[]{w / 1600f, h / 960f};
 		update = new SnowUnitSpriteContainer();
@@ -123,7 +126,7 @@ public class ColdWarGame extends State implements MiniGame{
 		sUSSnowball.addCollisionListener(model);
 		ice.addCollisionListener(model);
 		addToContainer(sUSSnowball, plTwoCon);
-		
+
 		initGUI();
 	}
 	private void initGUI(){
@@ -149,6 +152,8 @@ public class ColdWarGame extends State implements MiniGame{
 		plMassiveSnowball = initSnowUnitButton("Massive Snowball(4 su)",white,SnowUnitType.MASSIVE);
 		plSnowball = initSnowUnitButton("Snowball(1 su)",white,SnowUnitType.SNOWBALL);
 		plIcewall = initSnowUnitButton("Icewall(4 su)",white,SnowUnitType.ICEWALL);
+		drawSpriteOnGrid(icewall, SnowUnitType.ICEWALL, (int)(rGrid.getX()), (int)h);
+		placeSpriteOnGrid();
 		if(model.isPlayerOne()){
 			plIcecube.setPosition(150, 30);
 			plSnowball.setPosition(150, 100);
@@ -170,18 +175,18 @@ public class ColdWarGame extends State implements MiniGame{
 		placeButtons.add(plSnowball);
 		placeButtons.add(plMassiveSnowball);
 		placeButtons.add(plIcewall);
-		
+
 		sUSMassive = new SnowUnitSprite(snowball,model.getPlayerOne(),SnowUnitType.SNOWBALL);
 		sUSMassive.setPosition(100,100);
 		sUSMassive.setScale(scaling[0], scaling[1]);
 		addToContainer(sUSMassive, guiobjects);
-		
-		
+
+
 		icecub = new SnowUnitSprite(icecube,model.getPlayerTwo(),SnowUnitType.ICECUBE);
 		icecub.setPosition(400, 480);
 		icecub.setScale(scaling[0], scaling[1]);
 		addToContainer(icecub, guiobjects);
-		
+
 
 	}
 	private void initButtonPaint(){
@@ -228,9 +233,15 @@ public class ColdWarGame extends State implements MiniGame{
 	private void drawPlace(Canvas canvas){
 		backfade.draw(canvas);
 		if(model.isPlayerOne()){
-			rGrid.draw(canvas);					
+			rGrid.draw(canvas);	
+			for (int i = 0; i < plOneCon.getSprites().size(); i++) {
+				plOneCon.getSprites().get(i).draw(canvas);
+			}
 		}
 		else{
+			for (int i = 0; i < plTwoCon.getSprites().size(); i++) {
+				plTwoCon.getSprites().get(i).draw(canvas);
+			}
 			rGrid.draw(canvas);					
 		}
 		for (int i = 0; i < placeButtons.size(); i++) {
@@ -238,8 +249,8 @@ public class ColdWarGame extends State implements MiniGame{
 		}
 		if(placeSprite != null)
 			placeSprite.draw(canvas);
-//		Toast.makeText(Game.getInstance().getContext(), "Select type of SnowUnit(<-), " +
-//				"and then touch where you want it on the grid below", Toast.LENGTH_SHORT).show();
+		//		Toast.makeText(Game.getInstance().getContext(), "Select type of SnowUnit(<-), " +
+		//				"and then touch where you want it on the grid below", Toast.LENGTH_SHORT).show();
 		sUSMassive.draw(canvas);
 		icecub.draw(canvas);
 		plOneKing.draw(canvas);
@@ -319,44 +330,87 @@ public class ColdWarGame extends State implements MiniGame{
 	}
 	private void checkPlacingBox(MotionEvent e){
 		if(GraphicsHelper.isSpriteTouched(rGrid, gridB.getWidth(), gridB.getHeight(), e) && model.isPlacing()){
-			placeActiveSnowUnit(calculateSpritePosition(e.getX(),e.getY()));
-//			model.reversePlacing();
-//			model.reverseMenu();
+			placeActiveSnowUnit(e.getX(),e.getY());
+			//			model.reversePlacing();
+			//			model.reverseMenu();
 		}if(GraphicsHelper.isSpriteTouched(lGrid, gridA.getWidth(), gridA.getHeight(), e) && model.isPlacing()){
 			model.reversePlacing();
 			model.reverseMenu();
 		}
 	}
-	private int[] calculateSpritePosition(float x,float y){
-		int rowScale = (int) (70*scaling[0]);
-		int colScale = (int) (72*scaling[1]);
+	private int[] calculateSpritePosition(float x,float y,SnowUnitType t){
+		int colScale = (int) (70*scaling[0]);
+		int rowScale = (int) (72*scaling[1]);
 
-		int startW,startH;
-		
+		int startW, startH;
 		if(model.isPlayerOne()){
-			startH = (int) (lGrid.getY()-(gridA.getHeight()*scaling[1]));
-			startW = (int) (lGrid.getX()-(gridA.getWidth()*scaling[0]));
+			startW = (int) (rGrid.getX()-(gridB.getWidth()*scaling[0]));
+			startH = (int) (rGrid.getY()-(gridB.getHeight()*scaling[1]));			
 		}
 		else{
-			startH = (int) (rGrid.getY()-(gridB.getHeight()*scaling[1]));
-			startW = (int) (rGrid.getX()-(gridB.getWidth()*scaling[0]));
+			startW = (int) (lGrid.getX()-(gridB.getWidth()*scaling[0]));
+			startH = (int) (lGrid.getY()-(gridB.getHeight()*scaling[1]));
 		}
-		
+
 		Log.d("PlaceSprite", "X: " +x+" Y: "+y+" sW: "+(startW)+" sH: "+(startH));
-		
-			
-		
-		int row = (int) (1+(x-startW)/rowScale);
-		int column = (int) (1+(y-startH)/colScale);
-		
-		int[] array = new int[]{startW+(rowScale*row),startH+(colScale*column)};
+
+
+
+		int row,column,minrow=1,mincol=1,maxrow=5,maxcol=3;
+		if(t == SnowUnitType.ICEWALL || t == SnowUnitType.MASSIVE)
+			minrow = 2;
+		if(t == SnowUnitType.MASSIVE)
+			mincol = 2;
+
+
+
+		row = (int) (minrow+(y-startH)/rowScale);
+		column = (int) (mincol+(x-startW)/colScale);
+
+		if(column > maxcol)
+			column = maxcol;
+		if(row > maxrow)
+			row = maxrow;
+
+		int[] array = new int[]{startW+(colScale*column),startH+(rowScale*row)};
 		Log.d("PlaceSprite", "row: "+row+" column: "+column+", stW-x: "+(startW-x)+" stH-y: "+(startH-y)+", array: ["+array[0]+"]["+array[1]+"]");
+
+		int bolrow = row,bolcol = column;
+		boolean flag = false;
+		if(t == SnowUnitType.MASSIVE){
+			if(model.isGridEmpty(bolrow, bolcol))
+				if(model.isGridEmpty(bolrow-1, bolcol))
+					if(model.isGridEmpty(bolrow, bolcol-1))
+						if(model.isGridEmpty(bolrow-1, bolcol-1)){
+							flag = true;
+							occupiedGrids = new int[]{bolrow,bolcol,bolrow-1,bolcol,bolrow,bolcol-1,bolrow-1,bolcol-1};
+						}
+		}
+		else if(t == SnowUnitType.ICEWALL){
+			if(model.isGridEmpty(bolrow, bolcol))
+				if(model.isGridEmpty(bolrow-1, bolcol)){
+					occupiedGrids = new int[]{bolrow,bolcol,bolrow-1,bolcol};			
+					flag = true;
+				}
+		}
+		else{
+			if(model.isGridEmpty(bolrow, bolcol)){
+				occupiedGrids = new int[]{bolrow,bolcol};
+				flag = true;				
+			}
+		}
+		if(!flag)
+			return null;
+
 		return array;
 	}
-	private void placeActiveSnowUnit(int[] pos) {
+	private void placeActiveSnowUnit(float x,float y) {
 		if(plActive == null)
 			return;
 		else{
+			int[] pos = calculateSpritePosition(x, y, plActive.getType());
+			if(pos == null)
+				return;
 			switch (plActive.getType()) {
 			case MASSIVE:
 				drawSpriteOnGrid(massiveSnow, SnowUnitType.MASSIVE,pos[0],pos[1]);
@@ -375,17 +429,22 @@ public class ColdWarGame extends State implements MiniGame{
 			}
 		}
 	}
-	
+
 	private void drawSpriteOnGrid(Image i,SnowUnitType t,int x,int y){
 		SnowUnitSprite s = new SnowUnitSprite(i, model.getActivePlayer(), t);
-		if(placeSprite != null)
-			plOneCon.removeSprite(placeSprite);
-		addToContainer(s, plOneCon);
+		if(placeSprite == null){
+			placeSprite = s;			
+		}
 		s.setPosition(x, y);
 		s.setScale(scaling[0], scaling[1]);
 		placeSprite = s;
+		update.addSprite(placeSprite);
 	}
-	
+	private void placeSpriteOnGrid(){
+		addToContainer(placeSprite, plOneCon);
+		model.setGridOccupied(occupiedGrids);
+	}
+
 	private void checkPlacingButtons(MotionEvent event) {
 		if(GraphicsHelper.isSpriteTouched(plSnowball, plSnowball.getImageWidth(), plSnowball.getImageHeight(), event)){
 			setSnowUnitButton(plSnowball);
@@ -403,10 +462,10 @@ public class ColdWarGame extends State implements MiniGame{
 
 	private Image getScaledImage(int id){
 		Bitmap unscaledBitmap = BitmapFactory.decodeResource(res, id);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (unscaledBitmap.getWidth() * scaling[0]), (int) (unscaledBitmap.getHeight() * scaling[1]), true);
-        BitmapDrawable scaledDrawable = new BitmapDrawable(res, scaledBitmap);
-        scaledDrawable.setTargetDensity(res.getDisplayMetrics().densityDpi);
-        return new Image(scaledDrawable);
+		Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, (int) (unscaledBitmap.getWidth() * scaling[0]), (int) (unscaledBitmap.getHeight() * scaling[1]), true);
+		BitmapDrawable scaledDrawable = new BitmapDrawable(res, scaledBitmap);
+		scaledDrawable.setTargetDensity(res.getDisplayMetrics().densityDpi);
+		return new Image(scaledDrawable);
 	}
 	private void setSnowUnitButton(SnowUnitButton b){
 		if(plActive == null){
@@ -422,28 +481,10 @@ public class ColdWarGame extends State implements MiniGame{
 		Log.d("SnowUnitButton", "DeActivate Button: "+plActive.getLabel()+"activate: "+b.getLabel());
 		plActive.changePaint(Color.WHITE);
 		b.changePaint(Color.RED);
+		placeSprite = null;
+		plOneCon.removeSprite(placeSprite);
 		plActive = b;
 	}
-
-	//	private void createNewPlaceButton(SnowUnitButton b,boolean flag){
-	//		placeButtons.remove(b);
-	//		update.removeSprite(b);
-	//		guiobjects.removeSprite(b);
-	//		Log.d("SnowUnitButton", "Position of Button1: "+b.getX()+", "+b.getY());
-	//		if(flag)
-	//			b = new SnowUnitButton(b.getX(), b.getY(), 
-	//				b.getLabel(),red,true);
-	//		else
-	//			b = new SnowUnitButton(b.getX(), b.getY(), 
-	//					b.getLabel(),white,false);
-	//		placeButtons.add(b);
-	//		update.addSprite(b);
-	//		guiobjects.addSprite(b);
-	//		b.setPosition(b.getX(), b.getY());
-	//		update(updTime);
-	//		Log.d("SnowUnitButton", "Position of Button2: "+b.getX()+", "+b.getY());
-	//		
-	//	}
 
 	private SnowUnitButton initSnowUnitButton(String text,Paint p,SnowUnitType t){
 		Bitmap b = BitmapFactory.decodeResource(res, R.drawable.snowbutton)
