@@ -45,7 +45,11 @@ public class Controller {
     }
 
     public static void setChosenProjectile(String projectile) {
-        chosenProjectile = projectile;
+
+        if (activeTank.checkAmmo(projectile)) {
+            chosenProjectile = projectile;
+        }
+
     }
 
     /**

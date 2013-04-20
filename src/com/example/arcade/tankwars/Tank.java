@@ -234,6 +234,11 @@ public class Tank extends Sprite {
         String ammoName = Controller.getChosenProjectile();
         Log.d("Tank", "Reducing ammo of: " + ammoName);
         this.projectileAmmo.put(ammoName, (Integer) this.projectileAmmo.get(ammoName) - 1);
+
+        // Changing ammo to bullet if ammo is 0
+        if ((Integer) this.projectileAmmo.get(ammoName) <= 0) {
+            Controller.setChosenProjectile("Bullet");
+        }
     }
 
     /**
