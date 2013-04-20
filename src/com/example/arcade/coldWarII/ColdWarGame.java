@@ -44,14 +44,14 @@ public class ColdWarGame extends State implements MiniGame{
 	private SnowUnitButton upsl, upsn, att, place;
 	private SnowUnitButton plSnowball, plMassiveSnowball, plIcecube, plIcewall, plActive;
 	private SnowUnitSprite sUSIcecube,sUSSnowball,ice,icecub,sUSIcewall,sUSMassive;
-	private Sprite back,backfade,lGrid,rGrid,plOneKing,plTwoKing,spriteSnowflake;
+	private Sprite back,backfade, ground, lGrid,rGrid,plOneKing,plTwoKing,spriteSnowflake;
 	private ColdWarModel model;
-	private Image bg;
-	private Image bgfade;
+	private Image bg = new Image(R.drawable.coldwarii_backgound);
+	private Image bgfade = new Image(R.drawable.coldwarii_backgound);
+	private Image groundImage = new Image(R.drawable.coldwarii_ground);
 	private Image snowflake = new Image( R.drawable.coldwarii_snowflake);
 	private Image snowball = new Image( R.drawable.coldwar_snowball);
-	private Image gridA = new Image(R.drawable.wintergrida);
-	private Image gridB = new Image(R.drawable.wintergridb);
+	private Image grid = new Image(R.drawable.wintergrid);
 	private Image massiveSnow = new Image(R.drawable.massivesnowball);
 	private Image icecube = new Image(R.drawable.icecube);
 	private Image icewall = new Image(R.drawable.icewall);
@@ -79,8 +79,8 @@ public class ColdWarGame extends State implements MiniGame{
 		plOneCon = new SnowUnitSpriteContainer();
 		plTwoCon = new SnowUnitSpriteContainer();
 		model = new ColdWarModel(plOneCon,plTwoCon);
-		bg = getScaledImage(  R.drawable.winter);
-		bgfade = getScaledImage(  R.drawable.winterfade);
+//		bg = getScaledImage(  R.drawable.winter);
+//		bgfade = getScaledImage(  R.drawable.winterfade);
 
 		initButtonPaint();
 
@@ -92,12 +92,16 @@ public class ColdWarGame extends State implements MiniGame{
 		backfade.setPosition(w/2,h/2);
 		addToContainer(backfade, guiobjects);
 
+		ground = new Sprite(groundImage);
+		ground.setPosition(w/2, h+15);
+		addToContainer(ground, guiobjects);
+		
 		Log.d("Size", "Size: "+w+", "+h+". Scale: "+scaling[0]+", "+scaling[1]);
 		Log.d("Size", "SizeImage: "+bg.getWidth()+", "+bg.getHeight()+"pos: "+back.getX()+", "+back.getY());
 		Log.d("Size", "SizeSprite: "+backfade.getScale()+", offset: "+backfade.getOffset());
 
-		lGrid = new Sprite(gridA);
-		rGrid = new Sprite(gridB);
+		lGrid = new Sprite(grid);
+		rGrid = new Sprite(grid);
 		rGrid.setScale(scaling[0], scaling[1]);
 		lGrid.setScale(scaling[0], scaling[1]);
 
@@ -202,6 +206,7 @@ public class ColdWarGame extends State implements MiniGame{
 			canvas.drawPaint(new Paint(Color.BLACK));
 			if(!model.isMenu()){
 				back.draw(canvas);
+				ground.draw(canvas);
 				drawSnowUnits(canvas);
 			}
 			else{
@@ -232,6 +237,7 @@ public class ColdWarGame extends State implements MiniGame{
 
 	private void drawPlace(Canvas canvas){
 		backfade.draw(canvas);
+		ground.draw(canvas);
 		if(model.isPlayerOne()){
 			rGrid.draw(canvas);	
 			for (int i = 0; i < plOneCon.getSprites().size(); i++) {
@@ -329,11 +335,11 @@ public class ColdWarGame extends State implements MiniGame{
 		}
 	}
 	private void checkPlacingBox(MotionEvent e){
-		if(GraphicsHelper.isSpriteTouched(rGrid, gridB.getWidth(), gridB.getHeight(), e) && model.isPlacing()){
+		if(GraphicsHelper.isSpriteTouched(rGrid, grid.getWidth(), grid.getHeight(), e) && model.isPlacing()){
 			placeActiveSnowUnit(e.getX(),e.getY());
 			//			model.reversePlacing();
 			//			model.reverseMenu();
-		}if(GraphicsHelper.isSpriteTouched(lGrid, gridA.getWidth(), gridA.getHeight(), e) && model.isPlacing()){
+		}if(GraphicsHelper.isSpriteTouched(lGrid, grid.getWidth(), grid.getHeight(), e) && model.isPlacing()){
 			model.reversePlacing();
 			model.reverseMenu();
 		}
@@ -344,12 +350,12 @@ public class ColdWarGame extends State implements MiniGame{
 
 		int startW, startH;
 		if(model.isPlayerOne()){
-			startW = (int) (rGrid.getX()-(gridB.getWidth()*scaling[0]));
-			startH = (int) (rGrid.getY()-(gridB.getHeight()*scaling[1]));			
+			startW = (int) (rGrid.getX()-(grid.getWidth()*scaling[0]));
+			startH = (int) (rGrid.getY()-(grid.getHeight()*scaling[1]));			
 		}
 		else{
-			startW = (int) (lGrid.getX()-(gridB.getWidth()*scaling[0]));
-			startH = (int) (lGrid.getY()-(gridB.getHeight()*scaling[1]));
+			startW = (int) (lGrid.getX()-(grid.getWidth()*scaling[0]));
+			startH = (int) (lGrid.getY()-(grid.getHeight()*scaling[1]));
 		}
 
 		Log.d("PlaceSprite", "X: " +x+" Y: "+y+" sW: "+(startW)+" sH: "+(startH));
