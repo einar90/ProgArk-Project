@@ -48,7 +48,7 @@ public abstract class Projectile extends Sprite {
         this.setSpeed(initialSpeed);
 
         // Setting acceleration vector for projectile, taking into account gravity and wind
-        this.setAcceleration(windAffectionFactor * 3, 150);
+        this.setAcceleration(windAffectionFactor, 200);
 
         Log.d("Projectile", "Position: " + this.getPosition().toString());
         Log.d("Projectile", "Speed: " + this.getSpeed().toString());
