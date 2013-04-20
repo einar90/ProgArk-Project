@@ -307,4 +307,18 @@ public class Tank extends Sprite {
     }
 
 
+    @Override
+    public String toString() {
+        String nameString = "";
+        if (this == Tank.getTank1()) {
+            nameString = "Tank1";
+        } else nameString = "Tank2";
+
+        String hpString = this.hp + " hp";
+
+        return nameString + ", " + hpString;
+
+    }
+
+
 }
