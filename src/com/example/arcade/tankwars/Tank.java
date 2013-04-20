@@ -165,6 +165,10 @@ public class Tank extends Sprite {
         Log.d("Explode", "Reducing hp");
         this.hp = this.hp - dmg;
         Log.d("Explode", this.toString());
+
+        if(this.isTankDead()){
+            Log.d("Explode", this.toString()+" is now dead. Game Over!");
+        }
     }
 
     /**
@@ -278,6 +282,10 @@ public class Tank extends Sprite {
      */
     private static int getBarrelAngle() {
         return Controller.getActiveTank().barrelAngle;
+    }
+
+    public String getHpString(){
+        return Integer.toString(this.hp);
     }
 
     /**
