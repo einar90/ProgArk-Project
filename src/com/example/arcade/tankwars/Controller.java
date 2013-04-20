@@ -50,6 +50,17 @@ class Controller {
         chosenProjectile = projectile;
     }
 
+    /**
+     * Method to calculate the distance between two points/vectors.
+     * @param one  First point
+     * @param two  Second point
+     * @return Distance between the two points.
+     */
+    private static double calculateDistance(Vector2 one, Vector2 two){
+        return Math.sqrt(Math.pow(one.getX() - two.getX(), 2)+ Math.pow(one.getY() - two.getY(), 2));
+
+    }
+
 
     /**
      * Used to aim the barrel of a tank. Changes the barrelAngle variable for the tank and rotates the sprite.

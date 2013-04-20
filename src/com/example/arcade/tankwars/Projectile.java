@@ -23,6 +23,7 @@ public abstract class Projectile extends Sprite {
     int damage;
     int explosionRadius;
 
+
     /**
      * Contstructor for the Abstract class Projectile. All ammo types must call this!
      * Sets WindAffection, speed and direction, and the acceleration(gravity)

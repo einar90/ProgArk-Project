@@ -1,5 +1,7 @@
 package com.example.arcade.tankwars;
 
+import sheep.math.Vector2;
+
 /**
  * Created by:
  * User: Dzenan
@@ -19,4 +21,6 @@ class Bullet extends Projectile {
         return;
         // TODO: Implement this
     }
+
+
 }
