@@ -93,7 +93,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         String bulletText = "Bullet: " + ammo.get("Bullet");
         String tankShellText = "Shells: " + ammo.get("TankShell");
         String thermiteText = "Thermite: " + ammo.get("ThermiteShells");
-        String nukeText = "Nuke: " + ammo.get("Nukes");
+        String nukeText = "Nukes: " + ammo.get("Nukes");
         String pickedAmmoText = "Picked: " + Controller.getChosenProjectile();
 
         int y = GraphicsHelper.getDisplaySize().y - GraphicsHelper.getDisplaySize().y / 8;
@@ -124,8 +124,8 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
             Log.d("Tapped", "Thermite");
             Controller.setChosenProjectile("ThermiteShells");
         } else if (nukeButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Nuke");
-            Controller.setChosenProjectile("Nuke");
+            Log.d("Tapped", "Nukes");
+            Controller.setChosenProjectile("Nukes");
         }
     }
 

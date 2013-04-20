@@ -130,7 +130,7 @@ public class Controller {
             return new TankShell();
         } else if (chosenProjectile.equals("ThermiteShells")) {
             return new ThermiteShell();
-        } else if (chosenProjectile.equals("Nuke")) {
+        } else if (chosenProjectile.equals("Nukes")) {
             return new Nuke();
         } else return new Bullet(); // Returning bullet if everything else fails.
     }
