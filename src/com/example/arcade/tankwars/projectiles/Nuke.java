@@ -25,9 +25,9 @@ public class Nuke extends Projectile {
         Explosion DummyExplosion = new NukeExplosion();
         DummyExplosion.setPosition(this.getPosition());
         TankWarsUserInterface.createExplosion(DummyExplosion);
-        if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getActiveTank().getPosition())) {
-            // TODO: Do some badass explosion stuff!
-            Log.d("Collision", "It hit the tank :D:D:D");
+        if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
+            //
+            Controller.getInactiveTank().reduceHp(damage);
         }
         return;
     }

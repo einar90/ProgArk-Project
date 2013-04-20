@@ -19,7 +19,7 @@ public class ThermiteExplosion extends Explosion {
     private static final int duration = 3; // In Seconds
 
 
-    ThermiteExplosion() {
+    public ThermiteExplosion() {
         super(duration, spriteImage);
     }
 }

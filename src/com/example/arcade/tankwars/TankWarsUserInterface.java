@@ -82,6 +82,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         if (currentProjectile != null) {
             currentProjectile.draw(canvas);
         }
+
+        if (currentExplosion != null) {
+            currentExplosion.draw(canvas);
+        }
     }
 
     private void drawAmmoText(Canvas canvas) {
@@ -136,6 +140,9 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
             currentProjectile.update(dt);
         }
 
+        if (currentExplosion != null) {
+            currentExplosion.update(dt);
+        }
     }
 
     /**

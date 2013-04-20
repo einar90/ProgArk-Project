@@ -1,6 +1,9 @@
 package com.example.arcade.tankwars.projectiles;
 
 import com.example.arcade.tankwars.Controller;
+import com.example.arcade.tankwars.TankWarsUserInterface;
+import com.example.arcade.tankwars.explosions.Explosion;
+import com.example.arcade.tankwars.explosions.ThermiteExplosion;
 
 /**
  * Created by:
@@ -17,8 +20,12 @@ public class ThermiteShell extends Projectile {
     }
 
     public void explode() {
-        if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getActiveTank().getPosition())) {
-            // TODO: Do some badass explosion stuff!
+        Explosion DummyExplosion = new ThermiteExplosion();
+        DummyExplosion.setPosition(this.getPosition());
+        TankWarsUserInterface.createExplosion(DummyExplosion);
+        if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
+            //
+            Controller.getInactiveTank().reduceHp(damage);
         }
         return;
     }
