@@ -70,5 +70,22 @@ public abstract class Projectile extends Sprite {
      */
     abstract void explode();
 
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+
+
+        // Deleting projectile if it's outside the screen
+        Vector2 position = this.getPosition();
+        if (position.getX() < 0 || position.getX() > GraphicsHelper.getDisplaySize().x
+                || position.getY() < 0 || position.getY() > GraphicsHelper.getDisplaySize().y) {
+            TankWarsUserInterface.removeCurrentProjectile();
+            Controller.changeActiveTank();
+            Log.d("Collision", "Collided with screen border.");
+            this.die();
+        }
+
+    }
 }
 

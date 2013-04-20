@@ -37,27 +37,19 @@ class Controller {
         return activeTank;
     }
 
-    /**
-     * @return Returns the tank that has a projectile in the air.
-     */
-    public static Tank getFiringTank() {
-        if (activeTank == Tank.getTank1()) {
-            return Tank.getTank2();
-        } else return Tank.getTank1();
-    }
-
     public static void setChosenProjectile(String projectile) {
         chosenProjectile = projectile;
     }
 
     /**
      * Method to calculate the distance between two points/vectors.
-     * @param one  First point
-     * @param two  Second point
+     *
+     * @param one First point
+     * @param two Second point
      * @return Distance between the two points.
      */
-    public static double calculateDistance(Vector2 one, Vector2 two){
-        return Math.sqrt(Math.pow(one.getX() - two.getX(), 2)+ Math.pow(one.getY() - two.getY(), 2));
+    public static double calculateDistance(Vector2 one, Vector2 two) {
+        return Math.sqrt(Math.pow(one.getX() - two.getX(), 2) + Math.pow(one.getY() - two.getY(), 2));
 
     }
 

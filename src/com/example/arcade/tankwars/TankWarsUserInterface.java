@@ -29,7 +29,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private Map map;
     private Tank playerOneTank;
     private Tank playerTwoTank;
-    private Projectile currentProjectile = null;
+    private static Projectile currentProjectile = null;
 
     /**
      * Constructor for the TankWarsUserinterface, does some
@@ -115,6 +115,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         for (Sprite sprite : Map.getMapSprites()) {
             collisionLayer.addSprite(sprite);
         }
+
     }
 
     /**
@@ -140,8 +141,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         Tank.getTankBarrel1().draw(canvas);
         playerOneTank.draw(canvas);
         playerTwoTank.draw(canvas);
+    }
 
-
+    public static void removeCurrentProjectile() {
+        currentProjectile = null;
     }
 
     @Override
@@ -163,20 +166,18 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     public void collided(Sprite a, Sprite b) {
 
         // To avoid friendly fire
-        if ((a == Controller.getFiringTank() || b == Controller.getFiringTank())
+        if ((a == Controller.getActiveTank() || b == Controller.getActiveTank())
                 && (a instanceof Projectile || b instanceof Projectile)) {
             return;
         }
 
-        // Projectile collision
-        if (a instanceof Projectile || b instanceof Projectile) {
+        // Projectile collision. The projectile != null check is to avoid a strange bug
+        if ((a instanceof Projectile || b instanceof Projectile) && currentProjectile != null) {
             Log.d("Collision", "Projectile collided");
-            // Explode
-            // Check tank in radius
-            // If so, reduce hp
-            collisionLayer.removeSprite(currentProjectile);
             currentProjectile.explode();
+            collisionLayer.removeSprite(currentProjectile);
             currentProjectile = null;
+            Controller.changeActiveTank();
             return;
         }
 
@@ -186,11 +187,16 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
                 Tank.stopStartSpeed();
             }
         }
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public boolean onTouchDown(MotionEvent event) {
+
+        // Not reacting if there's a projectile in the air
+        if (currentProjectile != null) {
+            return true;
+        }
+
         Controller.aimBarrel(new Point((int) event.getX(), (int) event.getY()));
 
         // Clearing current projectile if it already exists.
@@ -208,10 +214,15 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public boolean onTouchUp(MotionEvent event) {
+
+        // Not reacting if there's a projectile in the air
+        if (currentProjectile != null) {
+            return true;
+        }
+
         Controller.calculatePower();
         currentProjectile = Controller.getProjectile();
         collisionLayer.addSprite(currentProjectile);
-        Controller.changeActiveTank();
         Map.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
     }
