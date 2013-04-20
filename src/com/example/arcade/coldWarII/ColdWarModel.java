@@ -8,6 +8,7 @@ public class ColdWarModel implements CollisionListener {
     private boolean menu, placing,attack;
     private ColdWarPlayer active, plOne, plTwo;
     private SnowUnitSpriteContainer plOneCon, plTwoCon;
+    private boolean[][] plOneSnowUnits,plTwoSnowUnits;
 
 
     public ColdWarModel(SnowUnitSpriteContainer one, SnowUnitSpriteContainer two) {
@@ -18,13 +19,36 @@ public class ColdWarModel implements CollisionListener {
         active = plOne;
         plOneCon = one;
         plTwoCon = two;
+        plOneSnowUnits = new boolean[3][5];
+        plTwoSnowUnits = new boolean[3][5];
     }
-
+    public void setGridOccupied(int[] array){
+    	if(active == plOne){
+    		for (int i = 0; i < array.length; i+=2) {
+    			Log.d("PlaceButton", "array: "+(array[i+1]-1)+", "+(array[i]-1));
+				plOneSnowUnits[array[i+1]-2][array[i]-2] = true;
+			}
+    	}
+    	else{
+    		for (int i = 0; i < array.length; i+=2) {
+				plTwoSnowUnits[array[i+1]-1][array[i]-1] = true;
+			}
+    	}
+    }
+    public boolean isGridEmpty(int x,int y){
+    	if(active == plOne)
+    		return !plOneSnowUnits[y-1][x-1];
+    	else
+    		return !plTwoSnowUnits[y-1][x-1];
+    }
     public void reverseMenu() {
         if (menu)
             menu = false;
         else
             menu = true;
+    }
+    public ColdWarPlayer getActivePlayer(){
+    	return active;
     }
     public ColdWarPlayer getPlayerOne(){
     	return plOne;
