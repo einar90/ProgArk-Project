@@ -15,7 +15,9 @@ class ThermiteShell extends Projectile {
     }
 
     public void explode() {
+        if(explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getActiveTank().getPosition())){
+            // TODO: Do some badass explosion stuff!
+        }
         return;
-        // TODO: Implement this
     }
 }
