@@ -8,11 +8,10 @@ package com.example.arcade.tankwars;
  */
 class ThermiteShell extends Projectile {
 
-    private int burnDuration = 20;
-
     public ThermiteShell() {
         super();
         damage = 35;
+        explosionRadius = 10;
     }
 
     public void explode() {

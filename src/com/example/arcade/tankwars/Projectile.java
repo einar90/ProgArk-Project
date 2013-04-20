@@ -21,6 +21,7 @@ public abstract class Projectile extends Sprite {
     private static final Image spriteImage = GraphicsHelper.getScaledImage(resources, R.drawable.projectile);
 
     int damage;
+    int explosionRadius;
 
     /**
      * Contstructor for the Abstract class Projectile. All ammo types must call this!
@@ -67,7 +68,6 @@ public abstract class Projectile extends Sprite {
      * the Explosions on the device screen.
      */
     abstract void explode();
-
 
 }
 

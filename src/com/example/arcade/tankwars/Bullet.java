@@ -12,6 +12,7 @@ class Bullet extends Projectile {
     public Bullet() {
         super();
         damage = 10;
+        explosionRadius = 1;
     }
 
     public void explode() {

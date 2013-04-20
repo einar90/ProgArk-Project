@@ -8,11 +8,10 @@ package com.example.arcade.tankwars;
  */
 class Nuke extends Projectile {
 
-    private int explosionRadius = 25;
-
     public Nuke() {
         super();
         damage = 50;
+        explosionRadius = 50;
     }
 
     public void explode() {
