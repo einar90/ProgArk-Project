@@ -56,7 +56,7 @@ class Controller {
      * @param two  Second point
      * @return Distance between the two points.
      */
-    private static double calculateDistance(Vector2 one, Vector2 two){
+    public static double calculateDistance(Vector2 one, Vector2 two){
         return Math.sqrt(Math.pow(one.getX() - two.getX(), 2)+ Math.pow(one.getY() - two.getY(), 2));
 
     }
