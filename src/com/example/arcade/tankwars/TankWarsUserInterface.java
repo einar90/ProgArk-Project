@@ -161,8 +161,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     @Override
     public void collided(Sprite a, Sprite b) {
-        Log.d("Collision", "Something collided: " + a.getClass().toString() + " and " + b.getClass().toString());
-
 
         // To avoid friendly fire
         if ((a == Controller.getFiringTank() || b == Controller.getFiringTank())
