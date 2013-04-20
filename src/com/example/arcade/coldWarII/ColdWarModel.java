@@ -26,6 +26,9 @@ public class ColdWarModel implements CollisionListener {
         else
             menu = true;
     }
+    public ColdWarPlayer getActivePlayer(){
+    	return active;
+    }
     public ColdWarPlayer getPlayerOne(){
     	return plOne;
     }

@@ -23,7 +23,7 @@ public class SnowUnitButton extends Sprite{
 	private static Resources res = Game.getInstance().getResources();
 	private SnowUnitType type;
 	
-	public SnowUnitButton( String text,Bitmap bm,Canvas c,int cX,int cY,Paint p){
+	public SnowUnitButton( String text,Bitmap bm,Canvas c,int cX,int cY,Paint p,SnowUnitType t){
 		super(new Image(new BitmapDrawable(res,bm)));
 		this.bm = bm;
 		imageH = bm.getHeight();
@@ -33,6 +33,7 @@ public class SnowUnitButton extends Sprite{
 		paint = p;
 		canvasX = cX;
 		canvasY = cY;
+		type = t;
 	}
 	public void changePaint(int color){
 		paint.setColor(color);
