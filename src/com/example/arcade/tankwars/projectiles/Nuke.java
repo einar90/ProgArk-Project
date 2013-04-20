@@ -1,6 +1,7 @@
 package com.example.arcade.tankwars.projectiles;
 
 import android.util.Log;
+import com.example.arcade.GraphicsHelper;
 import com.example.arcade.tankwars.Controller;
 import com.example.arcade.tankwars.TankWarsUserInterface;
 import com.example.arcade.tankwars.explosions.Explosion;
@@ -18,15 +19,16 @@ public class Nuke extends Projectile {
     public Nuke() {
         super();
         damage = 50;
-        explosionRadius = 50;
+        explosionRadius = 100;
     }
 
     public void explode() {
         Explosion DummyExplosion = new NukeExplosion();
         DummyExplosion.setPosition(this.getPosition());
         TankWarsUserInterface.createExplosion(DummyExplosion);
-        if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
+        if (explosionRadius* GraphicsHelper.getScalingFactor()[0] > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
             //
+            Log.d("Explode", "It hit with Nuke");
             Controller.getInactiveTank().reduceHp(damage);
         }
         return;

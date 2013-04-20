@@ -1,5 +1,7 @@
 package com.example.arcade.tankwars.projectiles;
 
+import android.util.Log;
+import com.example.arcade.GraphicsHelper;
 import com.example.arcade.tankwars.Controller;
 import com.example.arcade.tankwars.TankWarsUserInterface;
 import com.example.arcade.tankwars.explosions.Explosion;
@@ -16,7 +18,7 @@ public class ThermiteShell extends Projectile {
     public ThermiteShell() {
         super();
         damage = 35;
-        explosionRadius = 10;
+        explosionRadius = 100;
     }
 
     public void explode() {
@@ -24,8 +26,9 @@ public class ThermiteShell extends Projectile {
         DummyExplosion.setPosition(this.getPosition());
         DummyExplosion.setScale(1.5f, 1.5f );
         TankWarsUserInterface.createExplosion(DummyExplosion);
-        if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
+        if (explosionRadius* GraphicsHelper.getScalingFactor()[0] > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
             //
+            Log.d("Explode", "It hit with Thermiteshell");
             Controller.getInactiveTank().reduceHp(damage);
         }
         return;

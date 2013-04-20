@@ -162,9 +162,9 @@ public class Tank extends Sprite {
      * @param dmg The amount healthpoints should be reduced with
      */
     public void reduceHp(int dmg) {
-        Log.d("Tank", "Reducing hp");
+        Log.d("Explode", "Reducing hp");
         this.hp = this.hp - dmg;
-        Log.d("Tank", this.toString());
+        Log.d("Explode", this.toString());
     }
 
     /**

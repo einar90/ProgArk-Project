@@ -1,5 +1,7 @@
 package com.example.arcade.tankwars.projectiles;
 
+import android.util.Log;
+import com.example.arcade.GraphicsHelper;
 import com.example.arcade.tankwars.Controller;
 
 /**
@@ -13,12 +15,13 @@ public class TankShell extends Projectile {
     public TankShell() {
         super();
         damage = 20;
-        explosionRadius = 10;
+        explosionRadius = 100;
     }
 
     public void explode() {
-        if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
+        if (explosionRadius*GraphicsHelper.getScalingFactor()[0] > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
             //
+            Log.d("Explode", "It hit with Tankshell");
             Controller.getInactiveTank().reduceHp(damage);
         }
         return;
