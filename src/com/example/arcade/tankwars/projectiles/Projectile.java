@@ -1,10 +1,14 @@
-package com.example.arcade.tankwars;
+package com.example.arcade.tankwars.projectiles;
 
 import android.content.res.Resources;
 import android.util.Log;
 import com.example.arcade.Game;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.R;
+import com.example.arcade.tankwars.Controller;
+import com.example.arcade.tankwars.Map;
+import com.example.arcade.tankwars.Tank;
+import com.example.arcade.tankwars.TankWarsUserInterface;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 import sheep.math.Vector2;
@@ -20,8 +24,8 @@ public abstract class Projectile extends Sprite {
     private static final Resources resources = Game.getInstance().getResources();
     private static final Image spriteImage = GraphicsHelper.getScaledImage(resources, R.drawable.projectile);
 
-    int damage;
-    int explosionRadius;
+    public int damage;
+    public int explosionRadius;
 
 
     /**
@@ -30,7 +34,7 @@ public abstract class Projectile extends Sprite {
      * of the projectile. It also makes a call to Sprite() with the predefined
      * spriteImage we are using.
      */
-    Projectile() {
+    public Projectile() {
         super(spriteImage);
         int windAffectionFactor = -Map.getWindVector();
 
@@ -68,7 +72,7 @@ public abstract class Projectile extends Sprite {
      * Going to be used in subclasses to draw
      * the Explosions on the device screen.
      */
-    abstract void explode();
+    public abstract void explode();
 
 
     @Override

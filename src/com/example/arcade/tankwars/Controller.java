@@ -2,6 +2,7 @@ package com.example.arcade.tankwars;
 
 import android.graphics.Point;
 import android.util.Log;
+import com.example.arcade.tankwars.projectiles.*;
 import sheep.math.Vector2;
 
 import java.util.Calendar;
@@ -12,7 +13,7 @@ import java.util.Calendar;
  * Date: 11.03.13
  * Time: 15:21
  */
-class Controller {
+public class Controller {
 
     private static boolean firstPress = true;
     private static Calendar initialPressTime;

@@ -1,4 +1,4 @@
-package com.example.arcade.tankwars;
+package com.example.arcade.tankwars.explosions;
 
 import android.graphics.Canvas;
 import sheep.game.Sprite;
@@ -11,15 +11,15 @@ import java.util.Calendar;
  * Date: 20.04.13
  * Time: 20:31
  */
-public abstract class Explosion extends Sprite{
+public abstract class Explosion extends Sprite {
     private Calendar creationTime;
     private int duration;
 
-    Explosion(){
+    Explosion() {
 
     }
 
-    Explosion(int duration, Image spriteImage){
+    Explosion(int duration, Image spriteImage) {
         super(spriteImage);
         creationTime = Calendar.getInstance();
         this.duration = duration;
@@ -27,16 +27,16 @@ public abstract class Explosion extends Sprite{
     }
 
 
-    public void Update(long dt){
-       this.update(dt);
+    public void Update(long dt) {
+        this.update(dt);
 
-       if((Calendar.getInstance().getTimeInMillis() - creationTime.getTimeInMillis())/1000 > duration){
-          this.die();
-       }
+        if ((Calendar.getInstance().getTimeInMillis() - creationTime.getTimeInMillis()) / 1000 > duration) {
+            this.die();
+        }
     }
 
 
-    public void Draw(Canvas canvas){
+    public void Draw(Canvas canvas) {
         super.draw(canvas);
     }
 

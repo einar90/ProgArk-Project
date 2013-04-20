@@ -21,7 +21,7 @@ import java.util.Random;
  * Time: 14:43
  */
 @SuppressWarnings("FieldCanBeLocal")
-class Map {
+public class Map {
 
     private static final Resources resources = Game.getInstance().getResources();
     @SuppressWarnings("FieldCanBeLocal")

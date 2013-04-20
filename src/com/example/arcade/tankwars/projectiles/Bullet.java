@@ -1,6 +1,6 @@
-package com.example.arcade.tankwars;
+package com.example.arcade.tankwars.projectiles;
 
-import sheep.math.Vector2;
+import com.example.arcade.tankwars.Controller;
 
 /**
  * Created by:
@@ -8,7 +8,7 @@ import sheep.math.Vector2;
  * Date: 11.03.13
  * Time: 14:24
  */
-class Bullet extends Projectile {
+public class Bullet extends Projectile {
 
 
     public Bullet() {
@@ -18,7 +18,7 @@ class Bullet extends Projectile {
     }
 
     public void explode() {
-        if(explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getActiveTank().getPosition())){
+        if (explosionRadius > Controller.calculateDistance(this.getPosition(), Controller.getActiveTank().getPosition())) {
             // TODO: Do some badass explosion stuff!
         }
         return;

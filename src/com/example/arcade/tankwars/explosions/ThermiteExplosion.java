@@ -1,4 +1,4 @@
-package com.example.arcade.tankwars;
+package com.example.arcade.tankwars.explosions;
 
 import android.content.res.Resources;
 import com.example.arcade.Game;
@@ -19,7 +19,7 @@ public class ThermiteExplosion extends Explosion {
     private static final int duration = 3; // In Seconds
 
 
-    ThermiteExplosion(){
-        super(duration ,spriteImage);
+    ThermiteExplosion() {
+        super(duration, spriteImage);
     }
 }
