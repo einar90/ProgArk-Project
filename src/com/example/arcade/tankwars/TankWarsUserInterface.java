@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
+import com.example.arcade.tankwars.explosions.Explosion;
 import com.example.arcade.tankwars.projectiles.Projectile;
 import sheep.collision.CollisionLayer;
 import sheep.collision.CollisionListener;
@@ -35,6 +36,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private Tank playerOneTank;
     private Tank playerTwoTank;
     private static Projectile currentProjectile = null;
+    private static Explosion currentExplosion = null;
 
     private TextButton bulletButton;
     private TextButton shellButton;
@@ -55,6 +57,15 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         addSpritesToCollisionLayer();
         addSpritesToCollisionListener();
 
+    }
+
+    public static void createExplosion(Explosion explosion) {
+        currentExplosion = explosion;
+    }
+
+
+    public static void removeExplosion() {
+        currentExplosion = null;
     }
 
 
