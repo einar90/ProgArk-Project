@@ -126,9 +126,9 @@ public class Controller {
         }
         if (chosenProjectile.equals("Bullet")) {
             return new Bullet();
-        } else if (chosenProjectile.equals("Tank Shell")) {
+        } else if (chosenProjectile.equals("TankShell")) {
             return new TankShell();
-        } else if (chosenProjectile.equals("Thermite Shell")) {
+        } else if (chosenProjectile.equals("ThermiteShells")) {
             return new ThermiteShell();
         } else if (chosenProjectile.equals("Nuke")) {
             return new Nuke();

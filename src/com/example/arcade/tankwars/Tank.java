@@ -229,10 +229,9 @@ public class Tank extends Sprite {
 
     /**
      * Method to reduce ammo, after said ammo has been fired.
-     *
-     * @param ammoName The name of the Ammo to be reduced
      */
-    public void reduceAmmo(String ammoName) {
+    public void reduceAmmo() {
+        String ammoName = Controller.getChosenProjectile();
         Log.d("Tank", "Reducing ammo of: " + ammoName);
         this.projectileAmmo.put(ammoName, (Integer) this.projectileAmmo.get(ammoName) - 1);
     }

@@ -119,10 +119,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
             Controller.setChosenProjectile("Bullet");
         } else if (shellButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Shell");
-            Controller.setChosenProjectile("Tank Shell");
+            Controller.setChosenProjectile("TankShell");
         } else if (thermiteButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Thermite");
-            Controller.setChosenProjectile("Thermite Shell");
+            Controller.setChosenProjectile("ThermiteShells");
         } else if (nukeButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Nuke");
             Controller.setChosenProjectile("Nuke");
@@ -306,6 +306,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         Controller.calculatePower();
         currentProjectile = Controller.getProjectile();
+        Controller.getActiveTank().reduceAmmo();
         collisionLayer.addSprite(currentProjectile);
         Map.changeWindVector();
         return true;    //To change body of overridden methods use File | Settings | File Templates.
