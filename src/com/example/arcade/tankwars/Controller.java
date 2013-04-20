@@ -38,6 +38,12 @@ public class Controller {
         return activeTank;
     }
 
+    public static Tank getInactiveTank() {
+        if (activeTank == Tank.getTank1()) {
+            return Tank.getTank2();
+        } else return Tank.getTank1();
+    }
+
     public static void setChosenProjectile(String projectile) {
         chosenProjectile = projectile;
     }
