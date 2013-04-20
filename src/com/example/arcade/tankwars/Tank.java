@@ -164,6 +164,7 @@ public class Tank extends Sprite {
     public void reduceHp(int dmg) {
         Log.d("Tank", "Reducing hp");
         this.hp = this.hp - dmg;
+        Log.d("Tank", "Hp of "+this.toString()+ " is now "+ this.hp);
     }
 
     /**
