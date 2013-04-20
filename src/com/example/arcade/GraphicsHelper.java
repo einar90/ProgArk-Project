@@ -35,6 +35,10 @@ public class GraphicsHelper {
         return new Point(width, height);
     }
 
+    public static float[] getScalingFactor() {
+        return scalingFactor;
+    }
+
 
     /**
      * Calculating the pixel height of devices with a software navigation bar.
