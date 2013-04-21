@@ -1,5 +1,8 @@
 package com.example.arcade.tankwars;
 
+import android.graphics.Canvas;
+import android.media.JetPlayer;
+
 /**
  * Created by:
  * User: Einar
@@ -8,11 +11,21 @@ package com.example.arcade.tankwars;
  */
 public class TankWarsEndGameGUI extends sheep.game.State {
 
+    String scoreText;
     String winnerText;
     String newGameText = "New game";
     String toMainMenuText = "Back to main menu";
 
-    public TankWarsEndGameGUI(int winner, int player1Score, int player2Score) {
+    public TankWarsEndGameGUI(int player1Score, int player2Score) {
 
+        scoreText = "Score: " + player1Score;
+
+
+    }
+
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
     }
 }
