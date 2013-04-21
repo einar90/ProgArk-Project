@@ -169,7 +169,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         playerTwoTank = Tank.getTank2();
         Controller.setInitialTankPositions();
         Tank.setStartSpeed();
-
     }
 
     /**
@@ -183,8 +182,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         Tank.getTankBarrel1().update(dt);
         Tank.getTankBarrel2().update(dt);
         collisionLayer.update(dt);
-
-
     }
 
     /**
@@ -228,16 +225,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     public static void removeCurrentProjectile() {
         currentProjectile = null;
-    }
-
-    @Override
-    public void launchGame() {
-        // Load something?
-    }
-
-    @Override
-    public void exitGame() {
-        // Save the highscore list
     }
 
 
