@@ -54,8 +54,6 @@ public class Tank extends Sprite {
         this.power = 0;
         this.barrelAngle = 0;
         this.projectileAmmo = setStartingAmmo(15, 1, 3);
-        Log.d("Tank", "Tank initialized and ammo is: \n" + this.projectileAmmo.toString());
-
     }
 
     /**
@@ -64,7 +62,6 @@ public class Tank extends Sprite {
      * @return Player One Tank
      */
     public static Tank getTank1() {
-        Log.d("Tank", "Returning tank1");
         if (tank1 == null) {
             tank1 = new Tank(tankImage1);
         }
@@ -77,7 +74,6 @@ public class Tank extends Sprite {
      * @return Player Two Tank
      */
     public static Tank getTank2() {
-        Log.d("Tank", "Returning tank2");
         if (tank2 == null) {
             tank2 = new Tank(tankImage2);
         }
@@ -90,7 +86,6 @@ public class Tank extends Sprite {
      * @return Player 1's TankBarrel
      */
     public static Sprite getTankBarrel1() {
-        //Log.d("Tank", "Returning tankbarrel1");
         if (tankBarrel1 == null) {
             tankBarrel1 = new Sprite(tankBarrelImage);
             tank1.tankBarrel = tankBarrel1;
@@ -106,7 +101,6 @@ public class Tank extends Sprite {
      * @return Player 2's TankBarrel
      */
     public static Sprite getTankBarrel2() {
-        //Log.d("Tank", "Returning tankbarrel1");
         if (tankBarrel2 == null) {
             tankBarrel2 = new Sprite(tankBarrelImage);
             tank2.tankBarrel = tankBarrel2;
@@ -122,7 +116,6 @@ public class Tank extends Sprite {
      * @param size DisplaySize of the Device
      */
     public static void setInitialTankPositions(Point size) {
-        Log.d("Tank", "Setting positions for both tanks");
         tank1.setPosition(size.x / 10, size.y / 3);
         tank2.setPosition(size.x - size.x / 10, size.y / 3);
         setInitalBarrelPositions(size);
@@ -135,7 +128,6 @@ public class Tank extends Sprite {
      * @param size DisplaySize of the Device
      */
     private static void setInitalBarrelPositions(Point size) {
-        Log.d("Tank", "Setting positions for both barrels");
         tankBarrel1.setPosition(size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2);
         tankBarrel2.setPosition(size.x - size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2 + (size.y / 40));
         tankBarrel2.rotate(180);
@@ -153,7 +145,6 @@ public class Tank extends Sprite {
         int barrelDiff = this.barrelAngle - angle;
         this.barrelAngle = angle;
         tankBarrel.rotate(barrelDiff);
-        Log.d("Value", "new barrelAngle: " + this.barrelAngle);
     }
 
     /**
@@ -162,9 +153,7 @@ public class Tank extends Sprite {
      * @param dmg The amount healthpoints should be reduced with
      */
     public void reduceHp(int dmg) {
-        Log.d("Explode", "Reducing hp");
         this.hp = this.hp - dmg;
-        Log.d("Explode", this.toString());
 
         if(this.isTankDead()){
             Log.d("Explode", this.toString()+" is now dead. Game Over!");
@@ -178,7 +167,6 @@ public class Tank extends Sprite {
      * @return True if dead, False if not
      */
     public boolean isTankDead() {
-        Log.d("Tank", "Checking if tank is dead");
         return this.hp < 0;
     }
 
@@ -219,9 +207,6 @@ public class Tank extends Sprite {
      * in the Y direction.
      */
     public static void stopStartSpeed() {
-        Log.d("Speed", "Tank1 speed is: " + tank1.getSpeed().toString());
-        Log.d("Speed", "Tank2 speed is: " + tank2.getSpeed().toString());
-        Log.d("Speed", "Tankbarrel1 speed is: " + tankBarrel1.getSpeed().toString());
         tank1.setYSpeed(0);
         tank2.setYSpeed(0);
         getTankBarrel1().setYSpeed(0);
@@ -237,7 +222,6 @@ public class Tank extends Sprite {
      */
     public void reduceAmmo() {
         String ammoName = Controller.getChosenProjectile();
-        Log.d("Tank", "Reducing ammo of: " + ammoName);
         this.projectileAmmo.put(ammoName, (Integer) this.projectileAmmo.get(ammoName) - 1);
 
         // Changing ammo to bullet if ammo is 0
@@ -253,7 +237,6 @@ public class Tank extends Sprite {
      * @return True if ammo > 0, false if ammo =< 0.
      */
     public boolean checkAmmo(String ammoName) {
-        Log.d("Tank", "Checking ammo of: " + ammoName);
         return (Integer) this.projectileAmmo.get(ammoName) > 0;
     }
 
@@ -268,7 +251,6 @@ public class Tank extends Sprite {
      *         String is Ammoname and Integer is number of rounds left
      */
     private static Dictionary setStartingAmmo(final int tankshells, final int nukes, final int thermites) {
-        Log.d("Tank", "Initializing ammo");
         return new Hashtable<String, Integer>() {{
             put("Bullet", 999);
             put("TankShell", tankshells);

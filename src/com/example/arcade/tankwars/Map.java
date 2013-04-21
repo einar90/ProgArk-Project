@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 import com.example.arcade.Game;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.R;
@@ -102,7 +101,6 @@ public class Map {
     public static void changeWindVector() {
         Random numberGenerator = new Random();
         windVector = numberGenerator.nextInt(20) - 10;
-        Log.d("Value", "Wind: " + windVector);
     }
 
     /**

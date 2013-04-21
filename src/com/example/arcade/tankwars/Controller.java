@@ -1,7 +1,6 @@
 package com.example.arcade.tankwars;
 
 import android.graphics.Point;
-import android.util.Log;
 import com.example.arcade.tankwars.projectiles.*;
 import sheep.math.Vector2;
 
@@ -71,18 +70,15 @@ public class Controller {
      * @param touchPos The point on the screen being touched
      */
     public static void aimBarrel(Point touchPos) {
-        // Calculating angle
         Point tankPos = new Point((int) activeTank.getPosition().getX(), (int) activeTank.getPosition().getY());
         Vector2 aimVector = new Vector2(Math.abs(touchPos.x - tankPos.x), Math.abs(touchPos.y - tankPos.y));
         Vector2 normalizedAimVector = aimVector.getNormalized();
         double dotProduct = normalizedAimVector.getX();
         int angle = (int) Math.toDegrees(Math.acos(dotProduct));
 
-        // Changing sign of angle if tank 2 is active
         if (activeTank == Tank.getTank2()) {
             angle = -angle;
         }
-        // Changing angle of tank barrel
         activeTank.setBarrelAngle(angle);
     }
 
@@ -92,10 +88,7 @@ public class Controller {
      * given the time the user held down the shoot ability
      */
     public static void recordPower() {
-
-        Log.d("Controller", "Starting to record fire");
         initialPressTime = Calendar.getInstance();
-
     }
 
     /**
@@ -103,18 +96,13 @@ public class Controller {
      * given the time the user held down the shoot ability. (Milliseconds)
      */
     public static void calculatePower() {
-        //Released
         if (firstPress) {
             firstPress = false;
             return;
         }
 
         Calendar releasePressTime = Calendar.getInstance();
-
-        //Dette er tidsforskjellen.
         long timeHeld = releasePressTime.getTimeInMillis() - initialPressTime.getTimeInMillis();
-        Log.d("Controller", "Released the hold on fire, held for: " + timeHeld);
-
         activeTank.setTankPower(timeHeld);
     }
 
@@ -123,7 +111,6 @@ public class Controller {
      *         If its not instantiated, it instantiates it.
      */
     public static Projectile getProjectile() {
-        //Released
         if (firstPress) {
             firstPress = false;
             return null;

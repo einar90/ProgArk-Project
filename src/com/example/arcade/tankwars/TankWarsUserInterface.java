@@ -3,7 +3,6 @@ package com.example.arcade.tankwars;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.MotionEvent;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.HighscoreList;
@@ -115,16 +114,12 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
     private void changeAmmo(MotionEvent event) {
         if (bulletButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Bullet");
             Controller.setChosenProjectile("Bullet");
         } else if (shellButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Shell");
             Controller.setChosenProjectile("TankShell");
         } else if (thermiteButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Thermite");
             Controller.setChosenProjectile("ThermiteShells");
         } else if (nukeButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Nukes");
             Controller.setChosenProjectile("Nukes");
         }
     }
@@ -243,7 +238,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         // Projectile collision. The projectile != null check is to avoid a strange bug
         if ((a instanceof Projectile || b instanceof Projectile) && currentProjectile != null) {
-            Log.d("Collision", "Projectile collided");
             currentProjectile.explode();
             collisionLayer.removeSprite(currentProjectile);
             currentProjectile = null;
@@ -264,7 +258,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         // Attempting to change ammo and returning if touch is below ground level
         if (event.getY() > GraphicsHelper.getDisplaySize().y - Map.getGroundHeight()) {
-            Log.d("Tapped", "Trying to change projectile.");
             changeAmmo(event);
             return true;
         }
@@ -294,7 +287,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         // Attempting to change ammo and returning if touch is below ground level
         if (event.getY() > GraphicsHelper.getDisplaySize().y - Map.getGroundHeight()) {
-            Log.d("Tapped", "Trying to change projectile.");
             changeAmmo(event);
             return true;
         }
