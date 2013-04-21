@@ -1,6 +1,7 @@
 package com.example.arcade.tankwars;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.JetPlayer;
 import android.view.MotionEvent;
@@ -37,6 +38,8 @@ public class TankWarsEndGameGUI extends sheep.game.State {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+
+        canvas.drawColor(Color.LTGRAY); // Drawing a black background color
 
         canvas.drawText(scoreText, xPos, yInterval, font);
         canvas.drawText(winnerText, xPos, yInterval * 2, font);
