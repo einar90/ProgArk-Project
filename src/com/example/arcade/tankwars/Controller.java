@@ -1,6 +1,7 @@
 package com.example.arcade.tankwars;
 
 import android.graphics.Point;
+import com.example.arcade.Game;
 import com.example.arcade.tankwars.projectiles.*;
 import sheep.math.Vector2;
 
@@ -49,6 +50,16 @@ public class Controller {
             chosenProjectile = projectile;
         }
 
+    }
+
+    /**
+     * Takes in the health of the two tanks when one is dead, and
+     * pushes the endgamescreen displaying some scores etc.
+     * @param hp1 First tanks hp
+     * @param hp2 Second tanks hp
+     */
+    public static void setEndGameGUI(int hp1, int hp2){
+        Game.getInstance().pushState(new TankWarsEndGameGUI(hp1, hp2));
     }
 
     /**

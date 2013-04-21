@@ -157,6 +157,7 @@ public class Tank extends Sprite {
 
         if(this.isTankDead()){
             Log.d("Explode", this.toString()+" is now dead. Game Over!");
+            Controller.setEndGameGUI(tank1.hp, tank2.hp);
         }
     }
 
