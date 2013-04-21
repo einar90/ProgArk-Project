@@ -86,7 +86,6 @@ public abstract class Projectile extends Sprite {
                 || position.getY() < 0 || position.getY() > GraphicsHelper.getDisplaySize().y) {
             TankWarsUserInterface.removeCurrentProjectile();
             Controller.changeActiveTank();
-            Log.d("Collision", "Collided with screen border.");
             this.die();
         }
 

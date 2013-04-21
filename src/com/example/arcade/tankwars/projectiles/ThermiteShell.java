@@ -28,7 +28,6 @@ public class ThermiteShell extends Projectile {
         TankWarsUserInterface.createExplosion(DummyExplosion);
         if (explosionRadius * GraphicsHelper.getScalingFactor()[0] > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
             //
-            Log.d("Explode", "It hit with Thermiteshell");
             Controller.getInactiveTank().reduceHp(damage);
         }
         return;

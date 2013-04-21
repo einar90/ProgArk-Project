@@ -21,7 +21,6 @@ public class TankShell extends Projectile {
     public void explode() {
         if (explosionRadius * GraphicsHelper.getScalingFactor()[0] > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
             //
-            Log.d("Explode", "It hit with Tankshell");
             Controller.getInactiveTank().reduceHp(damage);
         }
         return;
