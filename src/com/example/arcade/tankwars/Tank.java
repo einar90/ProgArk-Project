@@ -80,10 +80,16 @@ public class Tank extends Sprite {
         return tank2;
     }
 
+    /**
+     * @return   Dimensions of the TankBarrelImage
+     */
     public static Point getTankBarrelImageDimensions(){
           return new Point((int)tankBarrelImage.getWidth(),(int) tankBarrelImage.getHeight());
     }
 
+    /**
+     * @return   Dimensions of the TankImage
+     */
     public static Point getTankImageDimensions(){
         return new Point((int)tankImage1.getWidth(),(int) tankImage1.getHeight());
     }
@@ -229,6 +235,9 @@ public class Tank extends Sprite {
         return Controller.getActiveTank().barrelAngle;
     }
 
+    /**
+     * @return     The hp of the tank as a string
+     */
     public String getHpString(){
         return Integer.toString(this.hp);
     }
@@ -255,6 +264,9 @@ public class Tank extends Sprite {
         return new Point((int) activeBarrel.getX(), (int) activeBarrel.getY());
     }
 
+    /**
+     * @return    Dictionary of the tank with its ammo.
+     */
     public Dictionary<String, Integer> getProjectileAmmo() {
         return projectileAmmo;
     }
