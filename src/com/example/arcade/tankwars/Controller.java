@@ -78,6 +78,32 @@ public class Controller {
     }
 
     /**
+     * Sets the initial fallspeed of the tanks and barrels
+     * in the Y direction towards the ground.
+     */
+    public static void setStartSpeed() {
+        Tank.getTank1().setYSpeed(100);
+        Tank.getTank2().setYSpeed(100);
+        Tank.getTankBarrel1().setYSpeed(200);
+        Tank.getTankBarrel2().setYSpeed(200);
+    }
+
+    /**
+     * Stops the movement of the tanks and barrels
+     * in the Y direction.
+     */
+    public static void stopStartSpeed() {
+        Tank.getTank1().setYSpeed(0);
+        Tank.getTank2().setYSpeed(0);
+        Tank.getTankBarrel1().setYSpeed(0);
+        Tank.getTankBarrel2().setYSpeed(0);
+
+        //Avoid future collisions
+        Tank.getTank1().setPosition(Tank.getTank1().getPosition().getX(), Tank.getTank1().getPosition().getY() - 1);
+        Tank.getTank2().setPosition(Tank.getTank2().getPosition().getX(), Tank.getTank2().getPosition().getY() - 1);
+    }
+
+    /**
      * Takes in the health of the two tanks when one is dead, and
      * pushes the endgamescreen displaying some scores etc.
      *
