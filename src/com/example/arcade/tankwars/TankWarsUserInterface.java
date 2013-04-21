@@ -77,6 +77,8 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
         canvas.drawText(Map.getWindString(), 20, 50, font);
         drawAmmoText(canvas);
+        drawHpText(canvas);
+        drawActivePlayerIndicator(canvas);
 
         if (currentProjectile != null) {
             currentProjectile.draw(canvas);
@@ -110,6 +112,27 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         thermiteButton.draw(canvas);
         nukeButton.draw(canvas);
         canvas.drawText(pickedAmmoText, xWidth * 2 - xIncr, y + yIncr, font);
+    }
+
+
+    private void drawHpText(Canvas canvas) {
+        int yPos = GraphicsHelper.getDisplaySize().y / 5;
+        int xPos1 = GraphicsHelper.getDisplaySize().x / 10;
+        int xPos2 = GraphicsHelper.getDisplaySize().x / 8 * 7;
+        canvas.drawText(Tank.getTank1().getHpString(), xPos1, yPos, font);
+        canvas.drawText(Tank.getTank2().getHpString(), xPos2, yPos, font);
+    }
+
+
+    private void drawActivePlayerIndicator(Canvas canvas) {
+        int yPos = GraphicsHelper.getDisplaySize().y / 7;
+        int xPos;
+
+        if (Controller.getActiveTank() == Tank.getTank1()) {
+            xPos = GraphicsHelper.getDisplaySize().x / 10;
+        } else xPos = GraphicsHelper.getDisplaySize().x / 8 * 7;
+
+        canvas.drawText("__", xPos, yPos, font);
     }
 
     private void changeAmmo(MotionEvent event) {
