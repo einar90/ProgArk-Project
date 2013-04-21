@@ -39,7 +39,7 @@ public class TankWarsEndGameGUI extends sheep.game.State {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        canvas.drawColor(Color.BLACK); // Drawing a black background color
+        canvas.drawColor(Color.LTGRAY); // Drawing a black background color
 
         canvas.drawText(scoreText, xPos, yInterval, font);
         canvas.drawText(winnerText, xPos, yInterval * 2, font);
