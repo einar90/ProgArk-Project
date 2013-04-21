@@ -26,12 +26,11 @@ import java.util.Dictionary;
 public class TankWarsUserInterface extends State implements MiniGame, CollisionListener {
 
     private static Point displaySize = GraphicsHelper.getDisplaySize();
-
-    private CollisionLayer collisionLayer = new CollisionLayer();
-
     private static final Font font = new Font(64, 64, 64, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
 
+    private CollisionLayer collisionLayer = new CollisionLayer();
     private Map map;
+
     private Tank playerOneTank;
     private Tank playerTwoTank;
     private static Projectile currentProjectile = null;
@@ -168,7 +167,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     private void getSprites() {
         playerOneTank = Tank.getTank1();
         playerTwoTank = Tank.getTank2();
-        Tank.setInitialTankPositions();
+        Controller.setInitialTankPositions();
         Tank.setStartSpeed();
 
     }
