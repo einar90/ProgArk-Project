@@ -168,7 +168,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         playerOneTank = Tank.getTank1();
         playerTwoTank = Tank.getTank2();
         Controller.setInitialTankPositions();
-        Tank.setStartSpeed();
+        Controller.setStartSpeed();
 
     }
 
@@ -262,7 +262,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         // Initial tank fall collision
         if (a.getClass() == Tank.class) {
             if (b.getClass() == Sprite.class) {    //Denne er rævva
-                Tank.stopStartSpeed();
+                Controller.stopStartSpeed();
             }
         }
     }

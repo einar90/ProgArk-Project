@@ -119,13 +119,6 @@ public class Tank extends Sprite {
     }
 
     /**
-     * Sets the Tank's initial positions on the map.
-     *
-     * @param size DisplaySize of the Device
-     */
-
-
-    /**
      * Sets the barrel angle of the tank to a specific angle,
      * and rotates it to the correct position.
      *
@@ -183,31 +176,9 @@ public class Tank extends Sprite {
         return Controller.getActiveTank().power;
     }
 
-    /**
-     * Sets the initial fallspeed of the tanks and barrels
-     * in the Y direction towards the ground.
-     */
-    public static void setStartSpeed() {
-        tank1.setYSpeed(100);
-        tank2.setYSpeed(100);
-        tankBarrel1.setYSpeed(200);
-        tankBarrel2.setYSpeed(200);
-    }
 
-    /**
-     * Stops the movement of the tanks and barrels
-     * in the Y direction.
-     */
-    public static void stopStartSpeed() {
-        tank1.setYSpeed(0);
-        tank2.setYSpeed(0);
-        getTankBarrel1().setYSpeed(0);
-        getTankBarrel2().setYSpeed(0);
 
-        //Avoid future collisions
-        tank1.setPosition(tank1.getPosition().getX(), tank1.getPosition().getY() - 1);
-        tank2.setPosition(tank2.getPosition().getX(), tank2.getPosition().getY() - 1);
-    }
+
 
     /**
      * Method to reduce ammo, after said ammo has been fired.
