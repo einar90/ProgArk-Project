@@ -71,6 +71,7 @@ public class Controller {
         Tank.getTankBarrel1().setPosition(size.x / 10 + Tank.getTankBarrelImageDimensions().x / 2, size.y / 3 - Tank.getTankImageDimensions().y / 2);
         Tank.getTankBarrel2().setPosition(size.x - size.x / 10 + Tank.getTankBarrelImageDimensions().x / 2, size.y / 3 - Tank.getTankImageDimensions().y / 2 + (size.y / 40));
         Tank.getTankBarrel2().rotate(180);
+
     }
 
     /**
