@@ -20,7 +20,7 @@ public class Bullet extends Projectile {
     }
 
     public void explode() {
-        if (explosionRadius*GraphicsHelper.getScalingFactor()[0] > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
+        if (explosionRadius * GraphicsHelper.getScalingFactor()[0] > Controller.calculateDistance(this.getPosition(), Controller.getInactiveTank().getPosition())) {
             //
             Log.d("Explode", "It hit with Bullet!");
             Controller.getInactiveTank().reduceHp(damage);

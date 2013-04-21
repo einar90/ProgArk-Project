@@ -1,6 +1,5 @@
 package com.example.arcade.tankwars.explosions;
 
-import android.graphics.Canvas;
 import com.example.arcade.tankwars.TankWarsUserInterface;
 import sheep.game.Sprite;
 import sheep.graphics.Image;
@@ -33,7 +32,6 @@ public abstract class Explosion extends Sprite {
             TankWarsUserInterface.removeExplosion();
         }
     }
-
 
 
 }
