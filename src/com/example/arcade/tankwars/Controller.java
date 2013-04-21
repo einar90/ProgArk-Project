@@ -5,8 +5,10 @@ import android.view.MotionEvent;
 import com.example.arcade.Game;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.tankwars.projectiles.*;
+import sheep.gui.TextButton;
 import sheep.math.Vector2;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -165,5 +167,23 @@ public class Controller {
         return chosenProjectile;
     }
 
+
+    public static void changeAmmo(MotionEvent event) {
+        ArrayList<TextButton> ammoButtons = TankWarsUserInterface.getAmmoButtons();
+        TextButton bulletButton = ammoButtons.get(0);
+        TextButton shellButton = ammoButtons.get(1);
+        TextButton thermiteButton = ammoButtons.get(2);
+        TextButton nukeButton = ammoButtons.get(3);
+
+        if (bulletButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            setChosenProjectile("Bullet");
+        } else if (shellButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            setChosenProjectile("TankShell");
+        } else if (thermiteButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            setChosenProjectile("ThermiteShells");
+        } else if (nukeButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            setChosenProjectile("Nukes");
+        }
+    }
 
 }
