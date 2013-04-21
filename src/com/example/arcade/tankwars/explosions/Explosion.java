@@ -15,9 +15,18 @@ public abstract class Explosion extends Sprite {
     private Calendar creationTime;
     private int duration;
 
+    /**
+     * Empty constructor, else there will be whine from the sublings..
+     */
     Explosion() {
     }
 
+    /**
+     * Constructor for all the explosions that keeps track of create/kill
+     * time.
+     * @param duration      How long the explosion should last
+     * @param spriteImage   What image to use on the explosion
+     */
     Explosion(int duration, Image spriteImage) {
         super(spriteImage);
         creationTime = Calendar.getInstance();
@@ -25,12 +34,16 @@ public abstract class Explosion extends Sprite {
 
     }
 
+
+
     @Override
     public void update(float dt) {
         super.update(dt);
-        if ((Calendar.getInstance().getTimeInMillis() - creationTime.getTimeInMillis()) / 1000 > duration) {
-            TankWarsUserInterface.removeExplosion();
-        }
+        if(checkIfExplosionTimeDone()) TankWarsUserInterface.removeExplosion();
+    }
+
+    private boolean checkIfExplosionTimeDone(){
+        return ((Calendar.getInstance().getTimeInMillis() - creationTime.getTimeInMillis()) / 1000 > duration);
     }
 
 
