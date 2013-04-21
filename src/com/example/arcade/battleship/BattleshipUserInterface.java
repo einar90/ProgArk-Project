@@ -66,10 +66,5 @@ public class BattleshipUserInterface extends State implements MiniGame {
 
     }
 
-    @Override
-    public HighscoreList getHighscoreList() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 }

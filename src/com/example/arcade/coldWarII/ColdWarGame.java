@@ -296,11 +296,7 @@ public class ColdWarGame extends State implements MiniGame{
 		// TODO Auto-generated method stub
 
 	}
-	@Override
-	public HighscoreList getHighscoreList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	private void checkCollision() {
 		ArrayList<Sprite> s1 = plOneCon.getSprites();
 		ArrayList<Sprite> s2 = plTwoCon.getSprites();

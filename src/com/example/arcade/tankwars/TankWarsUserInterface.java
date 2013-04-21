@@ -245,10 +245,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         // Save the highscore list
     }
 
-    @Override
-    public HighscoreList getHighscoreList() {
-        return null;  // Return the highscore list
-    }
+
 
     @Override
     public void collided(Sprite a, Sprite b) {
