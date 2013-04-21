@@ -10,6 +10,4 @@ public interface MiniGame {
     public void launchGame();
 
     public void exitGame();
-
-    public HighscoreList getHighscoreList();
 }
