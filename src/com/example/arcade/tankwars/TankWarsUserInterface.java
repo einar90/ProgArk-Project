@@ -54,37 +54,41 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     }
 
     /**
-     * Used to create the explosion when a thermite shell or nuke collides
-     *
-     * @param explosion The explosion that's created
+     * Returns the singletons to the correct var's in
+     * TankWarsUserInterface
      */
-    public static void createExplosion(Explosion explosion) {
-        currentExplosion = explosion;
+    private void getSprites() {
+        playerOneTank = Tank.getTank1();
+        playerTwoTank = Tank.getTank2();
+        Controller.setInitialTankPositions();
+        Controller.setStartSpeed();
     }
 
     /**
-     * Removes the displayed explosion
+     * Adds the sprites to the collision layer.
      */
-    public static void removeExplosion() {
-        currentExplosion = null;
+    private void addSpritesToCollisionLayer() {
+        collisionLayer.addSprite(playerOneTank);
+        collisionLayer.addSprite(playerTwoTank);
+
+        // Add map sprites
+        for (Sprite sprite : Map.getMapSprites()) {
+            collisionLayer.addSprite(sprite);
+        }
+
     }
 
     /**
-     * Used by Controller to check which button was tapped
-     *
-     * @return Returns an array with all the ammo buttons
+     * Adds the tanks to the collision listener.
      */
-    public static ArrayList<TextButton> getAmmoButtons() {
-        ArrayList<TextButton> ammoButtons = new ArrayList<TextButton>();
-        ammoButtons.add(bulletButton);
-        ammoButtons.add(shellButton);
-        ammoButtons.add(thermiteButton);
-        ammoButtons.add(nukeButton);
-        return ammoButtons;
-    }
+    private void addSpritesToCollisionListener() {
+        playerOneTank.addCollisionListener(this);
+        playerTwoTank.addCollisionListener(this);
 
-    public static void removeCurrentProjectile() {
-        currentProjectile = null;
+        // Add map sprites
+        for (Sprite sprite : Map.getMapSprites()) {
+            sprite.addCollisionListener(this);
+        }
     }
 
     /**
@@ -146,6 +150,21 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
 
     /**
+     * Used by Controller to check which button was tapped
+     *
+     * @return Returns an array with all the ammo buttons
+     */
+    public static ArrayList<TextButton> getAmmoButtons() {
+        ArrayList<TextButton> ammoButtons = new ArrayList<TextButton>();
+        ammoButtons.add(bulletButton);
+        ammoButtons.add(shellButton);
+        ammoButtons.add(thermiteButton);
+        ammoButtons.add(nukeButton);
+        return ammoButtons;
+    }
+
+
+    /**
      * Draws the HP text for both tanks on the screen
      *
      * @param canvas
@@ -175,6 +194,17 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         canvas.drawText("__", xPos, yPos, font);
     }
 
+    /**
+     * Handles drawing all the sprites
+     *
+     * @param canvas
+     */
+    private void drawSprites(Canvas canvas) {
+        Tank.getTankBarrel2().draw(canvas);
+        Tank.getTankBarrel1().draw(canvas);
+        playerOneTank.draw(canvas);
+        playerTwoTank.draw(canvas);
+    }
 
     /**
      * Updates the model
@@ -198,17 +228,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     }
 
     /**
-     * Returns the singletons to the correct var's in
-     * TankWarsUserInterface
-     */
-    private void getSprites() {
-        playerOneTank = Tank.getTank1();
-        playerTwoTank = Tank.getTank2();
-        Controller.setInitialTankPositions();
-        Controller.setStartSpeed();
-    }
-
-    /**
      * Handles the updating of all the sprites
      *
      * @param dt
@@ -222,42 +241,23 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     }
 
     /**
-     * Adds the sprites to the collision layer.
-     */
-    private void addSpritesToCollisionLayer() {
-        collisionLayer.addSprite(playerOneTank);
-        collisionLayer.addSprite(playerTwoTank);
-
-        // Add map sprites
-        for (Sprite sprite : Map.getMapSprites()) {
-            collisionLayer.addSprite(sprite);
-        }
-
-    }
-
-    /**
-     * Adds the tanks to the collision listener.
-     */
-    private void addSpritesToCollisionListener() {
-        playerOneTank.addCollisionListener(this);
-        playerTwoTank.addCollisionListener(this);
-
-        // Add map sprites
-        for (Sprite sprite : Map.getMapSprites()) {
-            sprite.addCollisionListener(this);
-        }
-    }
-
-    /**
-     * Handles drawing all the sprites
+     * Used to create the explosion when a thermite shell or nuke collides
      *
-     * @param canvas
+     * @param explosion The explosion that's created
      */
-    private void drawSprites(Canvas canvas) {
-        Tank.getTankBarrel2().draw(canvas);
-        Tank.getTankBarrel1().draw(canvas);
-        playerOneTank.draw(canvas);
-        playerTwoTank.draw(canvas);
+    public static void createExplosion(Explosion explosion) {
+        currentExplosion = explosion;
+    }
+
+    /**
+     * Removes the displayed explosion
+     */
+    public static void removeExplosion() {
+        currentExplosion = null;
+    }
+
+    public static void removeCurrentProjectile() {
+        currentProjectile = null;
     }
 
 
