@@ -169,6 +169,7 @@ public class Tank extends Sprite {
      */
     public boolean isTankDead() {
         return this.hp <= 0;
+
     }
 
     /**
