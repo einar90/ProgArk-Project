@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 import com.example.arcade.GraphicsHelper;
-import com.example.arcade.HighscoreList;
 import com.example.arcade.MiniGame;
 import com.example.arcade.tankwars.explosions.Explosion;
 import com.example.arcade.tankwars.projectiles.Projectile;
@@ -26,6 +25,7 @@ import java.util.Dictionary;
  */
 public class TankWarsUserInterface extends State implements MiniGame, CollisionListener {
 
+    private static Point displaySize = GraphicsHelper.getDisplaySize();
 
     private CollisionLayer collisionLayer = new CollisionLayer();
 
@@ -45,13 +45,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     /**
      * Constructor for the TankWarsUserinterface, does some
      * important Initializing.
-     *
-     * @param displaySize
      */
-    public TankWarsUserInterface(Point displaySize) {
+    public TankWarsUserInterface() {
 
         map = new Map();
-        getSprites(displaySize);
+        getSprites();
 
         addSpritesToCollisionLayer();
         addSpritesToCollisionListener();
@@ -97,10 +95,10 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         String nukeText = "Nukes: " + ammo.get("Nukes");
         String pickedAmmoText = "Picked: " + Controller.getChosenProjectile();
 
-        int y = GraphicsHelper.getDisplaySize().y - GraphicsHelper.getDisplaySize().y / 8;
-        int yIncr = GraphicsHelper.getDisplaySize().y / 10;
-        int xWidth = GraphicsHelper.getDisplaySize().x / 4;
-        int xIncr = GraphicsHelper.getDisplaySize().x / 10;
+        int y = displaySize.y - displaySize.y / 8;
+        int yIncr = displaySize.y / 10;
+        int xWidth = displaySize.x / 4;
+        int xIncr = displaySize.x / 10;
 
         bulletButton = new TextButton(xIncr, y, bulletText);
         shellButton = new TextButton(xWidth + xIncr, y, tankShellText);
@@ -116,21 +114,21 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
 
 
     private void drawHpText(Canvas canvas) {
-        int yPos = GraphicsHelper.getDisplaySize().y / 5;
-        int xPos1 = GraphicsHelper.getDisplaySize().x / 10;
-        int xPos2 = GraphicsHelper.getDisplaySize().x / 8 * 7;
+        int yPos = displaySize.y / 5;
+        int xPos1 = displaySize.x / 10;
+        int xPos2 = displaySize.x / 8 * 7;
         canvas.drawText(Tank.getTank1().getHpString(), xPos1, yPos, font);
         canvas.drawText(Tank.getTank2().getHpString(), xPos2, yPos, font);
     }
 
 
     private void drawActivePlayerIndicator(Canvas canvas) {
-        int yPos = GraphicsHelper.getDisplaySize().y / 7;
+        int yPos = displaySize.y / 7;
         int xPos;
 
         if (Controller.getActiveTank() == Tank.getTank1()) {
-            xPos = GraphicsHelper.getDisplaySize().x / 10;
-        } else xPos = GraphicsHelper.getDisplaySize().x / 8 * 7;
+            xPos = displaySize.x / 10;
+        } else xPos = displaySize.x / 8 * 7;
 
         canvas.drawText("__", xPos, yPos, font);
     }
@@ -166,13 +164,11 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     /**
      * Returns the singletons to the correct var's in
      * TankWarsUserInterface
-     *
-     * @param displaySize
      */
-    private void getSprites(Point displaySize) {
+    private void getSprites() {
         playerOneTank = Tank.getTank1();
         playerTwoTank = Tank.getTank2();
-        Tank.setInitialTankPositions(new Point(displaySize.x, 100));
+        Tank.setInitialTankPositions();
         Tank.setStartSpeed();
 
     }
@@ -246,7 +242,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     }
 
 
-
     @Override
     public void collided(Sprite a, Sprite b) {
 
@@ -277,7 +272,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     public boolean onTouchDown(MotionEvent event) {
 
         // Attempting to change ammo and returning if touch is below ground level
-        if (event.getY() > GraphicsHelper.getDisplaySize().y - Map.getGroundHeight()) {
+        if (event.getY() > displaySize.y - Map.getGroundHeight()) {
             changeAmmo(event);
             return true;
         }
@@ -306,7 +301,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
     public boolean onTouchUp(MotionEvent event) {
 
         // Attempting to change ammo and returning if touch is below ground level
-        if (event.getY() > GraphicsHelper.getDisplaySize().y - Map.getGroundHeight()) {
+        if (event.getY() > displaySize.y - Map.getGroundHeight()) {
             changeAmmo(event);
             return true;
         }

@@ -22,18 +22,16 @@ import java.util.Hashtable;
 public class Tank extends Sprite {
 
     private static final Resources resources = Game.getInstance().getResources();
-
+    private static Point displaySize = GraphicsHelper.getDisplaySize();
     //Tank
     private static final Image tankImage1 = GraphicsHelper.getScaledImage(resources, R.drawable.tankbody1);
     private static final Image tankImage2 = GraphicsHelper.getFlippedScaledImage(resources, R.drawable.tankbody2);
-    private static Tank tank1 = new Tank(tankImage1);
-    private static Tank tank2 = new Tank(tankImage2);
-
     //TankBarrel
     private static final Image tankBarrelImage = GraphicsHelper.getScaledImage(resources, R.drawable.tankbarrel);
+    private static Tank tank1 = new Tank(tankImage1);
+    private static Tank tank2 = new Tank(tankImage2);
     private static Sprite tankBarrel1 = new Sprite(tankBarrelImage);
     private static Sprite tankBarrel2 = new Sprite(tankBarrelImage);
-
     //Extra stuff for Tank to hold
     private int barrelAngle;
     private int power;
@@ -112,64 +110,32 @@ public class Tank extends Sprite {
 
     /**
      * Sets the Tank's initial positions on the map.
-     *
-     * @param size DisplaySize of the Device
      */
-    public static void setInitialTankPositions(Point size) {
-        tank1.setPosition(size.x / 10, size.y / 3);
-        tank2.setPosition(size.x - size.x / 10, size.y / 3);
-        setInitalBarrelPositions(size);
+    public static void setInitialTankPositions() {
+        tank1.setPosition(displaySize.x / 10, displaySize.y / 3);
+        tank2.setPosition(displaySize.x - displaySize.x / 10, displaySize.y / 3);
+        setInitalBarrelPositions();
     }
 
     /**
      * Sets the TankBarrel's initial positions on the map,
      * and tries to place them on top of the tanks.
-     *
-     * @param size DisplaySize of the Device
      */
-    private static void setInitalBarrelPositions(Point size) {
-        tankBarrel1.setPosition(size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2);
-        tankBarrel2.setPosition(size.x - size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2 + (size.y / 40));
+    private static void setInitalBarrelPositions() {
+        tankBarrel1.setPosition(displaySize.x / 10 + tankBarrelImage.getWidth() / 2, displaySize.y / 3 - tankImage1.getHeight() / 2);
+        tankBarrel2.setPosition(displaySize.x - displaySize.x / 10 + tankBarrelImage.getWidth() / 2, displaySize.y / 3 - tankImage1.getHeight() / 2 + (displaySize.y / 40));
         tankBarrel2.rotate(180);
 
         //sett posisjonen til barrels riktig i forhold til tanksene.
     }
 
     /**
-     * Sets the barrel angle of the tank to a specific angle,
-     * and rotates it to the correct position.
+     * Get the specified power the tank had for that shot
      *
-     * @param angle The angle the barrel should be set to
+     * @return Returns the Tanks firepower for that shot.
      */
-    public void setBarrelAngle(int angle) {
-        int barrelDiff = this.barrelAngle - angle;
-        this.barrelAngle = angle;
-        tankBarrel.rotate(barrelDiff);
-    }
-
-    /**
-     * Reduces a tanks healthpoints.
-     *
-     * @param dmg The amount healthpoints should be reduced with
-     */
-    public void reduceHp(int dmg) {
-        this.hp = this.hp - dmg;
-
-        if(this.isTankDead()){
-            Log.d("Explode", this.toString()+" is now dead. Game Over!");
-            Controller.setEndGameGUI(tank1.hp, tank2.hp);
-        }
-    }
-
-    /**
-     * Method to check if the Tank lost too much hp,
-     * and is now dead.
-     *
-     * @return True if dead, False if not
-     */
-    public boolean isTankDead() {
-        return this.hp <= 0;
-
+    public static int getTankPower() {
+        return Controller.getActiveTank().power;
     }
 
     /**
@@ -182,15 +148,6 @@ public class Tank extends Sprite {
         if (timeHeld > 2000) {
             this.power = 2000;
         } else this.power = (int) timeHeld;
-    }
-
-    /**
-     * Get the specified power the tank had for that shot
-     *
-     * @return Returns the Tanks firepower for that shot.
-     */
-    public static int getTankPower() {
-        return Controller.getActiveTank().power;
     }
 
     /**
@@ -220,29 +177,6 @@ public class Tank extends Sprite {
     }
 
     /**
-     * Method to reduce ammo, after said ammo has been fired.
-     */
-    public void reduceAmmo() {
-        String ammoName = Controller.getChosenProjectile();
-        this.projectileAmmo.put(ammoName, (Integer) this.projectileAmmo.get(ammoName) - 1);
-
-        // Changing ammo to bullet if ammo is 0
-        if ((Integer) this.projectileAmmo.get(ammoName) <= 0) {
-            Controller.setChosenProjectile("Bullet");
-        }
-    }
-
-    /**
-     * Method to check if there is more ammo of that kind left.
-     *
-     * @param ammoName The name of the Ammo to be checked
-     * @return True if ammo > 0, false if ammo =< 0.
-     */
-    public boolean checkAmmo(String ammoName) {
-        return (Integer) this.projectileAmmo.get(ammoName) > 0;
-    }
-
-    /**
      * Method to create the dictionary which keeps control of
      * the ammo within the Tank object.
      *
@@ -268,8 +202,16 @@ public class Tank extends Sprite {
         return Controller.getActiveTank().barrelAngle;
     }
 
-    public String getHpString(){
-        return Integer.toString(this.hp);
+    /**
+     * Sets the barrel angle of the tank to a specific angle,
+     * and rotates it to the correct position.
+     *
+     * @param angle The angle the barrel should be set to
+     */
+    public void setBarrelAngle(int angle) {
+        int barrelDiff = this.barrelAngle - angle;
+        this.barrelAngle = angle;
+        tankBarrel.rotate(barrelDiff);
     }
 
     /**
@@ -285,7 +227,6 @@ public class Tank extends Sprite {
                 -Math.abs(1 / (float) Math.sin(getBarrelAngle()))).getNormalized();
     }
 
-
     /**
      * @return Returns the position of the barrel of the active tank
      */
@@ -294,10 +235,61 @@ public class Tank extends Sprite {
         return new Point((int) activeBarrel.getX(), (int) activeBarrel.getY());
     }
 
+    /**
+     * Reduces a tanks healthpoints.
+     *
+     * @param dmg The amount healthpoints should be reduced with
+     */
+    public void reduceHp(int dmg) {
+        this.hp = this.hp - dmg;
+
+        if (this.isTankDead()) {
+            Log.d("Explode", this.toString() + " is now dead. Game Over!");
+            Controller.setEndGameGUI(tank1.hp, tank2.hp);
+        }
+    }
+
+    /**
+     * Method to check if the Tank lost too much hp,
+     * and is now dead.
+     *
+     * @return True if dead, False if not
+     */
+    public boolean isTankDead() {
+        return this.hp <= 0;
+
+    }
+
+    /**
+     * Method to reduce ammo, after said ammo has been fired.
+     */
+    public void reduceAmmo() {
+        String ammoName = Controller.getChosenProjectile();
+        this.projectileAmmo.put(ammoName, (Integer) this.projectileAmmo.get(ammoName) - 1);
+
+        // Changing ammo to bullet if ammo is 0
+        if ((Integer) this.projectileAmmo.get(ammoName) <= 0) {
+            Controller.setChosenProjectile("Bullet");
+        }
+    }
+
+    /**
+     * Method to check if there is more ammo of that kind left.
+     *
+     * @param ammoName The name of the Ammo to be checked
+     * @return True if ammo > 0, false if ammo =< 0.
+     */
+    public boolean checkAmmo(String ammoName) {
+        return (Integer) this.projectileAmmo.get(ammoName) > 0;
+    }
+
+    public String getHpString() {
+        return Integer.toString(this.hp);
+    }
+
     public Dictionary<String, Integer> getProjectileAmmo() {
         return projectileAmmo;
     }
-
 
     @Override
     public String toString() {

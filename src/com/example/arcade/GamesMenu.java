@@ -85,7 +85,7 @@ public class GamesMenu extends State {
     @Override
     public boolean onTouchUp(MotionEvent event) {
         if (GraphicsHelper.isSpriteTouched(tankWarsButton, buttonWidth, buttonHeight, event)) {
-            getGame().pushState(new TankWarsUserInterface(displaySize));
+            getGame().pushState(new TankWarsUserInterface());
             Log.d("Tapped", "Tank Wars button tapped.");
         } else if (GraphicsHelper.isSpriteTouched(wormsButton, buttonWidth, buttonHeight, event)) {
             Log.d("Tapped", "Worms button tapped.");

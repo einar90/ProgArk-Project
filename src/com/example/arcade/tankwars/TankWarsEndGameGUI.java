@@ -3,7 +3,6 @@ package com.example.arcade.tankwars;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.JetPlayer;
 import android.view.MotionEvent;
 import com.example.arcade.GraphicsHelper;
 import sheep.graphics.Font;
@@ -16,11 +15,11 @@ import sheep.graphics.Font;
  */
 public class TankWarsEndGameGUI extends sheep.game.State {
 
+    private static final Font font = new Font(64, 64, 64, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
     private String scoreText;
     private String winnerText;
     private String newGameText = "New game";
     private String toGameMenuText = "Back to game menu";
-    private static final Font font = new Font(64, 64, 64, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
     private int xPos = GraphicsHelper.getDisplaySize().x / 6;
     private int yInterval = GraphicsHelper.getDisplaySize().y / 5;
 
@@ -33,7 +32,6 @@ public class TankWarsEndGameGUI extends sheep.game.State {
         } else winnerText = "Player 2 won!";
 
     }
-
 
     @Override
     public void draw(Canvas canvas) {
@@ -55,7 +53,7 @@ public class TankWarsEndGameGUI extends sheep.game.State {
         if (touchYPos > yInterval * 2 && touchYPos < yInterval * 3) {
             getGame().popState(); // Popping end game state
             getGame().popState(); // Popping tank wars state
-            getGame().pushState(new TankWarsUserInterface(GraphicsHelper.getDisplaySize()));
+            getGame().pushState(new TankWarsUserInterface());
         } else if (touchYPos > yInterval * 3) {
             getGame().popState(); // Popping end game state
             getGame().popState(); // Popping tank wars state

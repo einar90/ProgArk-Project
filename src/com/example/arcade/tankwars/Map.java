@@ -24,7 +24,7 @@ public class Map {
 
     private static final Resources resources = Game.getInstance().getResources();
     @SuppressWarnings("FieldCanBeLocal")
-    private final Point displaySize = new Point(resources.getDisplayMetrics().widthPixels, resources.getDisplayMetrics().heightPixels);
+    private final Point displaySize = GraphicsHelper.getDisplaySize();
 
     private static int windVector = 0;
 
