@@ -168,8 +168,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         playerOneTank = Tank.getTank1();
         playerTwoTank = Tank.getTank2();
         Controller.setInitialTankPositions();
-        Controller.setStartSpeed();
-
+        Tank.setStartSpeed();
     }
 
     /**
@@ -183,8 +182,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         Tank.getTankBarrel1().update(dt);
         Tank.getTankBarrel2().update(dt);
         collisionLayer.update(dt);
-
-
     }
 
     /**
@@ -230,16 +227,6 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         currentProjectile = null;
     }
 
-    @Override
-    public void launchGame() {
-        // Load something?
-    }
-
-    @Override
-    public void exitGame() {
-        // Save the highscore list
-    }
-
 
     @Override
     public void collided(Sprite a, Sprite b) {
@@ -262,7 +249,7 @@ public class TankWarsUserInterface extends State implements MiniGame, CollisionL
         // Initial tank fall collision
         if (a.getClass() == Tank.class) {
             if (b.getClass() == Sprite.class) {    //Denne er rævva
-                Controller.stopStartSpeed();
+                Tank.stopStartSpeed();
             }
         }
     }

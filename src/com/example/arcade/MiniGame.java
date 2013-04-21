@@ -7,7 +7,5 @@ package com.example.arcade;
  * Time: 13:58
  */
 public interface MiniGame {
-    public void launchGame();
 
-    public void exitGame();
 }
