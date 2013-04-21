@@ -2,6 +2,7 @@ package com.example.arcade.tankwars;
 
 import android.graphics.Point;
 import com.example.arcade.Game;
+import com.example.arcade.GraphicsHelper;
 import com.example.arcade.tankwars.projectiles.*;
 import sheep.math.Vector2;
 
@@ -50,6 +51,27 @@ public class Controller {
             chosenProjectile = projectile;
         }
 
+    }
+
+    /**
+     * Sets the Tank's initial positions on the map.
+     */
+    public static void setInitialTankPositions() {
+        Point size = GraphicsHelper.getDisplaySize();
+        Tank.getTank1().setPosition(size.x / 10, size.y / 3);
+        Tank.getTank2().setPosition(size.x - size.x / 10, size.y / 3);
+        setInitalBarrelPositions();
+    }
+
+    /**
+     * Sets the TankBarrel's initial positions on the map,
+     * and tries to place them on top of the tanks.
+     */
+    public static void setInitalBarrelPositions() {
+        Point size = GraphicsHelper.getDisplaySize();
+        Tank.getTankBarrel1().setPosition(size.x / 10 + Tank.getTankBarrelImageDimensions().x / 2, size.y / 3 - Tank.getTankImageDimensions().y / 2);
+        Tank.getTankBarrel2().setPosition(size.x - size.x / 10 + Tank.getTankBarrelImageDimensions().x / 2, size.y / 3 - Tank.getTankImageDimensions().y / 2 + (size.y / 40));
+        Tank.getTankBarrel2().rotate(180);
     }
 
     /**

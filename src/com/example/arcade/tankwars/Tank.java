@@ -80,6 +80,14 @@ public class Tank extends Sprite {
         return tank2;
     }
 
+    public static Point getTankBarrelImageDimensions(){
+          return new Point((int)tankBarrelImage.getWidth(),(int) tankBarrelImage.getHeight());
+    }
+
+    public static Point getTankImageDimensions(){
+        return new Point((int)tankImage1.getWidth(),(int) tankImage1.getHeight());
+    }
+
     /**
      * Static method to retrieve Player 1's TankBarrel
      *
@@ -115,25 +123,7 @@ public class Tank extends Sprite {
      *
      * @param size DisplaySize of the Device
      */
-    public static void setInitialTankPositions(Point size) {
-        tank1.setPosition(size.x / 10, size.y / 3);
-        tank2.setPosition(size.x - size.x / 10, size.y / 3);
-        setInitalBarrelPositions(size);
-    }
 
-    /**
-     * Sets the TankBarrel's initial positions on the map,
-     * and tries to place them on top of the tanks.
-     *
-     * @param size DisplaySize of the Device
-     */
-    private static void setInitalBarrelPositions(Point size) {
-        tankBarrel1.setPosition(size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2);
-        tankBarrel2.setPosition(size.x - size.x / 10 + tankBarrelImage.getWidth() / 2, size.y / 3 - tankImage1.getHeight() / 2 + (size.y / 40));
-        tankBarrel2.rotate(180);
-
-        //sett posisjonen til barrels riktig i forhold til tanksene.
-    }
 
     /**
      * Sets the barrel angle of the tank to a specific angle,
