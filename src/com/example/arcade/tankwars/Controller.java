@@ -41,19 +41,17 @@ public class Controller {
         return activeTank;
     }
 
+    /**
+     * Returns the tank waiting for its turn
+     *
+     * @return
+     */
     public static Tank getInactiveTank() {
         if (activeTank == Tank.getTank1()) {
             return Tank.getTank2();
         } else return Tank.getTank1();
     }
 
-    public static void setChosenProjectile(String projectile) {
-
-        if (activeTank.checkAmmo(projectile)) {
-            chosenProjectile = projectile;
-        }
-
-    }
 
     /**
      * Sets the Tank's initial positions on the map.
@@ -169,6 +167,45 @@ public class Controller {
         activeTank.setTankPower(timeHeld);
     }
 
+
+    /**
+     * Called from TankWarsUserInterface, it changes the chosen ammo
+     *
+     * @param event Event containing the tapped location, used to determine the ammo picked
+     */
+    public static void changeAmmo(MotionEvent event) {
+        ArrayList<TextButton> ammoButtons = TankWarsUserInterface.getAmmoButtons();
+        TextButton bulletButton = ammoButtons.get(0);
+        TextButton shellButton = ammoButtons.get(1);
+        TextButton thermiteButton = ammoButtons.get(2);
+        TextButton nukeButton = ammoButtons.get(3);
+
+        if (bulletButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            setChosenProjectile("Bullet");
+        } else if (shellButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            setChosenProjectile("TankShell");
+        } else if (thermiteButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            setChosenProjectile("ThermiteShells");
+        } else if (nukeButton.getBoundingBox().contains(event.getX(), event.getY())) {
+            setChosenProjectile("Nukes");
+        }
+    }
+
+
+    /**
+     * Sets the chosen ammo
+     *
+     * @param projectile
+     */
+    public static void setChosenProjectile(String projectile) {
+
+        if (activeTank.checkAmmo(projectile)) {
+            chosenProjectile = projectile;
+        }
+
+    }
+
+
     /**
      * @return Projectile that is selected
      *         If its not instantiated, it instantiates it.
@@ -189,27 +226,15 @@ public class Controller {
         } else return new Bullet(); // Returning bullet if everything else fails.
     }
 
+
+    /**
+     * Returns the chosen projectile
+     *
+     * @return
+     */
     public static String getChosenProjectile() {
         return chosenProjectile;
     }
 
-
-    public static void changeAmmo(MotionEvent event) {
-        ArrayList<TextButton> ammoButtons = TankWarsUserInterface.getAmmoButtons();
-        TextButton bulletButton = ammoButtons.get(0);
-        TextButton shellButton = ammoButtons.get(1);
-        TextButton thermiteButton = ammoButtons.get(2);
-        TextButton nukeButton = ammoButtons.get(3);
-
-        if (bulletButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            setChosenProjectile("Bullet");
-        } else if (shellButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            setChosenProjectile("TankShell");
-        } else if (thermiteButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            setChosenProjectile("ThermiteShells");
-        } else if (nukeButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            setChosenProjectile("Nukes");
-        }
-    }
 
 }

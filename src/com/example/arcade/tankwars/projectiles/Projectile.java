@@ -56,18 +56,6 @@ public abstract class Projectile extends Sprite {
     }
 
     /**
-     * Checks if the Projectile had a collision with another sprite,
-     * or map boundaries.
-     *
-     * @return True if Collision, else False
-     */
-    public boolean collision() {
-        //To-do implementere collision detection mot objekter
-        return false;
-    }
-
-
-    /**
      * Abstract methods
      * Going to be used in subclasses to draw
      * the Explosions on the device screen.
