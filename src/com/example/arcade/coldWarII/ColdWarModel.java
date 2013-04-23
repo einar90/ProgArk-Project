@@ -1,5 +1,9 @@
 package com.example.arcade.coldWarII;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import android.util.Log;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
@@ -9,6 +13,9 @@ public class ColdWarModel implements CollisionListener {
     private ColdWarPlayer active, plOne, plTwo;
     private SnowUnitSpriteContainer plOneCon, plTwoCon;
     private boolean[][] plOneSnowUnits,plTwoSnowUnits;
+    private PropertyChangeSupport prSup;
+    public static String SNOW_PRODUCTION="snow_production";
+    public static String SNOW_AMOUNT="snow_amount";
 
 
     public ColdWarModel(SnowUnitSpriteContainer one, SnowUnitSpriteContainer two) {
@@ -22,6 +29,10 @@ public class ColdWarModel implements CollisionListener {
         plTwoCon = two;
         plOneSnowUnits = new boolean[3][5];
         plTwoSnowUnits = new boolean[3][5];
+        prSup = new PropertyChangeSupport(this);
+    }
+    public void addPropertyChangeListener(PropertyChangeListener l){
+    	prSup.addPropertyChangeListener(l);
     }
     public void setGridOccupied(int[] array){
     	if(active == plOne){
@@ -36,9 +47,45 @@ public class ColdWarModel implements CollisionListener {
 			}
     	}
     }
+    public int getSnowAmount(){
+    	return active.getSnowAmount();
+    }
+    public int getSnowProduction(){
+    	return active.getSnowProduction();
+    }
+    public void dereaseSnowAmount(SnowUnitType type){
+    	int old = active.getSnowAmount();
+    	if(active != null){
+    		int amount = 0;
+    		switch (type) {
+			case MASSIVE:
+				amount = 4;
+				break;
+			case SNOWBALL:
+				amount = 1;
+				break;
+			case ICECUBE:
+				amount = 2;
+				break;
+			case ICEWALL:
+				amount = 4;
+				break;
+
+			default:
+				break;
+			}
+    		active.decreaseSnowAmount(amount);
+    		PropertyChangeEvent event = new PropertyChangeEvent(active, SNOW_AMOUNT, old,active.getSnowAmount());
+    		prSup.firePropertyChange(event);    		
+    	}
+    }
     public void increaseSnowProduction(){
-    	if(active != null)
+    	int old = active.getSnowProduction();
+    	if(active != null){
     		active.increaseSnowProduction();
+    		PropertyChangeEvent event = new PropertyChangeEvent(active, SNOW_PRODUCTION, old,active.getSnowProduction());
+    		prSup.firePropertyChange(event);    		
+    	}
     }
     public boolean isGridEmpty(int x,int y){
     	if(active == plOne)

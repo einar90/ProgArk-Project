@@ -8,7 +8,18 @@ public class ColdWarPlayer {
     private int snowAmount;
     private int snowProduction;
     private ArrayList<SnowUnit> snowUnits;
-    private ArrayList<ColdWarAction> actionHistory;
+    public int getSnowAmount() {
+		return snowAmount;
+	}
+
+	public int getSnowProduction() {
+		return snowProduction;
+	}
+
+	public ArrayList<SnowUnit> getSnowUnits() {
+		return snowUnits;
+	}
+	private ArrayList<ColdWarAction> actionHistory;
 
     public ColdWarPlayer(String name){
     	this.name = name;

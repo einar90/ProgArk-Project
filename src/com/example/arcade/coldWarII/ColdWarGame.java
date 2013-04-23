@@ -1,6 +1,8 @@
 
 package com.example.arcade.coldWarII;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import android.app.FragmentManager.BackStackEntry;
@@ -38,7 +40,7 @@ import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.input.TouchListener;
 
-public class ColdWarGame extends State implements MiniGame{
+public class ColdWarGame extends State implements MiniGame,PropertyChangeListener{
 	private static Resources res = Game.getInstance().getResources();
 	private SnowUnitSpriteContainer update,guiobjects,objects,plOneCon,plTwoCon;
 	private float h,w;
@@ -602,6 +604,15 @@ public class ColdWarGame extends State implements MiniGame{
 			model.reverseMenu();
 		}
 		return false;
+	}
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		if(event.getPropertyName() == ColdWarModel.SNOW_AMOUNT){
+			snowAmount.setLabel(""+model.getSnowAmount()+" ("+model.getSnowProduction()+")");
+		}
+		else if(event.getPropertyName() == ColdWarModel.SNOW_PRODUCTION){
+			snowAmount.setLabel(""+model.getSnowAmount()+" ("+model.getSnowProduction()+")");
+		}
 	}
 
 }
