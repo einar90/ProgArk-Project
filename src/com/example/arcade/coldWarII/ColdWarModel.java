@@ -14,6 +14,7 @@ public class ColdWarModel implements CollisionListener {
     public ColdWarModel(SnowUnitSpriteContainer one, SnowUnitSpriteContainer two) {
         menu = true;
         placing = false;
+        attack = false;
         plOne = new ColdWarPlayer("Arne");
         plTwo = new ColdWarPlayer("Bjarne");
         active = plOne;
@@ -35,17 +36,15 @@ public class ColdWarModel implements CollisionListener {
 			}
     	}
     }
+    public void increaseSnowProduction(){
+    	if(active != null)
+    		active.increaseSnowProduction();
+    }
     public boolean isGridEmpty(int x,int y){
     	if(active == plOne)
     		return !plOneSnowUnits[y-1][x-1];
     	else
     		return !plTwoSnowUnits[y-1][x-1];
-    }
-    public void reverseMenu() {
-        if (menu)
-            menu = false;
-        else
-            menu = true;
     }
     public ColdWarPlayer getActivePlayer(){
     	return active;
@@ -55,6 +54,12 @@ public class ColdWarModel implements CollisionListener {
     }
     public ColdWarPlayer getPlayerTwo(){
     	return plTwo;
+    }
+    public void reverseMenu() {
+    	if (menu)
+    		menu = false;
+    	else
+    		menu = true;
     }
     public void reverseAttack() {
         if (attack)
@@ -92,6 +97,7 @@ public class ColdWarModel implements CollisionListener {
     }
 
     public void changePlayer() {
+    	active.increaseSnow();
         if (active != null) {
             if (active.equals(plOne))
                 active = plTwo;

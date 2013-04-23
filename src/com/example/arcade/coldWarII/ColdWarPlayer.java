@@ -19,7 +19,26 @@ public class ColdWarPlayer {
     	actionHistory = new ArrayList<ColdWarAction>();
     }
     
-    void performAction(ColdWarAction action) {
-        //TODO: ...
+    public void increaseSnowProduction(){
+    	snowProduction++;
+    }
+    public void increaseSlingshot(){
+    	slingShotLevel++;
+    }
+    public void increaseSnow(){
+    	snowAmount += snowProduction;
+    }
+    public boolean decreaseSnowAmount(int amount){
+    	if(snowAmount > amount){
+    		snowAmount -= amount;
+    		return true;
+    	}	
+    	return false;
+    }
+    public void addSnowUnit(SnowUnit u){
+    	snowUnits.add(u);
+    }
+    public void removeSnowUnit(SnowUnit u){
+    	snowUnits.remove(u);
     }
 }
