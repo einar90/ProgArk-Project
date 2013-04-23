@@ -25,7 +25,6 @@ public class GamesMenu extends State {
     private static Resources resources;
     private static Point displaySize;
     private Sprite tankWarsButton;
-    private Sprite wormsButton;
     private Sprite coldWarIIButton;
     private Sprite battleShipButton;
     private float buttonHeight;
@@ -42,7 +41,6 @@ public class GamesMenu extends State {
 
     private void initGameButtons() {
         Image tankWarsImage = GraphicsHelper.getScaledImage(resources, R.drawable.tankwars_button);
-        Image wormsImage = GraphicsHelper.getScaledImage(resources, R.drawable.worms_button);
         Image battleshipImage = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_button);
         Image coldWarIiImage = GraphicsHelper.getScaledImage(resources, R.drawable.coldwarii_button);
 
@@ -50,21 +48,18 @@ public class GamesMenu extends State {
         buttonWidth = tankWarsImage.getWidth();
 
         tankWarsButton = new Sprite(tankWarsImage);
-        wormsButton = new Sprite(wormsImage);
         battleShipButton = new Sprite(battleshipImage);
         coldWarIIButton = new Sprite(coldWarIiImage);
 
         tankWarsButton.setPosition(displaySize.x / 2, displaySize.y / 5);
-        wormsButton.setPosition(displaySize.x / 2, displaySize.y / 5 * 2);
-        battleShipButton.setPosition(displaySize.x / 2, displaySize.y / 5 * 3);
-        coldWarIIButton.setPosition(displaySize.x / 2, displaySize.y / 5 * 4);
+        battleShipButton.setPosition(displaySize.x / 2, displaySize.y / 5 * 2);
+        coldWarIIButton.setPosition(displaySize.x / 2, displaySize.y / 5 * 3);
     }
 
     @Override
     public void update(float dt) {
         super.update(dt);
         tankWarsButton.update(dt);
-        wormsButton.update(dt);
         battleShipButton.update(dt);
         coldWarIIButton.update(dt);
     }
@@ -75,7 +70,6 @@ public class GamesMenu extends State {
         if (canvas != null) {
             canvas.drawPaint(new Paint(Color.BLACK));
             tankWarsButton.draw(canvas);
-            wormsButton.draw(canvas);
             coldWarIIButton.draw(canvas);
             battleShipButton.draw(canvas);
         }
@@ -87,12 +81,12 @@ public class GamesMenu extends State {
         if (GraphicsHelper.isSpriteTouched(tankWarsButton, buttonWidth, buttonHeight, event)) {
             getGame().pushState(new TankWarsUserInterface());
             Log.d("Tapped", "Tank Wars button tapped.");
-        } else if (GraphicsHelper.isSpriteTouched(wormsButton, buttonWidth, buttonHeight, event)) {
-            Log.d("Tapped", "Worms button tapped.");
-        } else if (GraphicsHelper.isSpriteTouched(coldWarIIButton, buttonWidth, buttonHeight, event)) {
+        }
+        else if (GraphicsHelper.isSpriteTouched(coldWarIIButton, buttonWidth, buttonHeight, event)) {
             getGame().pushState(new ColdWarGame());
             Log.d("Tapped", "Cold War II button tapped.");
-        } else if (GraphicsHelper.isSpriteTouched(battleShipButton, buttonWidth, buttonHeight, event)) {
+        }
+        else if (GraphicsHelper.isSpriteTouched(battleShipButton, buttonWidth, buttonHeight, event)) {
             getGame().pushState(new BattleshipUserInterface(displaySize));
             Log.d("Tapped", "Battleship button tapped.");
         }
