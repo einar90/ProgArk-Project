@@ -1,5 +1,7 @@
 package com.example.arcade.battleship;
 
+import java.util.ArrayList;
+
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 import android.content.res.Resources;
@@ -11,36 +13,53 @@ import com.example.arcade.R;
 
 public class Battleship extends Sprite {
  
-	private static final Resources resources = Game.getInstance().getResources();
+    private static final Resources resources = Game.getInstance().getResources();
     
-    // Battleship1.
-    private static final Image battleshipImage1 = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_x);
-    private static Battleship battleship1 = new Battleship(battleshipImage1);
+    // Battleship images.
+    private static final Image battleshipImageHorisontal = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_x);
+    private static final Image battleshipImageVertical = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_y);
     
-    // Battleship2.
-    private static final Image battleshipImage2 = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_y);
-    private static Battleship battleship2 = new Battleship(battleshipImage2);
+    // Battleships player1.
+    private static ArrayList<Battleship> battleshipsPlayer1 = new ArrayList<Battleship>();
+    private static Battleship battleship1Player1 = new Battleship(battleshipImageHorisontal, 1);
+    private static Battleship battleship2Player1 = new Battleship(battleshipImageHorisontal, 1);
+    private static Battleship battleship3Player1 = new Battleship(battleshipImageHorisontal, 1);
+    private static Battleship battleship4Player1 = new Battleship(battleshipImageVertical, 1);
+    private static Battleship battleship5Player1 = new Battleship(battleshipImageVertical, 1);
     
-    private int hp;
-    
-    
-    /** Constructor */
-    public Battleship(Image battleshipimage) {
-    	super(battleshipimage);
+    // Battleships player2.
+    private static ArrayList<Battleship> battleshipsPlayer2 = new ArrayList<Battleship>();
+    private static Battleship battleship1Player2 = new Battleship(battleshipImageHorisontal, 2);
+    private static Battleship battleship2Player2 = new Battleship(battleshipImageHorisontal, 2);
+    private static Battleship battleship3Player2 = new Battleship(battleshipImageHorisontal, 2);
+    private static Battleship battleship4Player2 = new Battleship(battleshipImageVertical, 2);
+    private static Battleship battleship5Player2 = new Battleship(battleshipImageVertical, 2);
+ 
+    /** Constructor 
+     * @param battleshipimage */
+    public Battleship(Image battleshipimage, int player) {
+        super(battleshipimage);
+        
+        if(player == 1){
+            battleshipsPlayer1.add(this);
+        }else if(player == 2){
+            battleshipsPlayer2.add(this);
+        }
+        
+    }
+
+    /** Get player1's battleships */
+    public static ArrayList<Battleship> getBattleshipsPlayer1() {
+        return battleshipsPlayer1;
     }
     
-    // Get battleships.
-    public static Battleship getBattleship1() {
-    	return battleship1;
+    /** Get player2's battleships */
+    public static ArrayList<Battleship> getBattleshipsPlayer2() {
+        return battleshipsPlayer2;
     }
     
-    public static Battleship getBattleship2() {
-    	return battleship2;
-    }
-    
-    // Set initial positions for battleships.
-    public static void setInitialBattleshipPositions(Point size) {
-    	battleship1.setPosition(size.x / 2, size.y / 2);
-    	battleship2.setPosition(size.x / 4, size.y / 4);
+    /** Set position for battleship */
+    public void setBattleshipPosition(Point size) {
+        setPosition(size.x, size.y);
     }
 }
