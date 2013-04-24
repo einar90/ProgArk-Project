@@ -13,5 +13,8 @@ public class SnowUnitSprite extends Sprite {
         unit = new SnowUnit(player, type);
     }
 
+	SnowUnit getSnowUnit(){
+		return unit;
+	}
 	
 }

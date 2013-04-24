@@ -19,7 +19,6 @@ public class ColdWarPlayer {
 	public ArrayList<SnowUnit> getSnowUnits() {
 		return snowUnits;
 	}
-	private ArrayList<ColdWarAction> actionHistory;
 
     public ColdWarPlayer(String name){
     	this.name = name;
@@ -27,7 +26,6 @@ public class ColdWarPlayer {
     	snowAmount = 1;
     	snowProduction = 1;
     	snowUnits = new ArrayList<SnowUnit>();
-    	actionHistory = new ArrayList<ColdWarAction>();
     }
     
     public void increaseSnowProduction(){

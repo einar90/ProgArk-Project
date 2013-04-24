@@ -163,10 +163,24 @@ public class ColdWarModel implements CollisionListener {
 
     @Override
     public void collided(Sprite a, Sprite b) {
-        SnowUnitSprite sa = (SnowUnitSprite) a;
-        SnowUnitSprite sb = (SnowUnitSprite) b;
-        sa.die();
-        sb.die();
-        Log.d("Collision!", "Model, Collision" + a.getClass().getName() + " collided with " + b.getClass().getName());
+        if(a instanceof SnowUnitSprite && b instanceof SnowUnitSprite){
+        	SnowUnitSprite sa = (SnowUnitSprite)a;
+        	SnowUnitSprite sb = (SnowUnitSprite)b;
+        	
+        	SnowUnit sua = sa.getSnowUnit();
+        	SnowUnit sub = sb.getSnowUnit();
+        	
+        	if(sua.getPlayer().equals(sub.getPlayer())){
+        		if(a.getSpeed().getY() > 0 && b.getSpeed().getY() > 0){
+        			//nada
+        		}else if(a.getSpeed().getY() > 0 || b.getSpeed().getY() > 0){
+        			a.setSpeed(0, 0);
+        			b.setSpeed(0, 0);
+        		}
+        	}else{
+        		sua.decreaseHardness(sub.getHardness());
+        		sub.decreaseHardness(sua.getHardness());
+        	}
+        }
     }
 }
