@@ -314,7 +314,6 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 				}
 			}
 		}
-//		checkCollision();
 	}
 
 	private void addToContainer(Sprite s,SpriteContainer con){
@@ -322,18 +321,6 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		s.setParent(con);
 		update.addSprite(s);
 	}
-
-//	private void checkCollision() {
-//		ArrayList<Sprite> s1 = plOneCon.getSprites();
-//		ArrayList<Sprite> s2 = plTwoCon.getSprites();
-//		for (int i = 0; i < s1.size(); i++) {
-//			for (int j = 0; j < s2.size(); j++) {
-//				if(s1.get(i).collides(s2.get(j)))
-//					Log.d("COllision", "checkCollision()");
-//			}
-//		}
-//	}
-
 
 	private void checkTopMenu(MotionEvent e){
 		if(GraphicsHelper.isSpriteTouched(btnDefence, btnDefence.getImageWidth(), btnDefence.getImageHeight(), e)){
@@ -352,50 +339,44 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	}
 	private void checkDefenceMenu(MotionEvent event) {
 		if(GraphicsHelper.isSpriteTouched(btnPlaceSnowball, btnPlaceSnowball.getImageWidth(), btnPlaceSnowball.getImageHeight(), event)){
-			setSnowUnitButton(btnPlaceSnowball,true);
+			setSnowUnitButton(btnPlaceSnowball, "defence");
 		}else if(GraphicsHelper.isSpriteTouched(btnPlaceIceCube, btnPlaceIceCube.getImageWidth(), btnPlaceIceCube.getImageHeight(), event)){
-			setSnowUnitButton(btnPlaceIceCube,true);
+			setSnowUnitButton(btnPlaceIceCube, "defence");
 		}else if(GraphicsHelper.isSpriteTouched(btnPlaceMassiveSnowball, btnPlaceMassiveSnowball.getImageWidth(), btnPlaceMassiveSnowball.getImageHeight(), event)){
-			setSnowUnitButton(btnPlaceMassiveSnowball,true);
+			setSnowUnitButton(btnPlaceMassiveSnowball, "defence");
 		}else if(GraphicsHelper.isSpriteTouched(btnPlaceIceWall, btnPlaceIceWall.getImageWidth(), btnPlaceIceWall.getImageHeight(), event)){
-			setSnowUnitButton(btnPlaceIceWall,true);
+			setSnowUnitButton(btnPlaceIceWall, "defence");
 		}
 	}
 	private void checkAttackMenu(MotionEvent event) {
 		if(GraphicsHelper.isSpriteTouched(btnAttackSnowball, btnAttackSnowball.getImageWidth(), btnAttackSnowball.getImageHeight(), event)){
-			setSnowUnitButton(btnAttackSnowball,false);
+			setSnowUnitButton(btnAttackSnowball, "attack");
 		}else if(GraphicsHelper.isSpriteTouched(btnAttackIcecube, btnAttackIcecube.getImageWidth(), btnAttackIcecube.getImageHeight(), event)){
-			setSnowUnitButton(btnAttackIcecube,false);
+			setSnowUnitButton(btnAttackIcecube, "attack");
 		}else if(GraphicsHelper.isSpriteTouched(btnAttackMassiveSnowball, btnAttackMassiveSnowball.getImageWidth(), btnAttackMassiveSnowball.getImageHeight(), event)){
-			setSnowUnitButton(btnAttackMassiveSnowball,false);
+			setSnowUnitButton(btnAttackMassiveSnowball, "attack");
 		}
 	}
 	private void checkUpgradeMenu(MotionEvent event) {
 		if(GraphicsHelper.isSpriteTouched(btnUpgradeSlingshot, btnUpgradeSlingshot.getImageWidth(), btnUpgradeSlingshot.getImageHeight(), event)){
-			setSnowUnitButton(btnUpgradeSlingshot,false);
+			setSnowUnitButton(btnUpgradeSlingshot, "upgrade");
 		}else if(GraphicsHelper.isSpriteTouched(btnUpgradeSnowProduction, btnUpgradeSnowProduction.getImageWidth(), btnUpgradeSnowProduction.getImageHeight(), event)){
-			setSnowUnitButton(btnUpgradeSnowProduction,false);
+			setSnowUnitButton(btnUpgradeSnowProduction, "upgrade");
 		}
 		
 	}
-	private void checkPlacingBox(MotionEvent e){
+	private void checkPlaceSnow(MotionEvent e){
 		if(model.isPlayerOne() && e.getX() > width/2){
 			if(e.getX() < width - (width/7)){
 				placeActiveSnowUnit(e.getX(),e.getY());
+				btnPlaceSelected = null;
 			}
 		}else if (!model.isPlayerOne() && e.getX() < width/2){
 			if(e.getX() > width/7){
 				placeActiveSnowUnit(e.getX(),e.getY());
+				btnPlaceSelected = null;
 			}
 		}
-//		if(GraphicsHelper.isSpriteTouched(rGrid, grid.getWidth(), grid.getHeight(), e) && model.isPlacing()){
-//			placeActiveSnowUnit(e.getX(),e.getY());
-//			//			model.reversePlacing();
-//			//			model.reverseMenu();
-//		}if(GraphicsHelper.isSpriteTouched(lGrid, grid.getWidth(), grid.getHeight(), e) && model.isPlacing()){
-//			model.reversePlacing();
-//			model.reverseMenu();
-//		}
 	}
 	
 	private int[] calculateSpritePosition(float x,float y,SnowUnitType t){
@@ -464,10 +445,23 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 //		scaledDrawable.setTargetDensity(res.getDisplayMetrics().densityDpi);
 //		return new Image(scaledDrawable);
 //	}
-	private void setSnowUnitButton(SnowUnitButton b,boolean placing){
+	private void setSnowUnitButton(SnowUnitButton b, String type){
 		isDefenceMenuSelected = false; 
 		isAttackMenuSelected = false; 
 		isUpgradeMenuSelected = false;
+		btnPlaceSelected = null;
+		btnAttackSelected = null;
+		if(type.equals("defence")){
+			btnPlaceSelected = b;
+		}else if(type.equals("attack")){
+			btnAttackSelected = b;
+		}else if(type.equals("upgrade")){
+			if(b.getLabel().contains("Production")){
+//				model.upgradeSnowProduction();
+			}else{
+//				model.upgradeSlingshot();
+			}
+		}
 //		if(placing && plActive == null || !placing && attActive == null){
 //			b.changePaint(Color.RED);
 //			if(placing)
@@ -528,18 +522,18 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 
 	@Override
 	public boolean onTouchUp(MotionEvent event) {
-//		if(model.isMenu()){
-			checkTopMenu(event);
-			if(isDefenceMenuSelected){
-				checkDefenceMenu(event);
-			}else if(isAttackMenuSelected){
-				checkAttackMenu(event);
-			}else if(isUpgradeMenuSelected){
-				checkUpgradeMenu(event);
-			}
-//		}else{	
-//			model.reverseMenu();
-//		}
+		checkTopMenu(event);
+		if(isDefenceMenuSelected){
+			checkDefenceMenu(event);
+		}else if(isAttackMenuSelected){
+			checkAttackMenu(event);
+		}else if(isUpgradeMenuSelected){
+			checkUpgradeMenu(event);
+		}else if(btnPlaceSelected != null){
+			checkPlaceSnow(event);
+		}else if(btnAttackSelected != null){
+			
+		}
 		return false;
 	}
 	@Override
