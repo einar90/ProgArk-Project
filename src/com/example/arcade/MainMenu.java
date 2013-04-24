@@ -24,8 +24,6 @@ public class MainMenu extends State {
     private static Resources resources;
     private static Point displaySize;
     private Sprite playButton;
-    private Sprite highscoresButton;
-    private Sprite settingsButton;
 
 
     /**
@@ -44,16 +42,10 @@ public class MainMenu extends State {
 
     private void initButtons() {
         Image playButtonImage = GraphicsHelper.getScaledImage(resources, R.drawable.play_button);
-        Image highscoresButtonImage = GraphicsHelper.getScaledImage(resources, R.drawable.highscore_button);
-        Image settingsButtonImage = GraphicsHelper.getScaledImage(resources, R.drawable.settings_button);
 
         playButton = new Sprite(playButtonImage);
-        highscoresButton = new Sprite(highscoresButtonImage);
-        settingsButton = new Sprite(settingsButtonImage);
 
-        playButton.setPosition(displaySize.x / 2, displaySize.y / 4);
-        highscoresButton.setPosition(displaySize.x / 2, displaySize.y / 2);
-        settingsButton.setPosition(displaySize.x / 2, displaySize.y / 4 * 3);
+        playButton.setPosition(displaySize.x / 2, displaySize.y / 2);
     }
 
     @Override
@@ -61,8 +53,6 @@ public class MainMenu extends State {
         super.update(dt);
         if (playButton != null) {
             playButton.update(dt);
-            highscoresButton.update(dt);
-            settingsButton.update(dt);
         }
     }
 
@@ -72,8 +62,6 @@ public class MainMenu extends State {
         if (canvas != null) {
             canvas.drawPaint(new Paint(Color.BLACK));
             playButton.draw(canvas);
-            highscoresButton.draw(canvas);
-            settingsButton.draw(canvas);
         }
     }
 
@@ -83,10 +71,6 @@ public class MainMenu extends State {
         if (playButton.getBoundingBox().contains(event.getX(), event.getY())) {
             Log.d("Tapped", "Games button tapped.");
             getGame().pushState(new GamesMenu(displaySize, resources));
-        } else if (highscoresButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Highscore button tapped.");
-        } else if (settingsButton.getBoundingBox().contains(event.getX(), event.getY())) {
-            Log.d("Tapped", "Settings button tapped.");
         }
         return true;
     }

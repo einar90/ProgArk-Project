@@ -14,7 +14,7 @@ import com.example.arcade.tankwars.explosions.NukeExplosion;
  * Time: 14:25
  */
 public class Nuke extends Projectile {
-    Explosion lol;
+
 
     public Nuke() {
         super();
