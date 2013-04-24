@@ -9,7 +9,6 @@ import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 
 public class ColdWarModel implements CollisionListener {
-    private boolean menu, placing,attack;
     private ColdWarPlayer active, plOne, plTwo;
     private SnowUnitSpriteContainer plOneCon, plTwoCon;
     private boolean[][] plOneSnowUnits,plTwoSnowUnits;
@@ -19,9 +18,6 @@ public class ColdWarModel implements CollisionListener {
 
 
     public ColdWarModel(SnowUnitSpriteContainer one, SnowUnitSpriteContainer two) {
-        menu = true;
-        placing = false;
-        attack = false;
         plOne = new ColdWarPlayer("Arne");
         plTwo = new ColdWarPlayer("Bjarne");
         active = plOne;
@@ -102,37 +98,39 @@ public class ColdWarModel implements CollisionListener {
     public ColdWarPlayer getPlayerTwo(){
     	return plTwo;
     }
-    public void reverseMenu() {
-    	if (menu)
-    		menu = false;
-    	else
-    		menu = true;
-    }
-    public void reverseAttack() {
-        if (attack)
-        	attack = false;
-        else
-        	attack = true;
-    }
-
-    public void reversePlacing() {
-        if (placing)
-            placing = false;
-        else
-            placing = true;
-    }
-
-    public boolean isPlacing() {
-        return placing;
-    }
     
-    public boolean isAttack() {
-        return attack;
-    }
+    
+//    public void reverseMenu() {
+//    	if (menu)
+//    		menu = false;
+//    	else
+//    		menu = true;
+//    }
+//    public void reverseAttack() {
+//        if (attack)
+//        	attack = false;
+//        else
+//        	attack = true;
+//    }
+//
+//    public void reversePlacing() {
+//        if (placing)
+//            placing = false;
+//        else
+//            placing = true;
+//    }
 
-    public boolean isMenu() {
-        return menu;
-    }
+//    public boolean isPlacing() {
+//        return placing;
+//    }
+//    
+//    public boolean isAttack() {
+//        return attack;
+//    }
+
+//    public boolean isMenu() {
+//        return menu;
+//    }
 
     /**
      * @return
