@@ -2,7 +2,7 @@ package com.example.arcade.coldWarII;
 
 public class SnowUnit {
     private ColdWarPlayer player;
-    private ColdWarModel model;
+    private ColdWarController model;
     private SnowUnitSprite sprite;
     private int hardness;
     private int weight;
@@ -12,7 +12,7 @@ public class SnowUnit {
     public SnowUnit(ColdWarPlayer player,SnowUnitType type,SnowUnitSprite s){
     	this.player = player;
     	this.type = type;
-    	model = ColdWarModel.getInstance();
+    	model = ColdWarController.getInstance();
     	sprite = s;
     	initSnowUnit();
     }

@@ -8,8 +8,8 @@ import android.util.Log;
 import sheep.collision.CollisionListener;
 import sheep.game.Sprite;
 
-public class ColdWarModel implements CollisionListener {
-	private static ColdWarModel instance;
+public class ColdWarController implements CollisionListener {
+	private static ColdWarController instance;
     private ColdWarPlayer active, plOne, plTwo;
     private SnowUnitSpriteContainer plOneCon, plTwoCon, all;
     private boolean[][] plOneSnowUnits,plTwoSnowUnits;
@@ -20,7 +20,7 @@ public class ColdWarModel implements CollisionListener {
     public static String KING_COLLISION="king_collision25489621";
 
 
-    private ColdWarModel() {
+    private ColdWarController() {
         plOne = new ColdWarPlayer("Arne");
         plTwo = new ColdWarPlayer("Bjarne");
         active = plOne;
@@ -28,9 +28,9 @@ public class ColdWarModel implements CollisionListener {
         plTwoSnowUnits = new boolean[3][5];
         prSup = new PropertyChangeSupport(this);
     }
-    public static ColdWarModel getInstance(){
+    public static ColdWarController getInstance(){
     	if(instance == null)
-    		return instance = new ColdWarModel();
+    		return instance = new ColdWarController();
     	else 
     		return instance;
     }
