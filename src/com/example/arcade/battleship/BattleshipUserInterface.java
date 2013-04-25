@@ -51,8 +51,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
      */
     public BattleshipUserInterface(){
     	map = new Map();
-    	Controller.setBattleshipPositions();
-    	
+    	Controller.setBattleshipPositions();    	
     }
 
     /**
