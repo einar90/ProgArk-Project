@@ -11,7 +11,7 @@ import sheep.game.Sprite;
 public class ColdWarModel implements CollisionListener {
 	private static ColdWarModel instance;
     private ColdWarPlayer active, plOne, plTwo;
-    private SnowUnitSpriteContainer plOneCon, plTwoCon;
+    private SnowUnitSpriteContainer plOneCon, plTwoCon, all;
     private boolean[][] plOneSnowUnits,plTwoSnowUnits;
     private PropertyChangeSupport prSup;
     public static String SNOW_PRODUCTION="snow_production136433";
@@ -34,9 +34,10 @@ public class ColdWarModel implements CollisionListener {
     	else 
     		return instance;
     }
-    public void setSpriteContainers(SnowUnitSpriteContainer one,SnowUnitSpriteContainer two){
+    public void setSpriteContainers(SnowUnitSpriteContainer one,SnowUnitSpriteContainer two, SnowUnitSpriteContainer all){
     	plOneCon = one;
         plTwoCon = two;
+        this.all = all;
     }
     public void addPropertyChangeListener(PropertyChangeListener l){
     	prSup.addPropertyChangeListener(l);
@@ -60,7 +61,7 @@ public class ColdWarModel implements CollisionListener {
     public int getSnowProduction(){
     	return active.getSnowProduction();
     }
-    public void dereaseSnowAmount(SnowUnitType type){
+    public void decreaseSnowAmount(SnowUnitType type){
     	int old = active.getSnowAmount();
     	if(active != null){
     		int amount = 0;
@@ -130,12 +131,13 @@ public class ColdWarModel implements CollisionListener {
     }
 
     public void destroySnowUnit(SnowUnit sU) {
-    	SnowUnitSprite s  = sU.getSprite();
-        if (plOneCon.contains(s))
-            plOneCon.removeSprite(s);
-        else if (plTwoCon.contains(s))
-            plTwoCon.removeSprite(s);
-        s.die();
+    	SnowUnitSprite sprite  = sU.getSprite();
+        if (plOneCon.contains(sprite))
+            plOneCon.removeSprite(sprite);
+        if (plTwoCon.contains(sprite))
+            plTwoCon.removeSprite(sprite);
+        all.removeSprite(sprite);
+        sprite.die();
     }
 
     @Override
@@ -146,7 +148,6 @@ public class ColdWarModel implements CollisionListener {
         	
         	SnowUnit sua = sa.getSnowUnit();
         	SnowUnit sub = sb.getSnowUnit(); 
-        	
         	
         	if(sua.getPlayer().equals(sub.getPlayer())){
         		if(a.getSpeed().getY() > 0 && b.getSpeed().getY() > 0){
@@ -165,17 +166,19 @@ public class ColdWarModel implements CollisionListener {
         			b.setSpeed(0, 0);
         		}
         	}else{
-        		int suaHardness = sua.getHardness(),subHardness = sub.getHardness();
-        		
-        		if(sua.getType() == SnowUnitType.KING ){
+        		Log.d("cwg", "MAMMAEN MIN!!!!!!");
+        		int suaHardness = sua.getHardness(), subHardness = sub.getHardness();
+        		if(sua.getType().equals(SnowUnitType.KING)){
+        			Log.d("cwg", "Konge: " + sua.getPlayer().getName());
         			sua.decreaseHardness(subHardness);
         			sub.decreaseHardness(suaHardness);
         			prSup.firePropertyChange(new PropertyChangeEvent(sua, KING_COLLISION, suaHardness, sua.getHardness()));
         		}
-        		else if(sub.getType() == SnowUnitType.KING){
+        		else if(sub.getType().equals(SnowUnitType.KING)){
+        			Log.d("cwg", "Konge2: " + sub.getPlayer().getName());
         			sua.decreaseHardness(subHardness);
         			sub.decreaseHardness(suaHardness);
-        			prSup.firePropertyChange(new PropertyChangeEvent(sua, KING_COLLISION, subHardness, sua.getHardness()));
+        			prSup.firePropertyChange(new PropertyChangeEvent(sub, KING_COLLISION, subHardness, sub.getHardness()));
         		}
         		else{
         			sua.decreaseHardness(subHardness);

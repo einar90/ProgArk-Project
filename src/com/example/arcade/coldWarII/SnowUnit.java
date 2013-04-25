@@ -19,6 +19,9 @@ public class SnowUnit {
     
     private void initSnowUnit() {
 		switch (type) {
+		case KING:
+			hardness = 3;
+			break;
 		case ICECUBE:
 			hardness = 2;
 			weight = 4;
@@ -51,10 +54,9 @@ public class SnowUnit {
     	return sprite;
     }
     
-	public void setPlayer(ColdWarPlayer player) {
-		this.player = player;
+	public void setHardness(int hardness){
+		this.hardness = hardness;
 	}
-
 	public int getHardness() {
 		return hardness;
 	}

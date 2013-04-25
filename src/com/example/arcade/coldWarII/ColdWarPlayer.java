@@ -26,7 +26,10 @@ public class ColdWarPlayer {
 	public ArrayList<SnowUnit> getSnowUnits() {
 		return snowUnits;
 	}
-
+	
+	public String getName(){
+		return name;
+	}
     
     public void increaseSnowProduction(){
     	if(snowAmount >= snowProduction){
