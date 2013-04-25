@@ -1,4 +1,7 @@
-package com.example.arcade.coldWarII;
+package com.example.arcade.coldWarII.model;
+
+import com.example.arcade.coldWarII.controller.ColdWarController;
+import com.example.arcade.coldWarII.view.SnowUnitSprite;
 
 public class SnowUnit {
     private ColdWarPlayer player;
@@ -62,7 +65,7 @@ public class SnowUnit {
 	}
 	
 	public void decreaseHardness(int dx){
-		hardness -= dx;
+		if(dx > 0) hardness -= dx;
 		if(hardness <= 0)
 			destroy();
 	}

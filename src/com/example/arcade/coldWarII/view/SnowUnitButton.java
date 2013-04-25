@@ -1,7 +1,8 @@
-package com.example.arcade.coldWarII;
+package com.example.arcade.coldWarII.view;
 
 
 import com.example.arcade.R;
+import com.example.arcade.coldWarII.model.SnowUnitType;
 
 import android.content.res.Resources;
 import android.graphics.*;

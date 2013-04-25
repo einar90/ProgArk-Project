@@ -1,5 +1,5 @@
 
-package com.example.arcade.coldWarII;
+package com.example.arcade.coldWarII.view;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +18,10 @@ import android.view.MotionEvent;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
+import com.example.arcade.coldWarII.controller.ColdWarController;
+import com.example.arcade.coldWarII.model.ColdWarPlayer;
+import com.example.arcade.coldWarII.model.SnowUnit;
+import com.example.arcade.coldWarII.model.SnowUnitType;
 import com.example.arcade.utilities.Constants;
 import sheep.game.Game;
 import sheep.game.Sprite;
@@ -53,11 +57,12 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	private Image arrowImage = new Image(R.drawable.coldwarii_arrow);
 	private Paint white = new Paint(Font.WHITE_SANS_BOLD_16);
 	private float[] scaling;
-	private TextButton snowAmount;
+	private TextButton snowAmount, gameOver;
 	private boolean isDefenceMenuSelected = false;
 	private boolean isAttackMenuSelected = false;
 	private boolean isUpgradeMenuSelected = false;	
-	private boolean playerOneKingHit,playerTwoKingHit = false;
+	private boolean isPlayerOneKingHit, isPlayerTwoKingHit = false;
+	private boolean isGameOver = false;
 	private Vector2 attackVector;
 
 
@@ -78,7 +83,8 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		addToContainer(background, guiobjects);
 
 		snowAmount = new TextButton(width-(width/12), (snowflakeImage.getHeight()/2), ""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
-
+		gameOver = new TextButton(width/2, (height/2), "Game Over");
+		
 		spriteSnowflake = new Sprite(snowflakeImage);
 		spriteSnowflake.setPosition(width-(float)(1.5*(width/12)), 10+(snowflakeImage.getHeight()/2));
 		spriteSnowflake.setScale(scaling[0], scaling[1]);
@@ -221,6 +227,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		playerTwoKing.draw(canvas);
 		spriteSnowflake.draw(canvas);
 		snowAmount.draw(canvas);
+		if(isGameOver) gameOver.draw(canvas);
 		if(!controller.isPlayerOne()){
 			playerOneArrow.draw(canvas);
 		}else{
@@ -270,15 +277,15 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 				}
 			}
 		}
-		if(playerOneKingHit){
+		if(isPlayerOneKingHit){
 			playerOneKing = setNewKing(playerOneKing, controller.getPlayerOne());
 			playerOneKing.update(dt);
-			playerOneKingHit = false;
+			isPlayerOneKingHit = false;
 		}
-		if(playerTwoKingHit){
+		if(isPlayerTwoKingHit){
 			playerTwoKing  = setNewKing(playerTwoKing, controller.getPlayerTwo());
 			playerTwoKing.update(dt);
-			playerTwoKingHit = false;
+			isPlayerTwoKingHit = false;
 		}
 		playerTwoArrow.setPosition(playerOneKing.getX(), (float) (playerOneKing.getY()+((scaling[1])*king1Image.getHeight()/2.5)+(scaling[1]*arrowImage.getHeight()/2.5))); 
 		playerOneArrow.setPosition(playerTwoKing.getX(), (float) (playerOneKing.getY()+((scaling[1])*king1Image.getHeight()/2.5)+(scaling[1]*arrowImage.getHeight()/2.5)));
@@ -304,6 +311,9 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		}
 		else{
 			s = new SnowUnitSprite(kingDeadImage, player, SnowUnitType.KING);
+			if(player == controller.getPlayerOne()) gameOver.setLabel("Left player has won!");
+			else gameOver.setLabel("Right player has won!");
+			isGameOver = true;
 		}
 		s.setPosition(px, py);
 		s.setScale(scaling[0], scaling[1]);
@@ -324,6 +334,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	}
 
 	private void checkTopMenu(MotionEvent e){
+		if(isGameOver) return;
 		if(GraphicsHelper.isSpriteTouched(btnDefence, btnDefence.getImageWidth(), btnDefence.getImageHeight(), e)){
 			isDefenceMenuSelected = true; 
 			isAttackMenuSelected = false; 
@@ -580,15 +591,14 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	public void propertyChange(PropertyChangeEvent event) {
 		if(event.getPropertyName() == ColdWarController.SNOW_AMOUNT){
 			snowAmount.setLabel(""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
-		}
-		else if(event.getPropertyName() == ColdWarController.SNOW_PRODUCTION){
+		}else if(event.getPropertyName() == ColdWarController.SNOW_PRODUCTION){
 			snowAmount.setLabel(""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
 		}else if(event.getPropertyName() == ColdWarController.KING_COLLISION){
 			if(event.getSource() instanceof SnowUnit){
 				if(((SnowUnit)event.getSource()).getPlayer().equals(controller.getPlayerOne())){
-					playerOneKingHit = true;
+					isPlayerOneKingHit = true;
 				}else{
-					playerTwoKingHit = true;
+					isPlayerTwoKingHit = true;
 				}
 			}
 		}

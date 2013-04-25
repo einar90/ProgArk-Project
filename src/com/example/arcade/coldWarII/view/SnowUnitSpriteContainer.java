@@ -1,6 +1,7 @@
-package com.example.arcade.coldWarII;
+package com.example.arcade.coldWarII.view;
 
 import java.util.ArrayList;
+
 
 import android.graphics.Canvas;
 
