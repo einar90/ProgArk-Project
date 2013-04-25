@@ -150,20 +150,24 @@ public class BattleshipUserInterface extends State implements MiniGame {
             /* TODO */            
             // Check if it is a hit or miss.
             if(Controller.currentPlayer.equals("Player1")){
-                for(int i=0; i < player1Battleships.size(); i++){
-//                    if(player1Battleships.get(i).)
+                for(int i=0; i < player2Battleships.size(); i++){
+                    if(player2Battleships.get(i).getBoundingBox().contains(x, y) ){
+                        Sprite explosion = new Sprite(explosionImage);
+                        explosion.setPosition(x, y);
+                       
+                        if(Controller.currentPlayer.equals("Player1")){
+                            explosionsPlayer1.add(explosion);
+                        }else if(Controller.currentPlayer.equals("Player2")){
+                            explosionsPlayer2.add(explosion);
+                        } 
+                        
+                        break;
+                    }
                 }
             }
             
             
-            Sprite explosion = new Sprite(explosionImage);
-            explosion.setPosition(x, y);
-           
-            if(Controller.currentPlayer.equals("Player1")){
-                explosionsPlayer1.add(explosion);
-            }else if(Controller.currentPlayer.equals("Player2")){
-                explosionsPlayer2.add(explosion);
-            }            
+                   
             
             return true;    
         }
