@@ -88,7 +88,7 @@ public class ColdWarModel implements CollisionListener {
     }
     public void increaseSnowProduction(){
     	int old = active.getSnowProduction();
-    	if(active != null){
+    	if(active != null && active.getSnowAmount() >= active.getSnowProduction()){
     		active.increaseSnowProduction();
     		PropertyChangeEvent event = new PropertyChangeEvent(active, SNOW_PRODUCTION, old,active.getSnowProduction());
     		prSup.firePropertyChange(event);    		

@@ -29,7 +29,10 @@ public class ColdWarPlayer {
 
     
     public void increaseSnowProduction(){
-    	snowProduction++;
+    	if(snowAmount >= snowProduction){
+	    	snowAmount -= snowProduction;
+	    	snowProduction++;
+    	}
     }
     public void increaseSlingshot(){
     	slingShotLevel++;
