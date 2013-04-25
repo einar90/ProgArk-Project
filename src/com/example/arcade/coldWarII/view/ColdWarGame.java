@@ -1,5 +1,5 @@
 
-package com.example.arcade.coldWarII;
+package com.example.arcade.coldWarII.view;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +18,10 @@ import android.view.MotionEvent;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
+import com.example.arcade.coldWarII.controller.ColdWarController;
+import com.example.arcade.coldWarII.model.ColdWarPlayer;
+import com.example.arcade.coldWarII.model.SnowUnit;
+import com.example.arcade.coldWarII.model.SnowUnitType;
 import com.example.arcade.utilities.Constants;
 import sheep.game.Game;
 import sheep.game.Sprite;
@@ -53,7 +57,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	private Image arrowImage = new Image(R.drawable.coldwarii_arrow);
 	private Paint white = new Paint(Font.WHITE_SANS_BOLD_16);
 	private float[] scaling;
-	private TextButton snowAmount;
+	private TextButton snowAmount, gameOver;
 	private boolean isDefenceMenuSelected = false;
 	private boolean isAttackMenuSelected = false;
 	private boolean isUpgradeMenuSelected = false;	
@@ -78,7 +82,8 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		addToContainer(background, guiobjects);
 
 		snowAmount = new TextButton(width-(width/12), (snowflakeImage.getHeight()/2), ""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
-
+		gameOver = new TextButton(width-(width/12), (snowflakeImage.getHeight()/2), ""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
+		
 		spriteSnowflake = new Sprite(snowflakeImage);
 		spriteSnowflake.setPosition(width-(float)(1.5*(width/12)), 10+(snowflakeImage.getHeight()/2));
 		spriteSnowflake.setScale(scaling[0], scaling[1]);
@@ -580,8 +585,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	public void propertyChange(PropertyChangeEvent event) {
 		if(event.getPropertyName() == ColdWarController.SNOW_AMOUNT){
 			snowAmount.setLabel(""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
-		}
-		else if(event.getPropertyName() == ColdWarController.SNOW_PRODUCTION){
+		}else if(event.getPropertyName() == ColdWarController.SNOW_PRODUCTION){
 			snowAmount.setLabel(""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
 		}else if(event.getPropertyName() == ColdWarController.KING_COLLISION){
 			if(event.getSource() instanceof SnowUnit){

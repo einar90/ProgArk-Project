@@ -1,8 +1,14 @@
-package com.example.arcade.coldWarII;
+package com.example.arcade.coldWarII.controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
+import com.example.arcade.coldWarII.model.ColdWarPlayer;
+import com.example.arcade.coldWarII.model.SnowUnit;
+import com.example.arcade.coldWarII.model.SnowUnitType;
+import com.example.arcade.coldWarII.view.SnowUnitSprite;
+import com.example.arcade.coldWarII.view.SnowUnitSpriteContainer;
 
 import android.util.Log;
 import sheep.collision.CollisionListener;
@@ -12,7 +18,6 @@ public class ColdWarController implements CollisionListener {
 	private static ColdWarController instance;
     private ColdWarPlayer active, plOne, plTwo;
     private SnowUnitSpriteContainer plOneCon, plTwoCon, all;
-    private boolean[][] plOneSnowUnits,plTwoSnowUnits;
     private PropertyChangeSupport prSup;
     public static String SNOW_PRODUCTION="snow_production136433";
     public static String SNOW_AMOUNT="snow_amount199787665165";
@@ -24,8 +29,6 @@ public class ColdWarController implements CollisionListener {
         plOne = new ColdWarPlayer("Arne");
         plTwo = new ColdWarPlayer("Bjarne");
         active = plOne;
-        plOneSnowUnits = new boolean[3][5];
-        plTwoSnowUnits = new boolean[3][5];
         prSup = new PropertyChangeSupport(this);
     }
     public static ColdWarController getInstance(){
@@ -41,19 +44,6 @@ public class ColdWarController implements CollisionListener {
     }
     public void addPropertyChangeListener(PropertyChangeListener l){
     	prSup.addPropertyChangeListener(l);
-    }
-    public void setGridOccupied(int[] array){
-    	if(active == plOne){
-    		for (int i = 0; i < array.length; i+=2) {
-    			Log.d("PlaceButton", "array: "+(array[i+1]-1)+", "+(array[i]-1));
-				plOneSnowUnits[array[i+1]-2][array[i]-2] = true;
-			}
-    	}
-    	else{
-    		for (int i = 0; i < array.length; i+=2) {
-				plTwoSnowUnits[array[i+1]-1][array[i]-1] = true;
-			}
-    	}
     }
     public int getSnowAmount(){
     	return active.getSnowAmount();
@@ -94,12 +84,6 @@ public class ColdWarController implements CollisionListener {
     		PropertyChangeEvent event = new PropertyChangeEvent(active, SNOW_PRODUCTION, old,active.getSnowProduction());
     		prSup.firePropertyChange(event);    		
     	}
-    }
-    public boolean isGridEmpty(int x,int y){
-    	if(active == plOne)
-    		return !plOneSnowUnits[y-1][x-1];
-    	else
-    		return !plTwoSnowUnits[y-1][x-1];
     }
     public ColdWarPlayer getActivePlayer(){
     	return active;
@@ -171,13 +155,11 @@ public class ColdWarController implements CollisionListener {
         			sua.decreaseHardness(subHardness);
         			sub.decreaseHardness(suaHardness);
         			prSup.firePropertyChange(new PropertyChangeEvent(sua, KING_COLLISION, suaHardness, sua.getHardness()));
-        		}
-        		else if(sub.getType().equals(SnowUnitType.KING)){
+        		}else if(sub.getType().equals(SnowUnitType.KING)){
         			sua.decreaseHardness(subHardness);
         			sub.decreaseHardness(suaHardness);
         			prSup.firePropertyChange(new PropertyChangeEvent(sub, KING_COLLISION, subHardness, sub.getHardness()));
-        		}
-        		else{
+        		}else{
         			sua.decreaseHardness(subHardness);
         			sub.decreaseHardness(suaHardness);        			
         		}

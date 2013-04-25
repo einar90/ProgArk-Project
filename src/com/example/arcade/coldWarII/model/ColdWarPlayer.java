@@ -1,4 +1,4 @@
-package com.example.arcade.coldWarII;
+package com.example.arcade.coldWarII.model;
 
 import java.util.ArrayList;
 

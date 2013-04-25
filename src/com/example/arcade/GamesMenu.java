@@ -8,7 +8,7 @@ import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.example.arcade.battleship.BattleshipUserInterface;
-import com.example.arcade.coldWarII.ColdWarGame;
+import com.example.arcade.coldWarII.view.ColdWarGame;
 import com.example.arcade.tankwars.TankWarsUserInterface;
 import sheep.game.Sprite;
 import sheep.game.State;
