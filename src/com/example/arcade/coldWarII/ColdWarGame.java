@@ -290,9 +290,9 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	private SnowUnitSprite setNewKing(SnowUnitSprite king, ColdWarPlayer player) {
 		float px = king.getX();
 		float py = king.getY();
+		int health = king.getSnowUnit().getHardness();
 		removeFromContainer(king, guiobjects);
 		SnowUnitSprite s;
-		int health = king.getSnowUnit().getHardness();
 		if(health >= 3){
 			s = new SnowUnitSprite(king1Image, player, SnowUnitType.KING);
 		}
@@ -476,9 +476,9 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 			s.setSpeed(attackVector);
 			s.setAcceleration(0, 300);
 			if(controller.isPlayerOne()){
-				s.setPosition(width, height/2);
+				s.setPosition(width, height/3);
 			}else{
-				s.setPosition(0, height/2);
+				s.setPosition(0, height/3);
 			}
 		}else{
 			s.setSpeed(0, 400);

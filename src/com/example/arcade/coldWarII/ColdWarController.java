@@ -166,16 +166,13 @@ public class ColdWarController implements CollisionListener {
         			b.setSpeed(0, 0);
         		}
         	}else{
-        		Log.d("cwg", "MAMMAEN MIN!!!!!!");
         		int suaHardness = sua.getHardness(), subHardness = sub.getHardness();
         		if(sua.getType().equals(SnowUnitType.KING)){
-        			Log.d("cwg", "Konge: " + sua.getPlayer().getName());
         			sua.decreaseHardness(subHardness);
         			sub.decreaseHardness(suaHardness);
         			prSup.firePropertyChange(new PropertyChangeEvent(sua, KING_COLLISION, suaHardness, sua.getHardness()));
         		}
         		else if(sub.getType().equals(SnowUnitType.KING)){
-        			Log.d("cwg", "Konge2: " + sub.getPlayer().getName());
         			sua.decreaseHardness(subHardness);
         			sub.decreaseHardness(suaHardness);
         			prSup.firePropertyChange(new PropertyChangeEvent(sub, KING_COLLISION, subHardness, sub.getHardness()));
