@@ -13,11 +13,10 @@ import com.example.arcade.R;
 
 public class Battleship extends Sprite {
  
-    private static final Resources resources = Game.getInstance().getResources();
     
     // Battleship images.
-    private static final Image battleshipImageHorisontal = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_x);
-    private static final Image battleshipImageVertical = GraphicsHelper.getScaledImage(resources, R.drawable.battleship_y);
+    private static final Image battleshipImageHorisontal = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_x);
+    private static final Image battleshipImageVertical = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_y);
     
     // Battleships player1.
     private static ArrayList<Battleship> battleshipsPlayer1 = new ArrayList<Battleship>();

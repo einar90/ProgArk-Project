@@ -20,26 +20,27 @@ import sheep.graphics.Image;
 
 
 public class BattleshipUserInterface extends State implements MiniGame {
-	public Map map;
-	private static final Resources resources = Game.getInstance().getResources();
-	public static String currentPlayer = "Player1";
+	/** 
+	 * Fields
+	 */
+    public Map map;
+	
 	
 	// Each player has 5 battleships with the length: 1,2,3,4,5.
-	public ArrayList<Battleship>player1Battleships = Battleship.getBattleshipsPlayer1();
-	public ArrayList<Battleship>player2Battleships = Battleship.getBattleshipsPlayer2();
-	
-	public int numberOfBattleships = player1Battleships.size();
+	public static ArrayList<Battleship>player1Battleships = Battleship.getBattleshipsPlayer1();
+	public static ArrayList<Battleship>player2Battleships = Battleship.getBattleshipsPlayer2();	
+	public static final int numberOfBattleships = player1Battleships.size();
 	
 	// Explosion.
-	public static final int maximumExplosions = Map.gridRows * Map.gridColumns;
-	public static final Image explosionImage = GraphicsHelper.getScaledImage(resources, R.drawable.thermite);
+	public static final int maximumExplosions = 1+2+3+4+5;
+	public static final Image explosionImage = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.thermite);
 	public static ArrayList<Sprite> explosionsPlayer1 = new ArrayList<Sprite>();
     public static ArrayList<Sprite> explosionsPlayer2 = new ArrayList<Sprite>();
 	
 	
 	//Miss.
-    public static final int maximumMiss = Map.gridRows * Map.gridColumns;
-    public static final Image missHitImage = GraphicsHelper.getScaledImage(resources, R.drawable.miss_hit);
+    public static final int maximumMiss = (Map.gridRows * Map.gridColumns) - maximumExplosions;
+    public static final Image missHitImage = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.miss_hit);
     public static ArrayList<Sprite> missHitsPlayer1 = new ArrayList<Sprite>();
     public static ArrayList<Sprite> missHitsPlayer2 = new ArrayList<Sprite>();
 
@@ -48,23 +49,10 @@ public class BattleshipUserInterface extends State implements MiniGame {
     /**
      * Constructor
      */
-    public BattleshipUserInterface(Point displaySize) {
+    public BattleshipUserInterface(){
     	map = new Map();
-    	setBattleshipPositions(displaySize);
+    	Controller.setBattleshipPositions();
     	
-    }
-    
-    /** Sets positions for both players battleships */
-    public void setBattleshipPositions(Point displaySize){
-        // Player1.
-        player1Battleships.get(0).setBattleshipPosition(new Point((int)Map.gridXStart+100, (int)Map.gridYStart+25));
-        player1Battleships.get(1).setBattleshipPosition(new Point((int)Map.gridXStart+200, (int)Map.gridYStart+80));
-        player1Battleships.get(2).setBattleshipPosition(new Point((int)Map.gridXStart+100, (int)Map.gridYStop-30));
-        player1Battleships.get(3).setBattleshipPosition(new Point((int)Map.gridXStop-300, (int)Map.gridYStop-200));
-        player1Battleships.get(4).setBattleshipPosition(new Point((int)Map.gridXStop-30, (int)Map.gridYStop-100));
-        
-        // Player2.
-
     }
 
     /**
@@ -84,10 +72,14 @@ public class BattleshipUserInterface extends State implements MiniGame {
     	updateSprites(dt);
     }
     
+    /**
+     * Updating the sprites.
+     * @param dt
+     */
     public void updateSprites(float dt){
         // Update battleships.
         for(int i=0; i < numberOfBattleships; i++) {
-            if(currentPlayer.equals("Player1")){
+            if(Controller.currentPlayer.equals("Player1")){
                 player1Battleships.get(i).update(dt);
             }else{
                 player2Battleships.get(i).update(dt);
@@ -95,13 +87,13 @@ public class BattleshipUserInterface extends State implements MiniGame {
         }
         
         // Update explosions.
-        if(currentPlayer.equals("Player1")){
+        if(Controller.currentPlayer.equals("Player1")){
             for(int i=0; i < explosionsPlayer1.size(); i++) {
                 if(explosionsPlayer1.get(i) != null){
                     explosionsPlayer1.get(i).update(dt);
                 }
             }
-        }else if(currentPlayer.equals("Player2")){
+        }else if(Controller.currentPlayer.equals("Player2")){
             for(int i=0; i < explosionsPlayer2.size(); i++) {
                 if(explosionsPlayer2.get(i) != null){
                     explosionsPlayer2.get(i).update(dt);
@@ -116,7 +108,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
         
         // Draw battleships.
         for(int i=0; i < numberOfBattleships; i++) {
-            if(currentPlayer.equals("Player1")){
+            if(Controller.currentPlayer.equals("Player1")){
                 player1Battleships.get(i).draw(canvas);
             }else{
                 player2Battleships.get(i).draw(canvas);
@@ -124,13 +116,13 @@ public class BattleshipUserInterface extends State implements MiniGame {
         }
         
         // Draw explosions.
-        if(currentPlayer.equals("Player1")){
+        if(Controller.currentPlayer.equals("Player1")){
             for(int i=0; i < explosionsPlayer1.size(); i++) {
                 if(explosionsPlayer1.get(i) != null){
                     explosionsPlayer1.get(i).draw(canvas);
                 }
             }
-        }else if(currentPlayer.equals("Player2")){
+        }else if(Controller.currentPlayer.equals("Player2")){
             for(int i=0; i < explosionsPlayer2.size(); i++) {
                 if(explosionsPlayer2.get(i) != null){
                     explosionsPlayer2.get(i).draw(canvas);
@@ -140,7 +132,9 @@ public class BattleshipUserInterface extends State implements MiniGame {
 
     }
     
-    /** Touch screen events */
+    /** 
+     * Touch screen events 
+     */
     @Override
     public boolean onTouchUp(MotionEvent event) {
         // Touch is inside the grid.
@@ -150,12 +144,12 @@ public class BattleshipUserInterface extends State implements MiniGame {
             Log.d("Y:", String.valueOf(event.getY()) );
             
             // Transform the touch-coordinates to middle-point-coordinates of a column in the grid.
-            float x = Map.findMiddleXCoordinate(event.getX());
-            float y = Map.findMiddleYCoordinate(event.getY());
+            float x = Controller.findMiddleXCoordinate(event.getX());
+            float y = Controller.findMiddleYCoordinate(event.getY());
             
             /* TODO */            
             // Check if it is a hit or miss.
-            if(currentPlayer.equals("Player1")){
+            if(Controller.currentPlayer.equals("Player1")){
                 for(int i=0; i < player1Battleships.size(); i++){
 //                    if(player1Battleships.get(i).)
                 }
@@ -165,9 +159,9 @@ public class BattleshipUserInterface extends State implements MiniGame {
             Sprite explosion = new Sprite(explosionImage);
             explosion.setPosition(x, y);
            
-            if(currentPlayer.equals("Player1")){
+            if(Controller.currentPlayer.equals("Player1")){
                 explosionsPlayer1.add(explosion);
-            }else if(currentPlayer.equals("Player2")){
+            }else if(Controller.currentPlayer.equals("Player2")){
                 explosionsPlayer2.add(explosion);
             }            
             

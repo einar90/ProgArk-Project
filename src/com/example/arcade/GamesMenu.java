@@ -87,7 +87,7 @@ public class GamesMenu extends State {
             Log.d("Tapped", "Cold War II button tapped.");
         }
         else if (GraphicsHelper.isSpriteTouched(battleShipButton, buttonWidth, buttonHeight, event)) {
-            getGame().pushState(new BattleshipUserInterface(displaySize));
+            getGame().pushState(new BattleshipUserInterface());
             Log.d("Tapped", "Battleship button tapped.");
         }
         return true;
