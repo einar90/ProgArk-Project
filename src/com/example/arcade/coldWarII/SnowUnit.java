@@ -2,14 +2,18 @@ package com.example.arcade.coldWarII;
 
 public class SnowUnit {
     private ColdWarPlayer player;
+    private ColdWarModel model;
+    private SnowUnitSprite sprite;
     private int hardness;
     private int weight;
 	private int cost;
     private SnowUnitType type;
     
-    public SnowUnit(ColdWarPlayer player,SnowUnitType type){
+    public SnowUnit(ColdWarPlayer player,SnowUnitType type,SnowUnitSprite s){
     	this.player = player;
     	this.type = type;
+    	model = ColdWarModel.getInstance();
+    	sprite = s;
     	initSnowUnit();
     }
     
@@ -43,6 +47,10 @@ public class SnowUnit {
 		return player;
 	}
 
+    public SnowUnitSprite getSprite(){
+    	return sprite;
+    }
+    
 	public void setPlayer(ColdWarPlayer player) {
 		this.player = player;
 	}
@@ -67,14 +75,9 @@ public class SnowUnit {
     public int getCost(){
     	return cost;
     }
-    
-    protected boolean isHit() {
-        //TODO: ... ???
-        return false;
-    }
 
     protected void destroy() {
-        //TODO: ... ???
+        model.destroySnowUnit(this);
     }
 
 }

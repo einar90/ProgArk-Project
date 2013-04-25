@@ -10,7 +10,7 @@ public class SnowUnitSprite extends Sprite {
     public SnowUnitSprite(Image a,ColdWarPlayer player,SnowUnitType t) {
         super(a);
         type = t;
-        unit = new SnowUnit(player, type);
+        unit = new SnowUnit(player,type,this);
     }
 
 	SnowUnit getSnowUnit(){
