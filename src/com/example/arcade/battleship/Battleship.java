@@ -4,40 +4,48 @@ import java.util.ArrayList;
 
 import sheep.game.Sprite;
 import sheep.graphics.Image;
-import android.content.res.Resources;
 import android.graphics.Point;
 
-import com.example.arcade.Game;
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.R;
 
-public class Battleship extends Sprite {
- 
+public class Battleship extends Sprite { 
     
     // Battleship images.
-    private static final Image battleshipImageHorisontal = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_x);
-    private static final Image battleshipImageVertical = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_y);
+    private static final Image battleship1ImageHorisontal = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_x1);
+    private static final Image battleship2ImageHorisontal = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_x2);
+    private static final Image battleship3ImageHorisontal = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_x3);    
+    private static final Image battleship4ImageVertical = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_y4);
+    private static final Image battleship5ImageVertical = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_y5);
     
     // Battleships player1.
     private static ArrayList<Battleship> battleshipsPlayer1 = new ArrayList<Battleship>();
-    private static Battleship battleship1Player1 = new Battleship(battleshipImageHorisontal, 1);
-    private static Battleship battleship2Player1 = new Battleship(battleshipImageHorisontal, 1);
-    private static Battleship battleship3Player1 = new Battleship(battleshipImageHorisontal, 1);
-    private static Battleship battleship4Player1 = new Battleship(battleshipImageVertical, 1);
-    private static Battleship battleship5Player1 = new Battleship(battleshipImageVertical, 1);
+    private Battleship battleship1Player1 = new Battleship(battleship1ImageHorisontal, 1);
+    private Battleship battleship2Player1 = new Battleship(battleship2ImageHorisontal, 1);
+    private Battleship battleship3Player1 = new Battleship(battleship3ImageHorisontal, 1);
+    private Battleship battleship4Player1 = new Battleship(battleship4ImageVertical, 1);
+    private Battleship battleship5Player1 = new Battleship(battleship5ImageVertical, 1);
     
     // Battleships player2.
     private static ArrayList<Battleship> battleshipsPlayer2 = new ArrayList<Battleship>();
-    private static Battleship battleship1Player2 = new Battleship(battleshipImageHorisontal, 2);
-    private static Battleship battleship2Player2 = new Battleship(battleshipImageHorisontal, 2);
-    private static Battleship battleship3Player2 = new Battleship(battleshipImageHorisontal, 2);
-    private static Battleship battleship4Player2 = new Battleship(battleshipImageVertical, 2);
-    private static Battleship battleship5Player2 = new Battleship(battleshipImageVertical, 2);
+    private Battleship battleship1Player2 = new Battleship(battleship1ImageHorisontal, 2);
+    private Battleship battleship2Player2 = new Battleship(battleship2ImageHorisontal, 2);
+    private Battleship battleship3Player2 = new Battleship(battleship3ImageHorisontal, 2);
+    private Battleship battleship4Player2 = new Battleship(battleship4ImageVertical, 2);
+    private Battleship battleship5Player2 = new Battleship(battleship5ImageVertical, 2);
+    
+//    // Battleship HP
+//    private int hp=0;
+//    
+//    // Battleship hit.
+//    private boolean isBattleshipHit=false;; 
  
     /** Constructor 
      * @param battleshipimage */
     public Battleship(Image battleshipimage, int player) {
         super(battleshipimage);
+//        this.hp = hp;
+//        this.isBattleshipHit = false;
         
         if(player == 1){
             battleshipsPlayer1.add(this);
@@ -61,4 +69,26 @@ public class Battleship extends Sprite {
     public void setBattleshipPosition(Point size) {
         setPosition(size.x, size.y);
     }
+    
+//    /**
+//     * Get hp 
+//     */
+//    public int getBattleshipHp(){
+//        return this.hp;
+//    }
+//    
+//    /**
+//     * Get is battleshiphit 
+//     */
+//    public boolean isBattleshipHit(){
+//        return this.isBattleshipHit;
+//    }
+//    
+//    /** 
+//     * Set isbattleshiphit
+//     */
+//    public void setIsBattleshipHit(){
+//        this.isBattleshipHit = true;
+//    }
+    
 }
