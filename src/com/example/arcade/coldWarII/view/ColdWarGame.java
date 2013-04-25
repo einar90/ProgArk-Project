@@ -61,7 +61,8 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	private boolean isDefenceMenuSelected = false;
 	private boolean isAttackMenuSelected = false;
 	private boolean isUpgradeMenuSelected = false;	
-	private boolean playerOneKingHit,playerTwoKingHit = false;
+	private boolean isPlayerOneKingHit, isPlayerTwoKingHit = false;
+	private boolean isGameOver = false;
 	private Vector2 attackVector;
 
 
@@ -82,7 +83,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		addToContainer(background, guiobjects);
 
 		snowAmount = new TextButton(width-(width/12), (snowflakeImage.getHeight()/2), ""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
-		gameOver = new TextButton(width-(width/12), (snowflakeImage.getHeight()/2), ""+controller.getSnowAmount()+" ("+controller.getSnowProduction()+")");
+		gameOver = new TextButton(width/2, (height/2), "Game Over");
 		
 		spriteSnowflake = new Sprite(snowflakeImage);
 		spriteSnowflake.setPosition(width-(float)(1.5*(width/12)), 10+(snowflakeImage.getHeight()/2));
@@ -226,6 +227,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		playerTwoKing.draw(canvas);
 		spriteSnowflake.draw(canvas);
 		snowAmount.draw(canvas);
+		if(isGameOver) gameOver.draw(canvas);
 		if(!controller.isPlayerOne()){
 			playerOneArrow.draw(canvas);
 		}else{
@@ -275,15 +277,15 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 				}
 			}
 		}
-		if(playerOneKingHit){
+		if(isPlayerOneKingHit){
 			playerOneKing = setNewKing(playerOneKing, controller.getPlayerOne());
 			playerOneKing.update(dt);
-			playerOneKingHit = false;
+			isPlayerOneKingHit = false;
 		}
-		if(playerTwoKingHit){
+		if(isPlayerTwoKingHit){
 			playerTwoKing  = setNewKing(playerTwoKing, controller.getPlayerTwo());
 			playerTwoKing.update(dt);
-			playerTwoKingHit = false;
+			isPlayerTwoKingHit = false;
 		}
 		playerTwoArrow.setPosition(playerOneKing.getX(), (float) (playerOneKing.getY()+((scaling[1])*king1Image.getHeight()/2.5)+(scaling[1]*arrowImage.getHeight()/2.5))); 
 		playerOneArrow.setPosition(playerTwoKing.getX(), (float) (playerOneKing.getY()+((scaling[1])*king1Image.getHeight()/2.5)+(scaling[1]*arrowImage.getHeight()/2.5)));
@@ -309,6 +311,9 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		}
 		else{
 			s = new SnowUnitSprite(kingDeadImage, player, SnowUnitType.KING);
+			if(player == controller.getPlayerOne()) gameOver.setLabel("Left player has won!");
+			else gameOver.setLabel("Right player has won!");
+			isGameOver = true;
 		}
 		s.setPosition(px, py);
 		s.setScale(scaling[0], scaling[1]);
@@ -329,6 +334,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	}
 
 	private void checkTopMenu(MotionEvent e){
+		if(isGameOver) return;
 		if(GraphicsHelper.isSpriteTouched(btnDefence, btnDefence.getImageWidth(), btnDefence.getImageHeight(), e)){
 			isDefenceMenuSelected = true; 
 			isAttackMenuSelected = false; 
@@ -590,9 +596,9 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		}else if(event.getPropertyName() == ColdWarController.KING_COLLISION){
 			if(event.getSource() instanceof SnowUnit){
 				if(((SnowUnit)event.getSource()).getPlayer().equals(controller.getPlayerOne())){
-					playerOneKingHit = true;
+					isPlayerOneKingHit = true;
 				}else{
-					playerTwoKingHit = true;
+					isPlayerTwoKingHit = true;
 				}
 			}
 		}
