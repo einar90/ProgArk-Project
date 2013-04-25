@@ -11,7 +11,7 @@ public class ColdWarPlayer {
     public ColdWarPlayer(String name){
     	this.name = name;
     	slingShotLevel = 1;
-    	snowAmount = 4;
+    	snowAmount = 1; 
     	snowProduction = 1;
     	snowUnits = new ArrayList<SnowUnit>();
     }
