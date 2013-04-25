@@ -1,25 +1,25 @@
 package com.example.arcade.battleship;
 
 import java.util.ArrayList;
-
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
-
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.MiniGame;
 import com.example.arcade.R;
-
+import com.example.arcade.utilities.Constants;
 import sheep.game.Sprite;
 import sheep.game.State;
+import sheep.graphics.Font;
 import sheep.graphics.Image;
-
 
 public class BattleshipUserInterface extends State implements MiniGame {
 	/** 
 	 * Fields
 	 */
     public Map map;	
+    private static final Font font = new Font(0, 0, 0, Map.columnHeight/2, Typeface.SANS_SERIF, Typeface.NORMAL);
 	
 	// Each player has 5 battleships with the length: 1,2,3,4,5.
 	public static ArrayList<Battleship>player1Battleships = Battleship.getBattleshipsPlayer1();
@@ -46,16 +46,17 @@ public class BattleshipUserInterface extends State implements MiniGame {
     }
 
     /**
-     * Draw
+     * Draw all of the elements on the screen.
      */
     public void draw(Canvas canvas) {
         super.draw(canvas);
         map.drawMap(canvas);
+        canvas.drawText(Controller.currentPlayer, (float)(Constants.WINDOW_WIDTH*0.45), Map.columnHeight/2, font);
         drawSprites(canvas);
     }
 
     /**
-     * Update
+     * Update the screen.
      */
     public void update(float dt) {
     	super.update(dt);
@@ -63,26 +64,31 @@ public class BattleshipUserInterface extends State implements MiniGame {
     }
     
     /**
-     * Updating the sprites.
+     * Updating the sprites on the screen: Battleships, Explosions, Miss hits.
      * @param dt
      */
     public void updateSprites(float dt){
         // Update battleships.
         for(int i=0; i < numberOfBattleships; i++) {
+            // PLAYER 1.
             if(Controller.currentPlayer.equals("Player1")){
                 player2Battleships.get(i).update(dt);
+            
+            // PLAYER 2.
             }else{
                 player1Battleships.get(i).update(dt);
             }
         }
         
-        // Update explosions.
+        // Update explosions for PLAYER 1.
         if(Controller.currentPlayer.equals("Player1")){
             for(int i=0; i < explosionsPlayer2.size(); i++) {
                 if(explosionsPlayer2.get(i) != null){
                     explosionsPlayer2.get(i).update(dt);
                 }
             }
+        
+        // Update explosions for PLAYER 2. 
         }else if(Controller.currentPlayer.equals("Player2")){
             for(int i=0; i < explosionsPlayer1.size(); i++) {
                 if(explosionsPlayer1.get(i) != null){
@@ -91,13 +97,15 @@ public class BattleshipUserInterface extends State implements MiniGame {
             }
         }
         
-        // Update miss hits.
+        // Update miss hits for PLAYER 1.
         if(Controller.currentPlayer.equals("Player1")){
             for(int i=0; i < missHitsPlayer2.size(); i++) {
                 if(missHitsPlayer2.get(i) != null){
                     missHitsPlayer2.get(i).update(dt);
                 }
             }
+        
+        // Update miss hits for PLAYER 2.
         }else if(Controller.currentPlayer.equals("Player2")){
             for(int i=0; i < missHitsPlayer1.size(); i++) {
                 if(missHitsPlayer1.get(i) != null){
@@ -108,7 +116,9 @@ public class BattleshipUserInterface extends State implements MiniGame {
                 
     }
     
-    /** Draw the sprite's on screen */
+    /** 
+     * Draws the sprites on the screen: Battleships, Explosions, Miss hits.
+     */
     public void drawSprites(Canvas canvas){
         
         // Draw battleships.
@@ -118,7 +128,6 @@ public class BattleshipUserInterface extends State implements MiniGame {
                 // Only show battleships that is sunk.
                 if(player2Battleships.get(i).getBattleshipHpLeft() == 0){
                     player2Battleships.get(i).draw(canvas);
-
                 }
              
             // PLAYER 2    
@@ -130,13 +139,15 @@ public class BattleshipUserInterface extends State implements MiniGame {
             }
         }
         
-        // Draw explosions.
+        // Draw explosions for PLAYER 1.
         if(Controller.currentPlayer.equals("Player1")){
             for(int i=0; i < explosionsPlayer2.size(); i++) {
                 if(explosionsPlayer2.get(i) != null){
                     explosionsPlayer2.get(i).draw(canvas);
                 }
             }
+       
+        // Draw explosions for PLAYER 2.
         }else if(Controller.currentPlayer.equals("Player2")){
             for(int i=0; i < explosionsPlayer1.size(); i++) {
                 if(explosionsPlayer1.get(i) != null){
@@ -145,35 +156,35 @@ public class BattleshipUserInterface extends State implements MiniGame {
             }
         } 
         
-        // Draw miss hits.
+        // Draw miss hits for PLAYER 1.
         if(Controller.currentPlayer.equals("Player1")){
             for(int i=0; i < missHitsPlayer2.size(); i++) {
                 if(missHitsPlayer2.get(i) != null){
                     missHitsPlayer2.get(i).draw(canvas);
                 }
             }
+        
+        // Draw miss hits for PLAYER 2.
         }else if(Controller.currentPlayer.equals("Player2")){
             for(int i=0; i < missHitsPlayer1.size(); i++) {
                 if(missHitsPlayer1.get(i) != null){
                     missHitsPlayer1.get(i).draw(canvas);
                 }
             }
-        }  
-
-    }
+        } 
+    }// end drawSprites.
     
     /** 
      * Touch screen events 
      */
     @Override
     public boolean onTouchUp(MotionEvent event) {
-        // Touch is inside the grid.
-        if(event.getX() >= Map.gridXStart && event.getX() <= Map.gridXStop && event.getY() >= Map.gridYStart && event.getY() <= Map.gridYStop){
-            Log.d("TouchUp", "onTouchUp!");
-            Log.d("X:", String.valueOf(event.getX()) );
-            Log.d("Y:", String.valueOf(event.getY()) );
+        // Checks that the touch is inside the grid.
+        if(Controller.isTouchInsideGrid(event)){
+//            Log.d("X:", String.valueOf(event.getX()) );
+//            Log.d("Y:", String.valueOf(event.getY()) );
             
-            // Transform the touch-coordinates to middle-point-coordinates of a column in the grid.
+            // Transform the touch-coordinates into middle-point-coordinates of the touched column in the grid.
             float x = Controller.findMiddleXCoordinate(event.getX());
             float y = Controller.findMiddleYCoordinate(event.getY());
             
@@ -191,7 +202,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
                     
                     // If player2 don't have any battleships left then end game.
                     if(!Controller.hasBattleshipsLeft(2) ){
-                        Log.d("Player1:", "HAS WON!" );                        
+//                        Log.d("Player1:", "HAS WON!" );                        
                         Controller.setEndGameGUI();
                     }
                 
@@ -202,7 +213,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
                     missHitsPlayer2.add(missHit);
                     
                     // Change player.
-                    Controller.setCurrentPlayer("Player2");
+                    Controller.changePlayer();
                 }               
                 
             // PLAYER 2
@@ -219,7 +230,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
                     
                     // If player1 don't have any battleships left then end game.
                     if(!Controller.hasBattleshipsLeft(1) ){
-                        Log.d("Player2:", "HAS WON!" );                        
+//                        Log.d("Player2:", "HAS WON!" );                        
                         Controller.setEndGameGUI();
                     }
                  
@@ -230,7 +241,7 @@ public class BattleshipUserInterface extends State implements MiniGame {
                     missHitsPlayer1.add(missHit);
                     
                     // Change player.
-                    Controller.setCurrentPlayer("Player1");
+                    Controller.changePlayer();
                 }                
                 
             }                    

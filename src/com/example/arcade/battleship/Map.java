@@ -1,12 +1,14 @@
 package com.example.arcade.battleship;
 
 import com.example.arcade.utilities.Constants;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 
 public class Map {    
 	
+    /**
+     * Fields
+     */
 	public static final int gridRows = 7;
 	public static final int gridColumns = 7;
 	
@@ -15,19 +17,25 @@ public class Map {
 	public static final float gridYStop = 50 + gridHeight, gridXStop = (Constants.WINDOW_WIDTH-gridWidth)/2 + gridWidth;
 	public static final float columnWidth = gridWidth / gridColumns, columnHeight = columnWidth;
     
-	/** Constructor */
+	
+	/** 
+	 * Constructor 
+	 */
 	public Map() {
 		
 	}
 	
-	/** Draws the map */
+	/** 
+	 * Draws the map. 
+	 */
 	public void drawMap(Canvas canvas){
         canvas.drawColor(Color.BLUE);
-        canvas.drawText(Controller.currentPlayer, canvas.getWidth() / 2, 10, sheep.graphics.Color.WHITE);
         drawGrid(canvas);
 	}
 	
-	/** Draws the grid */
+	/** 
+	 * Draws the grid. 
+	 */
 	public void drawGrid(Canvas canvas){
 	    for(int i=0; i < gridRows+1; i++) {
             // Horizontal line
@@ -35,7 +43,6 @@ public class Map {
 	        // Vertical line
 	        canvas.drawLine(gridXStart + (i*gridHeight/gridRows), gridYStart, gridXStart + (i*gridHeight/gridRows), gridYStop, sheep.graphics.Color.WHITE);
         }
-	}
-	
+	}	
 
-}
+}// end class.

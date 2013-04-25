@@ -1,15 +1,17 @@
 package com.example.arcade.battleship;
 
 import java.util.ArrayList;
-
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 import android.graphics.Point;
-
 import com.example.arcade.GraphicsHelper;
 import com.example.arcade.R;
 
 public class Battleship extends Sprite { 
+   
+    /**
+     * Fields.
+     */
     
     // Battleship images.
     private static final Image battleship1ImageHorisontal = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_x1);
@@ -17,14 +19,7 @@ public class Battleship extends Sprite {
     private static final Image battleship3ImageHorisontal = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_x3);    
     private static final Image battleship4ImageVertical = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_y4);
     private static final Image battleship5ImageVertical = GraphicsHelper.getScaledImage(Controller.resources, R.drawable.battleship_y5);
-    
-    // Battleship image size.
-    public static final float battleship1Width = battleship1ImageHorisontal.getWidth(), battleship1Height = battleship1ImageHorisontal.getHeight(); 
-    public static final float battleship2Width = battleship2ImageHorisontal.getWidth(), battleship2Height = battleship2ImageHorisontal.getHeight();
-    public static final float battleship3Width = battleship3ImageHorisontal.getWidth(), battleship3Height = battleship3ImageHorisontal.getHeight();
-    public static final float battleship4Width = battleship4ImageVertical.getWidth(), battleship4Height = battleship4ImageVertical.getHeight(); 
-    public static final float battleship5Width = battleship5ImageVertical.getWidth(), battleship5Height = battleship5ImageVertical.getHeight(); 
-    
+     
     // Battleships player1.
     private static ArrayList<Battleship> battleshipsPlayer1 = new ArrayList<Battleship>();
     private static Battleship battleship1Player1 = new Battleship(battleship1ImageHorisontal, 1, 1);
@@ -43,54 +38,58 @@ public class Battleship extends Sprite {
     
     // Battleship Hp left. Decrease this for every hit.
     private int hpLeft;
-    // Battleship is sunk
-    private boolean isBattleshipSunk;
-  
  
+    
     /** Constructor 
-     * @param battleshipimage */
+     * @param battleshipimage 
+     */
     public Battleship(Image battleshipimage, int player, int hpLeft) {
         super(battleshipimage);
         this.hpLeft = hpLeft;
        
+        // Adding this battleship to the correct players battleship arraylist.
         if(player == 1){
             battleshipsPlayer1.add(this);
         }else if(player == 2){
             battleshipsPlayer2.add(this);
-        }
-        
+        }        
     }
 
-    /** Get player1's battleships */
+    /** 
+     * Returns the arraylist containing Player1's battleships. 
+     */
     public static ArrayList<Battleship> getBattleshipsPlayer1() {
         return battleshipsPlayer1;
     }
     
-    /** Get player2's battleships */
+    /** 
+     * Returns the arraylist containing Player2's battleships. 
+     */
     public static ArrayList<Battleship> getBattleshipsPlayer2() {
         return battleshipsPlayer2;
     }
     
-    /** Set position for battleship */
+    /** 
+     * Sets position for this battleship. 
+     */
     public void setBattleshipPosition(Point size) {
         setPosition(size.x, size.y);
     }
     
     /**
-     * Get hp left 
+     * Returns the amount of hp this battleship has left.
      */
     public int getBattleshipHpLeft(){
         return this.hpLeft;
     }
     
     /**
-     * Decrease hp left 
+     * Decreases the amount of hp this battleship has left by one.
      */
     public void decreaseBattleshipHpLeft(){
         if(this.hpLeft-1 >= 0){
             this.hpLeft--;
         }
     }  
-
     
-}
+}// end class.

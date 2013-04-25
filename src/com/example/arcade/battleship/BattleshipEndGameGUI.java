@@ -5,10 +5,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 import com.example.arcade.GraphicsHelper;
-
 import sheep.graphics.Font;
 
-public class BattleshipEndGameGUI extends sheep.game.State{
+public class BattleshipEndGameGUI extends sheep.game.State {
     private static final Font font = new Font(64, 64, 64, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
     private String scoreText;
     private String winnerText;
