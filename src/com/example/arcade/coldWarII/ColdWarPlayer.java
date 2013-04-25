@@ -8,6 +8,13 @@ public class ColdWarPlayer {
     private int snowAmount;
     private int snowProduction;
     private ArrayList<SnowUnit> snowUnits;
+    public ColdWarPlayer(String name){
+    	this.name = name;
+    	slingShotLevel = 1;
+    	snowAmount = 4;
+    	snowProduction = 1;
+    	snowUnits = new ArrayList<SnowUnit>();
+    }
     public int getSnowAmount() {
 		return snowAmount;
 	}
@@ -20,13 +27,6 @@ public class ColdWarPlayer {
 		return snowUnits;
 	}
 
-    public ColdWarPlayer(String name){
-    	this.name = name;
-    	slingShotLevel = 1;
-    	snowAmount = 1;
-    	snowProduction = 1;
-    	snowUnits = new ArrayList<SnowUnit>();
-    }
     
     public void increaseSnowProduction(){
     	snowProduction++;

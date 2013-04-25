@@ -82,10 +82,11 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		background.setPosition(width/2, height/2);
 		addToContainer(background, guiobjects);
 		
-		snowAmount = new TextButton(width-50, 10, "1");
+		snowAmount = new TextButton(width-50, (snowflakeImage.getHeight()/2), ""+model.getSnowAmount()+"("+model.getSnowProduction()+")");
+		Log.d("Arcade", "snowamount: "+model.getSnowAmount());
 		
 		spriteSnowflake = new Sprite(snowflakeImage);
-		spriteSnowflake.setPosition(width-100, 10);
+		spriteSnowflake.setPosition(width-60, 10+(snowflakeImage.getHeight()/2));
 		spriteSnowflake.setScale(scaling[0], scaling[1]);
 		addToContainer(spriteSnowflake, guiobjects);
 
@@ -261,6 +262,8 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		ground.draw(canvas);
 		playerOneKing.draw(canvas);
 		playerTwoKing.draw(canvas);
+		spriteSnowflake.draw(canvas);
+		snowAmount.draw(canvas);
 		if(!model.isPlayerOne()){
 			playerOneArrow.draw(canvas);
 		}else{
