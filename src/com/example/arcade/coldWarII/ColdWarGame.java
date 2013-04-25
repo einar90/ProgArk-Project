@@ -73,7 +73,8 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		objects = new SnowUnitSpriteContainer();
 		playerOneContainer = new SnowUnitSpriteContainer();
 		playerTwoContainer = new SnowUnitSpriteContainer();
-		model = new ColdWarModel(playerOneContainer,playerTwoContainer);
+		model = ColdWarModel.getInstance();
+		model.setSpriteContainers(playerOneContainer,playerTwoContainer);
 		model.addPropertyChangeListener(this);
 
 		background = new Sprite(backgroundImage);
@@ -289,7 +290,6 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		playerTwoArrow.setPosition(playerTwoKing.getX(), (float) (playerOneKing.getY()+((scaling[1])*king1Image.getHeight()/2.5)+(scaling[1]*arrowImage.getHeight()/2.5)));
 		playerOneArrow.update(dt);
 		playerTwoArrow.update(dt); 
-//		snowAmount.update(dt);
 	}	
 
 	private void addToContainer(Sprite s,SpriteContainer con){
