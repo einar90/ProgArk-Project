@@ -110,39 +110,6 @@ public class ColdWarModel implements CollisionListener {
     	return plTwo;
     }
     
-    
-//    public void reverseMenu() {
-//    	if (menu)
-//    		menu = false;
-//    	else
-//    		menu = true;
-//    }
-//    public void reverseAttack() {
-//        if (attack)
-//        	attack = false;
-//        else
-//        	attack = true;
-//    }
-//
-//    public void reversePlacing() {
-//        if (placing)
-//            placing = false;
-//        else
-//            placing = true;
-//    }
-
-//    public boolean isPlacing() {
-//        return placing;
-//    }
-//    
-//    public boolean isAttack() {
-//        return attack;
-//    }
-
-//    public boolean isMenu() {
-//        return menu;
-//    }
-
     /**
      * @return
      */
