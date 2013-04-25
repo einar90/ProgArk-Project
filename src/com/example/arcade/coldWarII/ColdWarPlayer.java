@@ -38,7 +38,7 @@ public class ColdWarPlayer {
     	snowAmount += snowProduction;
     }
     public boolean decreaseSnowAmount(int amount){
-    	if(snowAmount > amount){
+    	if(snowAmount >= amount){
     		snowAmount -= amount;
     		return true;
     	}	

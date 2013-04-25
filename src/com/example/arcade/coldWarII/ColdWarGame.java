@@ -66,47 +66,31 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		height = Constants.WINDOW_HEIGHT;
 		width = Constants.WINDOW_WIDTH;
 		updTime = System.currentTimeMillis();
-
+		
 		scaling = new float[]{width / 1600f, height / 960f};
-//		backScale = new float[]{w/1600f,h/1549f};
 		update = new SnowUnitSpriteContainer();
 		guiobjects = new SnowUnitSpriteContainer();
 		objects = new SnowUnitSpriteContainer();
 		playerOneContainer = new SnowUnitSpriteContainer();
 		playerTwoContainer = new SnowUnitSpriteContainer();
 		model = new ColdWarModel(playerOneContainer,playerTwoContainer);
-
-//		initButtonPaint();
+		model.addPropertyChangeListener(this);
 
 		background = new Sprite(backgroundImage);
 		background.setPosition(width/2, height/2);
 		addToContainer(background, guiobjects);
 		
-		snowAmount = new TextButton(width-50, (snowflakeImage.getHeight()/2), ""+model.getSnowAmount()+"("+model.getSnowProduction()+")");
+		snowAmount = new TextButton(width-(width/12), (snowflakeImage.getHeight()/2), ""+model.getSnowAmount()+"("+model.getSnowProduction()+")");
 		Log.d("Arcade", "snowamount: "+model.getSnowAmount());
 		
 		spriteSnowflake = new Sprite(snowflakeImage);
-		spriteSnowflake.setPosition(width-60, 10+(snowflakeImage.getHeight()/2));
+		spriteSnowflake.setPosition(width-(float)(1.5*(width/12)), 10+(snowflakeImage.getHeight()/2));
 		spriteSnowflake.setScale(scaling[0], scaling[1]);
 		addToContainer(spriteSnowflake, guiobjects);
 
 		ground = new Sprite(groundImage);
-		ground.setPosition(width/2, height+15);
+		ground.setPosition(width/2, height+(scaling[1]*groundImage.getHeight()/6)); 
 		addToContainer(ground, guiobjects);
-
-//		Log.d("Size", "Size: "+w+", "+h+". Scale: "+scaling[0]+", "+scaling[1]);
-//		Log.d("Size", "SizeImage: "+bg.getWidth()+", "+bg.getHeight()+"pos: "+back.getX()+", "+back.getY());
-//		Log.d("Size", "SizeSprite: "+backfade.getScale()+", offset: "+backfade.getOffset());
-
-//		lGrid = new Sprite(grid);
-//		rGrid = new Sprite(grid);
-//		rGrid.setScale(scaling[0], scaling[1]);
-//		lGrid.setScale(scaling[0], scaling[1]);
-//
-//		lGrid.setPosition(w/6, h);
-//		rGrid.setPosition(w-w/6, h);
-//		addToContainer(rGrid, guiobjects);
-//		addToContainer(lGrid, guiobjects);
 
 		playerOneKing = new Sprite(king1Image);
 		addToContainer(playerOneKing, guiobjects);
@@ -121,10 +105,8 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		playerTwoKing.setSpeed(0, 200);
 
 		playerOneArrow = new Sprite(arrowImage);
-		playerOneArrow.setPosition(playerOneKing.getX(), height-10);
-		playerOneArrow.setScale(scaling[0], scaling[1]);
 		playerTwoArrow = new Sprite(arrowImage);
-		playerTwoArrow.setPosition(playerTwoKing.getX(), height-10);
+		playerOneArrow.setScale(scaling[0], scaling[1]);
 		playerTwoArrow.setScale(scaling[0], scaling[1]);
 		
 		initWall(5);
@@ -219,13 +201,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		attackButtons.add(btnAttackIcecube);
 		attackButtons.add(btnAttackMassiveSnowball);
 	}
-//	private void initButtonPaint(){
-//		Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
-//		white = new Paint(Font.WHITE_SANS_BOLD_16);
-//		red = new Paint(white);
-//		red.setColor(Color.RED);
-//		Log.d("ButtonPaint", "pressed: "+red.getColor()+" idle: "+white.getColor());
-//	}
+
 	@Override
 	public void draw(Canvas canvas) {
 		if(canvas != null){
@@ -271,9 +247,10 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 		}
 	}
 	private void drawDefenceMenu(Canvas canvas){
-		for (int i = 0; i < defenceButtons.size(); i++) {
-			defenceButtons.get(i).draw(canvas);
-		}
+		if(model.getSnowAmount() >= 1) btnPlaceSnowball.draw(canvas);
+		if(model.getSnowAmount() >= 2) btnPlaceIceCube.draw(canvas);
+		if(model.getSnowAmount() >= 4) btnPlaceMassiveSnowball.draw(canvas);
+		if(model.getSnowAmount() >= 4) btnPlaceIceWall.draw(canvas);
 	}
 	private void drawAttackMenu(Canvas canvas){
 		for (int i = 0; i < attackButtons.size(); i++) {
@@ -308,10 +285,11 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 				}
 			}
 		}
-		playerOneArrow.setPosition(playerOneKing.getX(), playerOneKing.getY()+(king1Image.getHeight()/2)+5);
-		playerTwoArrow.setPosition(playerTwoKing.getX(), playerTwoKing.getY()+(king1Image.getHeight()/2)+5);
+		playerOneArrow.setPosition(playerOneKing.getX(), (float) (playerOneKing.getY()+((scaling[1])*king1Image.getHeight()/2.5)+(scaling[1]*arrowImage.getHeight()/2.5))); 
+		playerTwoArrow.setPosition(playerTwoKing.getX(), (float) (playerOneKing.getY()+((scaling[1])*king1Image.getHeight()/2.5)+(scaling[1]*arrowImage.getHeight()/2.5)));
 		playerOneArrow.update(dt);
-		playerTwoArrow.update(dt);
+		playerTwoArrow.update(dt); 
+//		snowAmount.update(dt);
 	}	
 
 	private void addToContainer(Sprite s,SpriteContainer con){
@@ -334,7 +312,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 			isAttackMenuSelected = false; 
 			isUpgradeMenuSelected = true;
 		}
-	}
+	} 
 	private void checkDefenceMenu(MotionEvent event) {
 		if(GraphicsHelper.isSpriteTouched(btnPlaceSnowball, btnPlaceSnowball.getImageWidth(), btnPlaceSnowball.getImageHeight(), event)){
 			setSnowUnitButton(btnPlaceSnowball, "defence");
@@ -405,21 +383,26 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 			switch (btnPlaceSelected.getType()) {
 			case MASSIVE:
 				drawSpriteOnGrid(massiveSnow, SnowUnitType.MASSIVE,pos[0],pos[1]);
+				model.dereaseSnowAmount(SnowUnitType.MASSIVE);
 				break;
 			case ICECUBE:
 				drawSpriteOnGrid(icecubeImage, SnowUnitType.ICECUBE,pos[0],pos[1]);
+				model.dereaseSnowAmount(SnowUnitType.ICECUBE);
 				break;
 			case ICEWALL:
 				drawSpriteOnGrid(icewallImage, SnowUnitType.ICEWALL,pos[0],pos[1]);
+				model.dereaseSnowAmount(SnowUnitType.ICEWALL);
 				break;
 			case SNOWBALL:
 				drawSpriteOnGrid(snowballImage, SnowUnitType.SNOWBALL,pos[0],pos[1]);
+				model.dereaseSnowAmount(SnowUnitType.SNOWBALL);
 				break;
-			default:
+			default:  
 				break;
 			}
 		}
 		model.changePlayer();
+		snowAmount.setLabel(""+model.getSnowAmount()+" ("+model.getSnowProduction()+")");
 	}
 
 	private void drawSpriteOnGrid(Image i,SnowUnitType t,int x,int y){
@@ -538,6 +521,7 @@ public class ColdWarGame extends State implements MiniGame,PropertyChangeListene
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		if(event.getPropertyName() == ColdWarModel.SNOW_AMOUNT){
+			Log.d("cwg", "propChange");
 			snowAmount.setLabel(""+model.getSnowAmount()+" ("+model.getSnowProduction()+")");
 		}
 		else if(event.getPropertyName() == ColdWarModel.SNOW_PRODUCTION){
